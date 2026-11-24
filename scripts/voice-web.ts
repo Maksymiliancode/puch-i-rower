@@ -1,11 +1,13 @@
-// Nagrany głos bez API: tekst do wklejenia na stronie ElevenLabs i cięcie pobranych MP3 na frazy.
+// Nagrany głos bez API: jeden tekst do wklejenia na stronie ElevenLabs i cięcie pobranego MP3 na frazy.
 //
-//   npm run voice:web -- tekst                 tworzy voice-web/czesc-1.txt, czesc-2.txt, …
-//   npm run voice:web -- potnij --name Kinga   tnie pobrane MP3 (voice-web/ albo Pobrane z ostatnich 12 h)
+//   npm run voice:web -- tekst                         tworzy voice-web/tekst.txt (frazy oddzielone pustą linią)
+//   npm run voice:web -- potnij --name Rhea            tnie najnowsze MP3 z Pobranych (z ostatnich 12 h)
+//   npm run voice:web -- potnij --plik "C:\…\x.mp3"    tnie wskazany plik
+//   npm run voice:web -- analizuj "C:\…\x.mp3"         pokazuje wykryte frazy i przerwy
 //
-// Każda część ma inną liczbę fraz, więc kolejność pobierania plików nie ma znaczenia:
-// plik dopasowuje się do części po liczbie wykrytych fraz. MP3 nie jest kodowany ponownie,
-// tylko cięty po ramkach w środku przerw między frazami.
+// Bez znaczników <break> (przy wielu ElevenLabs przyspiesza mowę). Liczba fraz jest znana, więc cięcie
+// idzie po N−1 najdłuższych przerwach. Poprawność sprawdza zgodność długości tekstu z długością nagrania.
+// MP3 nie jest kodowany ponownie, tylko cięty po ramkach w środku przerw.
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
@@ -16,9 +18,6 @@ import { phraseList, type Phrase } from '../src/domain/voicePhrases.ts';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const webDir = join(root, 'voice-web');
 const outDir = join(root, 'public', 'voice');
-const BREAK = '<break time="1.5s" />';
-/** Cisza dłuższa niż tyle sekund rozdziela frazy (przerwa w tekście to 1,5 s). */
-const MIN_GAP = 0.7;
 
 const args = process.argv.slice(2);
 const option = (name: string) => {
@@ -32,31 +31,14 @@ interface BikeJson {
 const bike = JSON.parse(readFileSync(join(root, 'data', 'workouts_bike.json'), 'utf8')) as BikeJson;
 const phrases = phraseList(bike.workouts.flatMap((w) => Object.values(w.rx).flatMap((r) => r.segments)));
 
-const line = (p: Phrase) => `${/[.!?]$/.test(p.text) ? p.text : `${p.text}.`} ${BREAK}`;
-
-/** Podział na części o różnej liczbie fraz (np. 50, 47, 45). */
-function parts(): Phrase[][] {
-  const total = phrases.reduce((a, p) => a + line(p).length + 1, 0);
-  const n = Math.max(3, Math.ceil(total / 2200));
-  const base = Math.floor(phrases.length / n);
-  const sizes = Array.from({ length: n }, (_, i) => base + (n - 1 - 2 * i));
-  sizes[0] += phrases.length - sizes.reduce((a, b) => a + b, 0);
-  const out: Phrase[][] = [];
-  let at = 0;
-  for (const s of sizes) {
-    out.push(phrases.slice(at, at + s));
-    at += s;
-  }
-  return out;
-}
+const line = (p: Phrase) => (/[.!?]$/.test(p.text) ? p.text : `${p.text}.`);
 
 function writeText() {
   mkdirSync(webDir, { recursive: true });
-  const ps = parts();
-  ps.forEach((p, i) => writeFileSync(join(webDir, `czesc-${i + 1}.txt`), p.map(line).join('\n') + '\n'));
-  writeFileSync(join(webDir, 'order.json'), JSON.stringify(ps.map((p) => p.map((x) => x.key))));
-  const chars = ps.map((p) => p.map(line).join('\n').length);
-  console.log(`Gotowe: ${ps.length} części w folderze voice-web (fraz: ${ps.map((p) => p.length).join(', ')}; znaków: ${chars.join(', ')}; razem ${chars.reduce((a, b) => a + b, 0)}).`);
+  const text = phrases.map(line).join('\n\n') + '\n';
+  writeFileSync(join(webDir, 'tekst.txt'), text);
+  writeFileSync(join(webDir, 'order.json'), JSON.stringify(phrases.map((p) => p.key)));
+  console.log(`Gotowe: voice-web/tekst.txt, ${phrases.length} fraz, ${text.length} znaków (jedno wklejenie, limit strony to 5000).`);
 }
 
 // ---------- MP3: ramki ----------
@@ -106,45 +88,85 @@ function frames(buf: Uint8Array): { frames: Frame[]; samplesPerFrame: number; sa
   return { frames: out, samplesPerFrame: spf, sampleRate: sr };
 }
 
-/** Odcinki mowy [start, koniec] w sekundach, rozdzielone ciszą dłuższą niż MIN_GAP. */
-function speech(samples: Float32Array, sampleRate: number): [number, number][] {
-  const win = Math.round(sampleRate * 0.01);
+// ---------- cisza i mowa ----------
+const WIN = 0.01;
+
+/** Przerwy (cisza ≥ 80 ms) między fragmentami mowy oraz początek i koniec mowy. */
+function gaps(samples: Float32Array, sampleRate: number, threshold = 0.008) {
+  const win = Math.round(sampleRate * WIN);
   const loud: boolean[] = [];
   for (let i = 0; i < samples.length; i += win) {
     let sum = 0;
     const end = Math.min(samples.length, i + win);
     for (let j = i; j < end; j++) sum += samples[j] * samples[j];
-    loud.push(Math.sqrt(sum / (end - i)) > 0.008);
+    loud.push(Math.sqrt(sum / (end - i)) > threshold);
   }
-  const segs: [number, number][] = [];
-  let start = -1;
-  let quiet = 0;
-  const gapWins = Math.round(MIN_GAP / 0.01);
-  loud.forEach((l, w) => {
-    if (l) {
-      if (start < 0) start = w;
-      quiet = 0;
-    } else if (start >= 0 && ++quiet >= gapWins) {
-      segs.push([start * 0.01, (w - quiet + 1) * 0.01]);
-      start = -1;
-      quiet = 0;
+  const first = loud.indexOf(true);
+  const last = loud.lastIndexOf(true);
+  const out: { a: number; b: number; len: number }[] = [];
+  let run = -1;
+  for (let w = first; w <= last; w++) {
+    if (!loud[w]) {
+      if (run < 0) run = w;
+    } else if (run >= 0) {
+      if (w - run >= 8) out.push({ a: run * WIN, b: w * WIN, len: (w - run) * WIN });
+      run = -1;
     }
-  });
-  if (start >= 0) segs.push([start * 0.01, (loud.length - quiet) * 0.01]);
-  return segs.filter(([a, b]) => b - a >= 0.12);
+  }
+  return { gaps: out, start: first * WIN, end: (last + 1) * WIN };
 }
 
-function candidates(): string[] {
-  const fromWeb = existsSync(webDir) ? readdirSync(webDir).filter((f) => f.toLowerCase().endsWith('.mp3')).map((f) => join(webDir, f)) : [];
-  const dl = join(homedir(), 'Downloads');
+/** Cięcie na n fraz po n−1 najdłuższych przerwach + ocena pewności. */
+function cut(samples: Float32Array, sampleRate: number, n: number) {
+  const g = gaps(samples, sampleRate);
+  if (g.gaps.length < n - 1) return null;
+  const sorted = [...g.gaps].sort((x, y) => y.len - x.len);
+  const chosen = sorted.slice(0, n - 1).sort((x, y) => x.a - y.a);
+  const minChosen = sorted[n - 2]?.len ?? 0;
+  const maxOther = sorted[n - 1]?.len ?? 0;
+  const segs: [number, number][] = [];
+  let at = g.start;
+  for (const c of chosen) {
+    segs.push([at, c.a]);
+    at = c.b;
+  }
+  segs.push([at, g.end]);
+  return { segs, chosen, minChosen, maxOther };
+}
+
+/** Korelacja Pearsona (długość tekstu ↔ długość nagrania). */
+function pearson(x: number[], y: number[]): number {
+  const mx = x.reduce((a, b) => a + b, 0) / x.length;
+  const my = y.reduce((a, b) => a + b, 0) / y.length;
+  let sxy = 0;
+  let sxx = 0;
+  let syy = 0;
+  x.forEach((xi, i) => {
+    sxy += (xi - mx) * (y[i] - my);
+    sxx += (xi - mx) ** 2;
+    syy += (y[i] - my) ** 2;
+  });
+  return sxy / Math.sqrt(sxx * syy);
+}
+
+async function decode(file: string) {
+  const decoder = new MPEGDecoder();
+  await decoder.ready;
+  const buf = new Uint8Array(readFileSync(file));
+  const { channelData, sampleRate } = decoder.decode(buf);
+  decoder.free();
+  return { buf, samples: channelData[0], sampleRate };
+}
+
+function newestMp3(): string | null {
+  const dirs = [webDir, join(homedir(), 'Downloads')].filter(existsSync);
   const recent = Date.now() - 12 * 3600 * 1000;
-  const fromDl = existsSync(dl)
-    ? readdirSync(dl)
-        .filter((f) => f.toLowerCase().endsWith('.mp3'))
-        .map((f) => join(dl, f))
-        .filter((f) => statSync(f).mtimeMs > recent)
-    : [];
-  return [...fromWeb, ...fromDl];
+  const files = dirs
+    .flatMap((d) => readdirSync(d).filter((f) => f.toLowerCase().endsWith('.mp3')).map((f) => join(d, f)))
+    .map((f) => ({ f, t: statSync(f).mtimeMs }))
+    .filter((x) => x.t > recent)
+    .sort((a, b) => b.t - a.t);
+  return files[0]?.f ?? null;
 }
 
 async function split() {
@@ -154,63 +176,71 @@ async function split() {
     process.exitCode = 1;
     return;
   }
-  const order = JSON.parse(readFileSync(orderPath, 'utf8')) as string[][];
-  const files = candidates();
-  if (!files.length) {
-    console.error('Nie widzę pobranych plików MP3 (ani w voice-web, ani w Pobranych z ostatnich 12 godzin).');
+  const order = JSON.parse(readFileSync(orderPath, 'utf8')) as string[];
+  if (!Array.isArray(order) || typeof order[0] !== 'string') {
+    console.error('Plik voice-web/order.json jest ze starej wersji. Uruchom: npm run voice:web -- tekst');
     process.exitCode = 1;
     return;
   }
-
-  const decoder = new MPEGDecoder();
-  await decoder.ready;
-  const matched = new Map<number, { file: string; buf: Uint8Array; segs: [number, number][] }>();
-  for (const file of files) {
-    const buf = new Uint8Array(readFileSync(file));
-    decoder.reset();
-    const { channelData, sampleRate } = decoder.decode(buf);
-    const segs = speech(channelData[0], sampleRate);
-    const part = order.findIndex((keys, i) => keys.length === segs.length && !matched.has(i));
-    console.log(`${file.split(/[\\/]/).pop()}: ${segs.length} fraz${part >= 0 ? ` → część ${part + 1}` : ' (nie pasuje do żadnej części)'}`);
-    if (part >= 0) matched.set(part, { file, buf, segs });
+  const file = option('plik') ?? newestMp3();
+  if (!file) {
+    console.error('Nie widzę pobranego MP3 z ostatnich 12 godzin. Podaj go: npm run voice:web -- potnij --plik "ścieżka.mp3"');
+    process.exitCode = 1;
+    return;
   }
-  decoder.free();
-
-  const missing = order.map((_, i) => i).filter((i) => !matched.has(i));
-  if (missing.length) {
-    console.error(`\nBrakuje części: ${missing.map((i) => `${i + 1} (${order[i].length} fraz)`).join(', ')}.`);
-    console.error('Sprawdź, czy wybrany był model „Eleven Multilingual v2” i czy cały tekst części został wklejony. Plik do części z inną liczbą fraz trzeba wygenerować jeszcze raz.');
+  console.log(`Plik: ${file.split(/[\\/]/).pop()}`);
+  const { buf, samples, sampleRate } = await decode(file);
+  const r = cut(samples, sampleRate, order.length);
+  if (!r) {
+    console.error(`Za mało przerw w nagraniu na ${order.length} fraz. Czy wklejony był cały tekst z voice-web/tekst.txt?`);
+    process.exitCode = 1;
+    return;
+  }
+  const texts = order.map((k) => phrases.find((p) => p.key === k)?.text.length ?? 0);
+  const corr = pearson(
+    texts,
+    r.segs.map(([a, b]) => b - a),
+  );
+  console.log(`Fraz: ${r.segs.length}. Najkrótsza przerwa między frazami: ${r.minChosen.toFixed(2)} s, najdłuższa wewnątrz frazy: ${r.maxOther.toFixed(2)} s.`);
+  console.log(`Zgodność długości tekstu z nagraniem: ${corr.toFixed(2)} (dobrze, gdy powyżej 0,8).`);
+  if (corr < 0.8 || r.minChosen <= r.maxOther) {
+    console.error('\nCięcie jest niepewne, więc nic nie zapisuję. Wygeneruj tekst jeszcze raz (najlepiej z Stability 40–50%) albo pokaż mi wynik.');
     process.exitCode = 1;
     return;
   }
 
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
+  const { frames: fr, samplesPerFrame, sampleRate: sr } = frames(buf);
+  const frameAt = (t: number) => Math.max(0, Math.min(fr.length, Math.floor((t * sr) / samplesPerFrame)));
   const clips: Record<string, string> = {};
-  for (const [part, { buf, segs }] of matched) {
-    const { frames: fr, samplesPerFrame, sampleRate } = frames(buf);
-    const frameAt = (t: number) => Math.max(0, Math.min(fr.length, Math.floor((t * sampleRate) / samplesPerFrame)));
-    segs.forEach(([a, b], i) => {
-      // Cięcie w połowie przerwy przed i po frazie.
-      const from = i === 0 ? Math.max(0, a - 0.3) : (segs[i - 1][1] + a) / 2;
-      const to = i === segs.length - 1 ? b + 0.3 : (b + segs[i + 1][0]) / 2;
-      const slice = fr.slice(frameAt(from), frameAt(to) + 1);
-      const bytes = Buffer.concat(slice.map((f) => Buffer.from(buf.subarray(f.offset, f.offset + f.length))));
-      const k = order[part][i];
-      writeFileSync(join(outDir, `${k}.mp3`), bytes);
-      clips[k] = `${k}.mp3`;
-    });
-  }
+  r.segs.forEach(([a, b], i) => {
+    const from = i === 0 ? Math.max(0, a - 0.2) : (r.segs[i - 1][1] + a) / 2;
+    const to = i === r.segs.length - 1 ? b + 0.2 : (b + r.segs[i + 1][0]) / 2;
+    const slice = fr.slice(frameAt(from), frameAt(to) + 1);
+    const bytes = Buffer.concat(slice.map((f) => Buffer.from(buf.subarray(f.offset, f.offset + f.length))));
+    writeFileSync(join(outDir, `${order[i]}.mp3`), bytes);
+    clips[order[i]] = `${order[i]}.mp3`;
+  });
   const manifest = { provider: 'ElevenLabs', model: 'eleven_multilingual_v2 (strona)', voiceName: option('name') ?? null, createdAt: new Date().toISOString(), clips };
   writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 1) + '\n');
   console.log(`\nGotowe: ${Object.keys(clips).length} nagrań w public/voice.`);
 }
 
+/** Podgląd jednego pliku: przerwy i fragmenty mowy (do strojenia). */
+async function analyze(file: string) {
+  const { samples, sampleRate } = await decode(file);
+  const g = gaps(samples, sampleRate);
+  console.log(`Długość: ${(samples.length / sampleRate).toFixed(1)} s, mowa ${g.start.toFixed(2)}–${g.end.toFixed(2)} s, przerw ≥ 80 ms: ${g.gaps.length}`);
+  console.log('Przerwy (s): ' + g.gaps.map((x) => x.len.toFixed(2)).join(' '));
+}
+
 const cmd = args[0];
+const fail = (e: unknown) => {
+  console.error((e as Error).message);
+  process.exitCode = 1;
+};
 if (cmd === 'tekst') writeText();
-else if (cmd === 'potnij')
-  split().catch((e: unknown) => {
-    console.error((e as Error).message);
-    process.exitCode = 1;
-  });
-else console.log('Użycie: npm run voice:web -- tekst   |   npm run voice:web -- potnij --name Kinga');
+else if (cmd === 'potnij') split().catch(fail);
+else if (cmd === 'analizuj' && args[1]) analyze(args[1]).catch(fail);
+else console.log('Użycie: npm run voice:web -- tekst | potnij --name Rhea | analizuj "plik.mp3"');

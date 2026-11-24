@@ -57,7 +57,7 @@ export function spokenLabel(label: string): string {
     .replace(/(\d+)\s*min\b/g, (_, n: string) => durationWords(Number(n) * 60))
     .replace(/(\d+)\s*s\b/g, (_, n: string) => durationWords(Number(n)))
     .replace(/TEST/g, 'Test')
-    .replace(/:/g, ',');
+    .replace(/:\s*/g, ' ');
 }
 
 /** Liczby kadencji z opisu: „55–65” → [55, 65], „110+” → [110] i „więcej”. */
@@ -86,8 +86,6 @@ export const WORDS = {
   kadencja: 'Kadencja',
   'na-maksa': 'Na maksa!',
   'i-wiecej': 'i więcej',
-  start: 'Zaczynamy!',
-  koniec: 'Koniec treningu. Dobra robota!',
 } as const;
 
 /** Pauza między liczbami zakresu („dwieście dwadzieścia… dwieście pięćdziesiąt”). */

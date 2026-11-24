@@ -41,7 +41,7 @@ describe('nazwy odcinków', () => {
     expect(spokenLabel('1 min mocno')).toBe('minuta mocno');
     expect(spokenLabel('TEST 20 min')).toBe('Test dwadzieścia minut');
     expect(spokenLabel('VO₂max')).toBe('VO2 max');
-    expect(spokenLabel('Rozgrzewka: tempo')).toBe('Rozgrzewka, tempo');
+    expect(spokenLabel('Rozgrzewka: tempo')).toBe('Rozgrzewka tempo');
   });
 });
 
