@@ -3,50 +3,88 @@ import { href, startHref } from '../app/route';
 import { useSettings } from '../app/settings';
 import { Icon } from '../components/Icon';
 import { db } from '../data/db';
-import { useMorning, usePlanned, useSessions } from '../data/live';
 import { nowSuggestion, type Pick } from '../domain/planner';
-import { todayIso } from '../domain/season';
 import type { Equipment } from '../domain/types';
 import { startKind, workoutMeta } from '../domain/workouts';
 import { AddEntry } from './plan/AddEntry';
-import { DEFAULT_EQUIPMENT, EQUIPMENT_OPTIONS, familyOfWorkout, famStyle, minutesLabel, plannedItems, sessionItems, shortName } from './plan/common';
+import { dayLabel, EQUIPMENT_OPTIONS, familyOfWorkout, famStyle, minutesLabel, shortName } from './plan/common';
+import { nextDay, usePlanDays } from './plan/usePlanDays';
 import './plan/plan.css';
 
 const TIMES = [30, 45, 60, 90, 120];
 
-/** „Co teraz?”: czas i miejsce → jedna propozycja z uzasadnieniem + alternatywy. */
+/**
+ * Następny trening. Domyślnie dokładnie to, co pokazuje Plan (ten sam wspólny plan).
+ * Po wybraniu czasu, miejsca albo samopoczucia: propozycja na teraz, dopasowana do sytuacji.
+ */
 export function NowCard() {
   const { settings, phase } = useSettings();
-  const today = todayIso();
-  const sessions = useSessions();
-  const planned = usePlanned();
-  const morning = useMorning();
-  const [minutes, setMinutes] = useState(60);
-  const [equipment, setEquipment] = useState<Equipment[]>(settings.planner?.equipment ?? DEFAULT_EQUIPMENT);
+  const data = usePlanDays();
+  const [minutes, setMinutes] = useState<number | null>(null);
+  const [equipment, setEquipment] = useState<Equipment[] | null>(null);
   const [legsHeavy, setLegsHeavy] = useState(false);
   const [fasted, setFasted] = useState(false);
   const [chosen, setChosen] = useState<string | null>(null);
   const [logging, setLogging] = useState(false);
   const [rhr, setRhr] = useState('');
 
-  if (!sessions || !planned || !morning) return null;
+  if (!data) return null;
+  const { today, sessions, morning, done, ahead, days } = data;
+  const eq = equipment ?? data.equipment;
+  const custom = minutes !== null || equipment !== null || legsHeavy || fasted;
 
-  const items = [...sessionItems(sessions), ...plannedItems(planned, today)];
-  const plannedToday = plannedItems(planned, today).filter((p) => p.date === today);
-  const s = nowSuggestion(
-    { date: today, phase, items, equipment, minutes, fasted, legsHeavy, morning, rhrAlert: settings.rhrAlert, lightWeeks: settings.lightWeeks },
-    plannedToday,
-  );
-  const options: Pick[] = [s.pick, ...s.alternatives].filter((x): x is Pick => !!x);
-  const pick = options.find((o) => o.workoutId === chosen) ?? s.pick;
-  const meta = workoutMeta(pick?.workoutId);
-  const kind = pick ? startKind(pick.workoutId, phase) : 'log';
+  // Tryb planu: pierwszy dzień z czymś do zrobienia. Tryb „teraz”: propozycja na dziś.
+  const next = nextDay(days);
+  let when = today;
+  let pick: Pick | null = null;
+  let why = '';
+  let note: string | undefined;
+  let alternatives: Pick[] = [];
+  let inPlan = false;
+  if (custom) {
+    const s = nowSuggestion(
+      { date: today, phase, items: [...done, ...ahead], equipment: eq, minutes, fasted, legsHeavy, morning, rhrAlert: settings.rhrAlert, lightWeeks: settings.lightWeeks },
+      ahead.filter((p) => p.date === today),
+    );
+    pick = s.pick;
+    why = s.why;
+    note = s.note;
+    alternatives = s.alternatives;
+  } else if (next) {
+    when = next.date;
+    const p = next.planned[0];
+    if (p) {
+      inPlan = true;
+      pick = p.workoutId ? { workoutId: p.workoutId, slot: 'luz', minutes: workoutMeta(p.workoutId)?.minutes(data.phaseFor(next.date)) ?? null } : null;
+      why = p.note ?? 'W planie.';
+    } else if (next.suggestion) {
+      pick = next.suggestion.pick;
+      why = next.suggestion.why;
+      note = next.suggestion.note;
+      alternatives = next.suggestion.alternatives;
+    }
+  }
+
+  const options: Pick[] = [pick, ...alternatives].filter((x): x is Pick => !!x);
+  const shown = options.find((o) => o.workoutId === chosen) ?? pick;
+  const meta = workoutMeta(shown?.workoutId);
+  const kind = shown ? startKind(shown.workoutId, data.phaseFor(when)) : 'log';
   const doneToday = sessions.filter((x) => x.date === today && x.kind !== 'rest');
   const todayRhr = morning.find((m) => m.date === today)?.rhr;
+  const isToday = when === today;
+
+  const reset = () => {
+    setMinutes(null);
+    setEquipment(null);
+    setLegsHeavy(false);
+    setFasted(false);
+    setChosen(null);
+    setLogging(false);
+  };
 
   const toggleEq = (e: Equipment) => {
     setChosen(null);
-    setEquipment((eq) => (eq.includes(e) ? eq.filter((x) => x !== e) : [...eq, e]));
+    setEquipment(eq.includes(e) ? eq.filter((x) => x !== e) : [...eq, e]);
   };
 
   const saveRhr = async () => {
@@ -59,118 +97,63 @@ export function NowCard() {
 
   return (
     <section className="card now" aria-labelledby="now-h">
-      <h2 id="now-h">Co teraz?</h2>
+      <h2 id="now-h">{custom ? 'Co teraz?' : 'Następny trening'}</h2>
       {doneToday.length > 0 && (
         <p className="muted">
-          Dziś zrobione: <b>{doneToday.map((x) => shortName(x.workoutId) || x.title).join(', ')}</b>. Poniżej propozycja na kolejny trening.
+          Dziś zrobione: <b>{doneToday.map((x) => shortName(x.workoutId)).join(', ')}</b>.
         </p>
       )}
 
-      <div className="field">
-        <span className="label" id="now-time">
-          Ile masz czasu
-        </span>
-        <div className="chips" role="group" aria-labelledby="now-time">
-          {TIMES.map((t) => (
-            <button
-              key={t}
-              type="button"
-              className="chip"
-              aria-pressed={minutes === t}
-              onClick={() => {
-                setMinutes(t);
-                setChosen(null);
-              }}
-            >
-              {t === 120 ? '120+' : t}
-            </button>
-          ))}
-          <button
-            type="button"
-            className="chip chip-text"
-            aria-pressed={minutes === 600}
-            onClick={() => {
-              setMinutes(600);
-              setChosen(null);
-              if (!equipment.includes('gory')) setEquipment((eq) => [...eq, 'gory']);
-            }}
-          >
-            Dzień w górach
-          </button>
-        </div>
-      </div>
-
-      <div className="field">
-        <span className="label" id="now-eq">
-          Co masz pod ręką
-        </span>
-        <div className="chips" role="group" aria-labelledby="now-eq">
-          {EQUIPMENT_OPTIONS.map((o) => (
-            <button key={o.id} type="button" className="chip chip-text" aria-pressed={equipment.includes(o.id)} onClick={() => toggleEq(o.id)}>
-              {o.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <details className="now-more">
-        <summary>Samopoczucie</summary>
-        <label className="switch">
-          <input type="checkbox" checked={legsHeavy} onChange={(e) => setLegsHeavy(e.target.checked)} />
-          <span>Ciężkie nogi</span>
-        </label>
-        <label className="switch">
-          <input type="checkbox" checked={fasted} onChange={(e) => setFasted(e.target.checked)} />
-          <span>Na czczo</span>
-        </label>
-        <div className="field">
-          <label htmlFor="now-rhr">Tętno spoczynkowe rano{todayRhr ? ` (zapisane: ${todayRhr})` : ''}</label>
-          <div className="row">
-            <input id="now-rhr" className="input num now-rhr" inputMode="numeric" value={rhr} onChange={(e) => setRhr(e.target.value)} placeholder="np. 44" />
-            <button type="button" className="btn" onClick={() => void saveRhr()} disabled={!rhr}>
-              Zapisz
-            </button>
-          </div>
-          <span className="hint">Dwa dni z rzędu ≥ {settings.rhrAlert}: aplikacja proponuje tylko spokojne treningi.</span>
-        </div>
-      </details>
-
-      {pick && meta ? (
-        <div className="day-card now-pick" style={famStyle(familyOfWorkout(pick.workoutId))}>
+      {shown && meta ? (
+        <div className="day-card now-pick" style={famStyle(familyOfWorkout(shown.workoutId))}>
+          <p className="now-when">
+            {dayLabel(when, today)}
+            {inPlan && !chosen && <span className="tag">w planie</span>}
+            {custom && <span className="tag">dopasowane do sytuacji</span>}
+          </p>
           <div className="day-main">
             <b>{meta.name}</b>
-            {pick.minutes && <span className="muted num">{minutesLabel(pick.minutes)}</span>}
+            {shown.minutes && <span className="muted num">{minutesLabel(shown.minutes)}</span>}
           </div>
-          {meta.rxText(phase) && <p>{meta.rxText(phase)}</p>}
-          <p className="day-why">{chosen ? 'Wybrane z alternatyw.' : s.why}</p>
-          {!chosen && s.note && <p className="day-note">{s.note}</p>}
+          {meta.rxText(data.phaseFor(when)) && <p>{meta.rxText(data.phaseFor(when))}</p>}
+          <p className="day-why">{chosen ? 'Wybrane z alternatyw.' : why}</p>
+          {!chosen && note && <p className="day-note">{note}</p>}
           <div className="row">
             {kind !== 'log' ? (
-              <a className="btn btn-primary" href={startHref(pick.workoutId, kind)}>
+              <a className="btn btn-primary" href={startHref(shown.workoutId, kind)}>
                 <Icon name="play" filled />
                 {kind === 'timer' ? 'Start' : 'Ćwiczenia'}
               </a>
             ) : (
-              <button type="button" className="btn btn-primary" onClick={() => setLogging(true)}>
-                <Icon name="check" />
-                Zrobione
-              </button>
+              isToday && (
+                <button type="button" className="btn btn-primary" onClick={() => setLogging(true)}>
+                  <Icon name="check" />
+                  Zrobione
+                </button>
+              )
             )}
             {kind === 'log' && (
-              <a className="btn" href={href.catalog(pick.workoutId)}>
+              <a className="btn" href={href.catalog(shown.workoutId)}>
                 Opis
+              </a>
+            )}
+            {!custom && (
+              <a className="btn" href={href.plan()}>
+                <Icon name="calendar" />
+                Plan
               </a>
             )}
           </div>
         </div>
       ) : (
         <div className="day-card" style={famStyle('rest')}>
-          <b>Odpoczynek</b>
-          <p className="day-why">{s.why}</p>
+          <p className="now-when">{dayLabel(when, today)}</p>
+          <b>{inPlan ? 'Wolne' : 'Odpoczynek'}</b>
+          {why && <p className="day-why">{why}</p>}
         </div>
       )}
 
-      {logging && pick && <AddEntry key={pick.workoutId} date={today} initial={pick.workoutId} onDone={() => setLogging(false)} />}
+      {logging && shown && <AddEntry key={shown.workoutId} date={today} initial={shown.workoutId} onDone={() => setLogging(false)} />}
 
       {options.length > 1 && (
         <div className="field">
@@ -179,7 +162,7 @@ export function NowCard() {
           </span>
           <div className="swap" role="group" aria-labelledby="now-alt">
             {options
-              .filter((o) => o.workoutId !== pick?.workoutId)
+              .filter((o) => o.workoutId !== shown?.workoutId)
               .map((o) => (
                 <button
                   key={o.workoutId}
@@ -198,6 +181,80 @@ export function NowCard() {
           </div>
         </div>
       )}
+
+      <details className="now-more" open={custom || undefined}>
+        <summary>Dopasuj do dzisiejszej sytuacji</summary>
+        <div className="field">
+          <span className="label" id="now-time">
+            Ile masz czasu
+          </span>
+          <div className="chips" role="group" aria-labelledby="now-time">
+            {TIMES.map((t) => (
+              <button
+                key={t}
+                type="button"
+                className="chip"
+                aria-pressed={minutes === t}
+                onClick={() => {
+                  setMinutes(minutes === t ? null : t);
+                  setChosen(null);
+                }}
+              >
+                {t === 120 ? '120+' : t}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="chip chip-text"
+              aria-pressed={minutes === 600}
+              onClick={() => {
+                setMinutes(600);
+                setChosen(null);
+                if (!eq.includes('gory')) setEquipment([...eq, 'gory']);
+              }}
+            >
+              Dzień w górach
+            </button>
+          </div>
+        </div>
+
+        <div className="field">
+          <span className="label" id="now-eq">
+            Co masz pod ręką
+          </span>
+          <div className="chips" role="group" aria-labelledby="now-eq">
+            {EQUIPMENT_OPTIONS.map((o) => (
+              <button key={o.id} type="button" className="chip chip-text" aria-pressed={eq.includes(o.id)} onClick={() => toggleEq(o.id)}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <label className="switch">
+          <input type="checkbox" checked={legsHeavy} onChange={(e) => setLegsHeavy(e.target.checked)} />
+          <span>Ciężkie nogi</span>
+        </label>
+        <label className="switch">
+          <input type="checkbox" checked={fasted} onChange={(e) => setFasted(e.target.checked)} />
+          <span>Na czczo</span>
+        </label>
+        <div className="field">
+          <label htmlFor="now-rhr">Tętno spoczynkowe rano{todayRhr ? ` (zapisane: ${todayRhr})` : ''}</label>
+          <div className="row">
+            <input id="now-rhr" className="input num now-rhr" inputMode="numeric" value={rhr} onChange={(e) => setRhr(e.target.value)} placeholder="np. 44" />
+            <button type="button" className="btn" onClick={() => void saveRhr()} disabled={!rhr}>
+              Zapisz
+            </button>
+          </div>
+          <span className="hint">Dwa dni z rzędu ≥ {settings.rhrAlert}: aplikacja proponuje tylko spokojne treningi.</span>
+        </div>
+        {custom && (
+          <button type="button" className="btn" onClick={reset}>
+            Wróć do planu
+          </button>
+        )}
+      </details>
     </section>
   );
 }

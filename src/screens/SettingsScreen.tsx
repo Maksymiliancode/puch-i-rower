@@ -5,7 +5,7 @@ import { applyImport, db, exportAll, parseExport, planImport, type ImportPlan } 
 import { prettyDate } from '../domain/format';
 import { phaseForDate, todayIso } from '../domain/season';
 import type { FtpEntry, PhaseId, Settings } from '../domain/types';
-import { hasVoice, polishVoices, speak, useVoices, voiceLabel } from '../lib/speech';
+import { hasVoice, polishVoices, speak, useVoices, voiceLabels } from '../lib/speech';
 
 type NumKey = 'lthrBike' | 'lthrRun' | 'hrMax' | 'rhrAlert';
 const NUM_FIELDS: { key: NumKey; label: string; hint: string; min: number; max: number }[] = [
@@ -62,6 +62,7 @@ const RATES = [
 function VoiceSection() {
   const { settings, save } = useSettings();
   const voices = polishVoices(useVoices());
+  const labels = voiceLabels(voices);
   if (!hasVoice) return null;
   const uri = voices.some((v) => v.voiceURI === settings.timer.voiceUri) ? settings.timer.voiceUri : (voices[0]?.voiceURI ?? '');
   const rate = settings.timer.voiceRate ?? 1.05;
@@ -80,12 +81,15 @@ function VoiceSection() {
         <div className="field">
           <label htmlFor="voice">Który głos czyta zapowiedzi</label>
           <select id="voice" className="input" value={uri} onChange={(e) => set({ voiceUri: e.target.value })}>
-            {voices.map((v) => (
+            {voices.map((v, i) => (
               <option key={v.voiceURI} value={v.voiceURI}>
-                {voiceLabel(v)}
+                {labels[i]}
               </option>
             ))}
           </select>
+          <span className="hint">
+            Polskie głosy widoczne dla aplikacji: {voices.length}. Wybrany: <span className="voice-id">{uri}</span>
+          </span>
         </div>
       )}
       <div className="field">
@@ -111,7 +115,7 @@ function VoiceSection() {
         <ol className="steps">
           <li>Ustawienia → Dostępność → Treść mówiona → Głosy → Polski.</li>
           <li>Wybierz głos (np. Zosia) i pobierz wersję oznaczoną jako „Rozszerzony” albo „Premium”.</li>
-          <li>Zamknij aplikację Puch i Rower całkiem i otwórz ponownie. Nowy głos pojawi się na liście wyżej z dopiskiem o jakości.</li>
+          <li>Zamknij aplikację Puch i Rower całkiem (przesuń ją w górę w przełączniku aplikacji) i otwórz ponownie. Jeśli iPhone udostępnia ten głos przeglądarce, pojawi się wyżej z dopiskiem „Rozszerzony” albo „Premium”.</li>
         </ol>
         <p className="hint">Głosy systemowe działają bez internetu, także w górach. Głosy Siri zwykle nie są dostępne dla aplikacji z przeglądarki.</p>
       </details>

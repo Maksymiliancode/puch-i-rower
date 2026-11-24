@@ -3,7 +3,7 @@ import { prettyDate } from '../../domain/format';
 import type { Item } from '../../domain/planner';
 import { daysBetween } from '../../domain/season';
 import type { Equipment, Planned, Session } from '../../domain/types';
-import { familyOf, workoutMeta, type Family } from '../../domain/workouts';
+import { familyFor, workoutMeta, type Family } from '../../domain/workouts';
 
 export const DEFAULT_EQUIPMENT: Equipment[] = ['keiser_m3', 'silownia', 'schody_lub_bieznia'];
 
@@ -32,11 +32,7 @@ export const sessionItems = (sessions: Session[]): Item[] => sessions.map((s) =>
 export const plannedItems = (planned: Planned[], today: string): Item[] =>
   planned.filter((p) => p.status === 'planned' && p.date >= today).map((p) => ({ date: p.date, workoutId: p.workoutId, planned: true, id: p.id, note: p.note }));
 
-export function familyOfWorkout(id: string | null, kind?: Session['kind']): Family {
-  if (!id) return kind ? familyOf(kind, null) : 'rest';
-  const m = workoutMeta(id);
-  return m ? familyOf(m.kind, id) : familyOf(kind ?? 'other', id);
-}
+export const familyOfWorkout = (id: string | null, kind?: Session['kind']): Family => familyFor(id, kind);
 
 export const famStyle = (f: Family) => ({ '--fam': `var(--fam-${f})` }) as CSSProperties;
 

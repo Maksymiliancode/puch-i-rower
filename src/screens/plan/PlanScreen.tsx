@@ -3,37 +3,27 @@ import { href } from '../../app/route';
 import { useSettings } from '../../app/settings';
 import { Icon } from '../../components/Icon';
 import { db, deleteSession } from '../../data/db';
-import { useMorning, usePlanned, useSessions } from '../../data/live';
 import { prettyDate } from '../../domain/format';
-import { addDays, CATEGORY_LABEL, CORE_SLOTS, lightWeekFor, mondayOf, planDays, suggest, weekPlan, type Context, type Item } from '../../domain/planner';
-import { currentPhase, todayIso } from '../../domain/season';
+import { addDays, CATEGORY_LABEL, CORE_SLOTS, lightWeekFor, mondayOf, suggest, weekPlan, type Context, type Item } from '../../domain/planner';
+import { todayIso } from '../../domain/season';
 import type { Equipment, Planned, Session } from '../../domain/types';
 import { FAMILY_LABEL, workoutMeta, type Family } from '../../domain/workouts';
 import { AddEntry } from './AddEntry';
 import { DayTile } from './DayTile';
-import { DEFAULT_EQUIPMENT, EQUIPMENT_OPTIONS, familyOfWorkout, famStyle, plannedItems, sessionItems, shortName, weekdayName } from './common';
+import { EQUIPMENT_OPTIONS, familyOfWorkout, famStyle, shortName, weekdayName } from './common';
+import { SummaryCard } from './SummaryCard';
+import { usePlanDays } from './usePlanDays';
 import './plan.css';
-
-const DAYS_AHEAD = 7;
 
 export function PlanScreen({ focus }: { focus?: string }) {
   const { settings, save } = useSettings();
-  const today = todayIso();
-  const sessions = useSessions();
-  const planned = usePlanned();
-  const morning = useMorning();
-  const [selected, setSelected] = useState(focus ?? today);
-  const [month, setMonth] = useState((focus ?? today).slice(0, 7));
+  const data = usePlanDays();
+  const [selected, setSelected] = useState(focus ?? todayIso());
+  const [month, setMonth] = useState((focus ?? todayIso()).slice(0, 7));
   const [adding, setAdding] = useState(false);
-  const equipment = settings.planner?.equipment ?? DEFAULT_EQUIPMENT;
 
-  if (!sessions || !planned || !morning) return <main className="page" aria-busy="true" />;
-
-  const done = sessionItems(sessions);
-  const ahead = plannedItems(planned, today);
-  const phaseFor = (d: string) => currentPhase(settings.phases, d, settings.phaseOverride);
-  const base = { equipment, minutes: null, morning, rhrAlert: settings.rhrAlert, lightWeeks: settings.lightWeeks };
-  const days = planDays(base, { from: today, days: DAYS_AHEAD, done, planned: ahead, phaseFor });
+  if (!data) return <main className="page" aria-busy="true" />;
+  const { today, sessions, planned, done, ahead, equipment, base, phaseFor, days } = data;
 
   // Zamiana kafelka: propozycje dla dnia z pominięciem tego, co na nim jest teraz.
   const alternativesFor = (date: string) => {
@@ -108,6 +98,8 @@ export function PlanScreen({ focus }: { focus?: string }) {
         </div>
         <p className="hint">Bieg, mobilność i spacer są możliwe zawsze. Na dziś możesz to zmienić w karcie „Co teraz?” na ekranie Dziś.</p>
       </section>
+
+      <SummaryCard sessions={sessions} month={month} today={today} phases={settings.phases} phaseId={phaseFor(today).id} />
 
       <Calendar
         month={month}

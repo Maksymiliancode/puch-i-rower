@@ -143,6 +143,16 @@ export const FAMILY_LABEL: Record<Family, string> = {
   rest: 'Wolne',
 };
 
+/** Rodzaj wpisu: z treningu w katalogu, a gdy go nie ma, z pola `kind`. */
+export function familyFor(workoutId: string | null, kind?: SessionKind): Family {
+  if (!workoutId) return kind ? familyOf(kind, null) : 'rest';
+  const m = workoutMeta(workoutId);
+  return m ? familyOf(m.kind, workoutId) : familyOf(kind ?? 'other', workoutId);
+}
+
+/** Kolejność rodzajów w legendzie i podsumowaniu. */
+export const FAMILY_ORDER: Family[] = ['legs', 'upper', 'bike', 'run', 'uphill', 'easy', 'other'];
+
 export function familyOf(kind: SessionKind, workoutId?: string | null): Family {
   if (workoutId === 'r_hills') return 'uphill';
   switch (kind) {

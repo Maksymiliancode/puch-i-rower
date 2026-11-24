@@ -48,16 +48,19 @@ if (hasVoice) {
 
 /** Jakość głosu po nazwie (iOS/macOS dopisuje „Enhanced”/„Premium”, Chrome „Google”/„Natural”). */
 export function voiceQuality(v: Pick<SpeechSynthesisVoice, 'name' | 'voiceURI'>): 0 | 1 | 2 {
+  // iOS: voiceURI w stylu com.apple.voice.enhanced.pl-PL.Zosia (compact / enhanced / premium).
   const s = `${v.name} ${v.voiceURI}`.toLowerCase();
   if (/premium|natural|neural/.test(s)) return 2;
   if (/enhanced|rozszerz|google|online/.test(s)) return 1;
   return 0;
 }
 
-const QUALITY_LABEL = ['', ' · lepsza jakość', ' · najlepsza jakość'] as const;
+const QUALITY_LABEL = ['', ' · Rozszerzony', ' · Premium'] as const;
 
-export function voiceLabel(v: SpeechSynthesisVoice): string {
-  return `${v.name.replace(/\s*\((enhanced|premium|rozszerzony)\)/i, '')}${QUALITY_LABEL[voiceQuality(v)]}`;
+/** Etykiety na listę; te same nazwy (np. dwie „Zosie”) dostają numer, żeby dało się je odróżnić. */
+export function voiceLabels(list: SpeechSynthesisVoice[]): string[] {
+  const base = list.map((v) => `${v.name.replace(/\s*\((enhanced|premium|rozszerzony|compact)\)/i, '')}${QUALITY_LABEL[voiceQuality(v)]}`);
+  return base.map((b, i) => (base.filter((x) => x === b).length > 1 ? `${b} (wersja ${base.slice(0, i + 1).filter((x) => x === b).length})` : b));
 }
 
 /** Polskie głosy, najlepsze na górze. */

@@ -428,3 +428,23 @@ details summary {
   vertical-align: -4px;
   margin-right: 6px;
 }
+
+.voice-id {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.now-when {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-weight: 700;
+  font-family: var(--font-num);
+  font-size: 19px;
+}
+
+.now-more {
+  display: grid;
+  gap: 12px;
+}
