@@ -59,6 +59,9 @@ export function PlanScreen({ focus }: { focus?: string }) {
   const light = lightWeekFor(selected, settings.lightWeeks);
   const wkItems = [...done, ...ahead.filter((p) => p.date >= today)].filter((i) => i.date >= wkMon && i.date <= wkSun);
   const wp = weekPlan(wkItems, phaseFor(selected).id, !!light);
+  const core = wp.filledBy.slice(0, CORE_SLOTS);
+  const coreDone = core.filter((x) => x && !x.planned).length;
+  const corePlanned = core.filter((x) => x?.planned).length;
 
   return (
     <main className="page plan">
@@ -121,20 +124,53 @@ export function PlanScreen({ focus }: { focus?: string }) {
           Tydzień {prettyDate(wkMon)} – {prettyDate(wkSun)}
         </h2>
         {light && <p className="notice">Tydzień lżejszy {light.reason}: najwyżej 4 treningi, siła połową serii.</p>}
+        <p className="hint">
+          Tak wygląda idealny tydzień w tej fazie: rodzaje treningów od najważniejszego. Każdy zrobiony albo zaplanowany trening zajmuje jedno miejsce. „Do zrobienia” to miejsce, którego jeszcze nic nie wypełnia — nie
+          oznacza dnia wolnego.
+        </p>
         <p className="num week-core">
-          Najważniejsze trzy: <b>{wp.coreDone}</b> z {CORE_SLOTS}
+          Najważniejsze trzy: <b>{coreDone}</b> z {CORE_SLOTS} zrobione
+          {corePlanned > 0 && <span className="muted"> · {corePlanned} w planie</span>}
         </p>
         <ol className="slots">
           {wp.slots.map((s, i) => {
             const by = wp.filledBy[i];
+            const state = !by ? 'todo' : by.planned ? 'planned' : 'done';
             return (
-              <li key={i} className="slot" data-filled={by ? true : undefined} data-core={i < CORE_SLOTS || undefined}>
-                <span className="slot-cat">{CATEGORY_LABEL[s.c]}</span>
-                <span className="slot-by">{by ? `${shortName(by.workoutId)} · ${weekdayName(by.date)}${by.planned ? ' (plan)' : ''}` : 'wolne'}</span>
+              <li key={i} className="slot" data-state={state} data-core={i < CORE_SLOTS || undefined}>
+                <span className="slot-icon" aria-hidden="true">
+                  {state === 'done' && <Icon name="check" size={18} />}
+                  {state === 'planned' && <Icon name="calendar" size={18} />}
+                </span>
+                <span className="slot-cat">
+                  {CATEGORY_LABEL[s.c]}
+                  {i < CORE_SLOTS && <span className="visually-hidden"> (jeden z trzech najważniejszych)</span>}
+                </span>
+                <span className="slot-by">
+                  {by ? (
+                    <>
+                      <span className="slot-what">{shortName(by.workoutId)}</span>
+                      <span className="slot-when">
+                        {state === 'done' ? 'zrobione' : 'w planie'}, {weekdayName(by.date)}
+                      </span>
+                    </>
+                  ) : (
+                    'do zrobienia'
+                  )}
+                </span>
               </li>
             );
           })}
         </ol>
+        <ul className="slot-legend" aria-label="Legenda">
+          <li data-state="done">
+            <Icon name="check" size={16} /> zrobione
+          </li>
+          <li data-state="planned">
+            <Icon name="calendar" size={16} /> w planie
+          </li>
+          <li data-state="todo">do zrobienia</li>
+        </ul>
         {wp.extra.length > 0 && <p className="muted">Dodatkowo: {wp.extra.map((e) => shortName(e.workoutId)).join(', ')}.</p>}
       </section>
     </main>
