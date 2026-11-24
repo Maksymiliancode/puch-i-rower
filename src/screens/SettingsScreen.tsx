@@ -4,8 +4,11 @@ import { Icon } from '../components/Icon';
 import { applyImport, db, exportAll, parseExport, planImport, type ImportPlan } from '../data/db';
 import { prettyDate } from '../domain/format';
 import { phaseForDate, todayIso } from '../domain/season';
-import type { FtpEntry, PhaseId, Settings } from '../domain/types';
-import { hasVoice, polishVoices, speak, useVoices, voiceLabels } from '../lib/speech';
+import type { FtpEntry, PhaseId, Segment, Settings } from '../domain/types';
+import { segmentTarget } from '../domain/zones';
+import { unlockAudio } from '../lib/audio';
+import { announce, hasVoice, PACK_VOICE, polishVoices, useVoices, voiceLabels } from '../lib/speech';
+import { useVoicePack } from '../lib/voicePack';
 
 type NumKey = 'lthrBike' | 'lthrRun' | 'hrMax' | 'rhrAlert';
 const NUM_FIELDS: { key: NumKey; label: string; hint: string; min: number; max: number }[] = [
@@ -52,7 +55,8 @@ function NumberField({ label, hint, value, min, max, onCommit }: { label: string
   );
 }
 
-const VOICE_SAMPLE = 'Podjazd siłowy. 6 minut. 220 do 250 watów. Kadencja 55 do 65.';
+// Przykładowa zapowiedź do odsłuchu (odcinek z podjazdu siłowego).
+const SAMPLE_SEG: Segment = { sec: 360, pct_ftp: 82, label: 'Podjazd siłowy', cadence: '55–65' };
 const RATES = [
   { v: 0.9, label: 'Wolno' },
   { v: 1.05, label: 'Normalnie' },
@@ -62,25 +66,33 @@ const RATES = [
 function VoiceSection() {
   const { settings, save } = useSettings();
   const voices = polishVoices(useVoices());
+  const pack = useVoicePack();
   const labels = voiceLabels(voices);
-  if (!hasVoice) return null;
-  const uri = voices.some((v) => v.voiceURI === settings.timer.voiceUri) ? settings.timer.voiceUri : (voices[0]?.voiceURI ?? '');
+  if (!hasVoice && !pack) return null;
+  const saved = settings.timer.voiceUri;
+  const uri =
+    saved === PACK_VOICE && pack ? PACK_VOICE : voices.some((v) => v.voiceURI === saved) ? saved! : pack ? PACK_VOICE : (voices[0]?.voiceURI ?? '');
   const rate = settings.timer.voiceRate ?? 1.05;
+  const listen = (p: { voiceUri?: string; rate?: number }) => {
+    unlockAudio();
+    announce(SAMPLE_SEG, segmentTarget(SAMPLE_SEG, settings.ftpW, settings.lthrBike), p);
+  };
   const set = (patch: Partial<Settings['timer']>) => {
     const timer = { ...settings.timer, ...patch };
     void save({ timer });
-    speak(VOICE_SAMPLE, { voiceUri: timer.voiceUri, rate: timer.voiceRate });
+    listen({ voiceUri: timer.voiceUri ?? uri, rate: timer.voiceRate });
   };
 
   return (
     <section className="card" aria-labelledby="voice-h">
       <h2 id="voice-h">Głos</h2>
-      {voices.length === 0 ? (
-        <p>Ta przeglądarka nie ma polskiego głosu. Na iPhonie pobierz go w ustawieniach (opis niżej).</p>
+      {voices.length === 0 && !pack ? (
+        <p>Ta przeglądarka nie ma polskiego głosu.</p>
       ) : (
         <div className="field">
           <label htmlFor="voice">Który głos czyta zapowiedzi</label>
           <select id="voice" className="input" value={uri} onChange={(e) => set({ voiceUri: e.target.value })}>
+            {pack && <option value={PACK_VOICE}>Nagrany głos{pack.voiceName ? `: ${pack.voiceName}` : ''} (najbardziej naturalny)</option>}
             {voices.map((v, i) => (
               <option key={v.voiceURI} value={v.voiceURI}>
                 {labels[i]}
@@ -88,37 +100,39 @@ function VoiceSection() {
             ))}
           </select>
           <span className="hint">
-            Polskie głosy widoczne dla aplikacji: {voices.length}. Wybrany: <span className="voice-id">{uri}</span>
+            {uri === PACK_VOICE ? (
+              <>Nagrania wygenerowane w ElevenLabs (elevenlabs.io), działają bez internetu. Gdy jakiejś frazy brakuje, mówi głos systemowy.</>
+            ) : (
+              <>
+                Polskie głosy systemowe widoczne dla aplikacji: {voices.length}. Wybrany: <span className="voice-id">{uri}</span>
+              </>
+            )}
           </span>
         </div>
       )}
-      <div className="field">
-        <span className="label" id="rate-l">
-          Tempo mowy
-        </span>
-        <div className="chips" role="group" aria-labelledby="rate-l">
-          {RATES.map((r) => (
-            <button key={r.v} type="button" className="chip chip-text" aria-pressed={Math.abs(rate - r.v) < 0.01} onClick={() => set({ voiceRate: r.v })}>
-              {r.label}
-            </button>
-          ))}
+      {uri !== PACK_VOICE && (
+        <div className="field">
+          <span className="label" id="rate-l">
+            Tempo mowy
+          </span>
+          <div className="chips" role="group" aria-labelledby="rate-l">
+            {RATES.map((r) => (
+              <button key={r.v} type="button" className="chip chip-text" aria-pressed={Math.abs(rate - r.v) < 0.01} onClick={() => set({ voiceRate: r.v })}>
+                {r.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <div className="row">
-        <button type="button" className="btn" onClick={() => speak(VOICE_SAMPLE)}>
+        <button type="button" className="btn" onClick={() => listen({ voiceUri: uri, rate })}>
           <Icon name="voice" />
           Posłuchaj
         </button>
       </div>
-      <details>
-        <summary>Jak dodać ładniejszy głos na iPhonie</summary>
-        <ol className="steps">
-          <li>Ustawienia → Dostępność → Treść mówiona → Głosy → Polski.</li>
-          <li>Wybierz głos (np. Zosia) i pobierz wersję oznaczoną jako „Rozszerzony” albo „Premium”.</li>
-          <li>Zamknij aplikację Puch i Rower całkiem (przesuń ją w górę w przełączniku aplikacji) i otwórz ponownie. Jeśli iPhone udostępnia ten głos przeglądarce, pojawi się wyżej z dopiskiem „Rozszerzony” albo „Premium”.</li>
-        </ol>
-        <p className="hint">Głosy systemowe działają bez internetu, także w górach. Głosy Siri zwykle nie są dostępne dla aplikacji z przeglądarki.</p>
-      </details>
+      {!pack && (
+        <p className="hint">iPhone daje aplikacjom z przeglądarki tylko podstawową wersję głosów systemowych. Naturalniejszy głos to paczka nagrań (patrz README, sekcja „Nagrany głos”).</p>
+      )}
     </section>
   );
 }

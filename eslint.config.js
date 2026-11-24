@@ -14,4 +14,6 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
     },
   },
+  // Skrypty uruchamiane w Node (np. generowanie nagrań głosu).
+  { files: ['scripts/**/*.ts'], languageOptions: { globals: globals.node } },
 );

@@ -4,7 +4,9 @@
 import { useSyncExternalStore } from 'react';
 import { minutesText, secondsText } from '../domain/format';
 import type { Segment } from '../domain/types';
+import { announcementKeys } from '../domain/voicePhrases';
 import type { SegmentTarget } from '../domain/zones';
+import { hasVoicePack, preloadClips, sayKeys, stopClips } from './voicePack';
 
 export const hasVoice = (() => {
   try {
@@ -110,16 +112,46 @@ function spokenDuration(sec: number): string {
   return parts.join(' ');
 }
 
-export function announce(seg: Segment, t: SegmentTarget): void {
+/** Wartość voiceUri oznaczająca nagrany głos (paczka z public/voice). */
+export const PACK_VOICE = 'pack';
+
+/** Nagrany głos, gdy wybrany albo gdy nic nie wybrano, a paczka jest. */
+export const usesPack = (p: VoicePrefs = prefs) => p.voiceUri === PACK_VOICE || (p.voiceUri === undefined && hasVoicePack());
+
+function systemText(seg: Segment, t: SegmentTarget): string {
   const power =
     t.power.kind === 'max' ? 'Na maksa' : t.power.unit === 'W' ? `${t.power.lo} do ${t.power.hi} watów` : `${t.power.lo} do ${t.power.hi} procent FTP`;
-  speak(`${seg.label}. ${spokenDuration(seg.sec)}. ${power}. Kadencja ${spoken(seg.cadence)}.`);
+  return `${seg.label}. ${spokenDuration(seg.sec)}. ${power}. Kadencja ${spoken(seg.cadence)}.`;
 }
 
-export function stopSpeech(): void {
+/** Zapowiedź odcinka: nagranym głosem, a gdy czegoś brakuje — głosem systemowym. */
+export function announce(seg: Segment, t: SegmentTarget, override?: VoicePrefs): void {
+  const p = { ...prefs, ...override };
+  if (usesPack(p)) {
+    stopSystem();
+    void sayKeys(announcementKeys(seg, t.power)).then((ok) => {
+      if (!ok) speak(systemText(seg, t), { ...override, voiceUri: undefined });
+    });
+    return;
+  }
+  speak(systemText(seg, t), override);
+}
+
+/** Wczytuje z wyprzedzeniem nagrania wszystkich zapowiedzi treningu. */
+export function preloadAnnouncements(segments: Segment[], targetOf: (s: Segment) => SegmentTarget): void {
+  if (!usesPack()) return;
+  preloadClips(segments.flatMap((s) => announcementKeys(s, targetOf(s).power)));
+}
+
+function stopSystem(): void {
   try {
     if (hasVoice) speechSynthesis.cancel();
   } catch {
     /* ignoruj */
   }
+}
+
+export function stopSpeech(): void {
+  stopSystem();
+  stopClips();
 }

@@ -34,7 +34,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // voice/ = nagrany głos (mp3 + manifest), też offline.
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2,mp3}', 'voice/manifest.json'],
         navigateFallback: 'index.html',
       },
     }),

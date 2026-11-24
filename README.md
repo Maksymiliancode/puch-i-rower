@@ -43,6 +43,22 @@ Aplikacja otworzy się pod adresem `http://localhost:5173`. `npm run check` spra
 
 Na iPhonie pełne działanie (offline, ekran nie gaśnie, instalacja na ekranie początkowym) wymaga adresu `https://`, czyli wersji opublikowanej na GitHub Pages.
 
+## Nagrany głos (ElevenLabs)
+
+Zapowiedzi w timerze mogą czytać nagrania z naturalnego głosu zamiast głosu systemowego. Aplikacja skleja je z krótkich fraz (nazwa odcinka, czas, waty, kadencja), działają offline. Jeśli jakiejś frazy brakuje, mówi głos systemowy.
+
+1. Załóż konto na elevenlabs.io. W bibliotece głosów (Voice Library) wybierz polski głos i dodaj go do „My Voices”.
+2. W ustawieniach konta utwórz klucz API.
+3. W PowerShell w folderze projektu (klucz wklejasz tylko w tym oknie, nie jest nigdzie zapisywany):
+
+   ```powershell
+   $env:ELEVENLABS_API_KEY = Read-Host "Klucz ElevenLabs"
+   npm run voice -- --list-voices
+   npm run voice -- --voice ID_GŁOSU --name "Nazwa głosu"
+   ```
+
+Nagrania trafiają do `public/voice/`. Komenda `npm run voice -- --dry` pokazuje listę fraz i liczbę znaków bez łączenia z ElevenLabs. Po zmianie głosu uruchom generowanie z innym ID; stare nagrania zostaną zastąpione.
+
 ## Wymaga uzupełnienia
 
 - Data wyjazdu w Alpy (przyjęto 14.02.2027).

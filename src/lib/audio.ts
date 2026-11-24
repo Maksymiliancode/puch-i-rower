@@ -31,6 +31,9 @@ export function unlockAudio(): void {
   }
 }
 
+/** Wspólny kontekst dźwięku (sygnały i nagrany głos); null przed pierwszym Start. */
+export const audioContext = (): AudioContext | null => ctx;
+
 export function resumeAudio(): void {
   try {
     if (ctx && ctx.state !== 'running') void ctx.resume();

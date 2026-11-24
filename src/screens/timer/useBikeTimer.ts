@@ -4,7 +4,7 @@ import type { TimerState } from '../../domain/timer';
 import type { BikeRxKey, Segment } from '../../domain/types';
 import type { MetricId, SegmentTarget } from '../../domain/zones';
 import { resumeAudio, sounds, unlockAudio } from '../../lib/audio';
-import { announce, stopSpeech } from '../../lib/speech';
+import { announce, preloadAnnouncements, stopSpeech } from '../../lib/speech';
 import { loadTimer, saveTimer } from '../../lib/timerStore';
 import { lockScreen, releaseScreen } from '../../lib/wakeLock';
 
@@ -149,7 +149,10 @@ export function useBikeTimer(opts: {
     dispatch({ type: 'start', now: Date.now() });
     if (first) {
       if (sound) sounds.start();
-      if (voice) announce(segments[state.timer.idx], targetOf(segments[state.timer.idx]));
+      if (voice) {
+        preloadAnnouncements(segments, targetOf);
+        announce(segments[state.timer.idx], targetOf(segments[state.timer.idx]));
+      }
     }
     void lockScreen().then(setWakeOk);
   }, [state.timer.started, state.timer.idx, sound, voice, segments, targetOf]);
