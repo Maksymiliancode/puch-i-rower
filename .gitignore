@@ -3,3 +3,6 @@ dist
 dev-dist
 *.local
 .DS_Store
+
+# Tekst i pobrane MP3 do przygotowania nagranego głosu (wynik idzie do public/voice)
+voice-web/
