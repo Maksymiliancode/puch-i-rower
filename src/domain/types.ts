@@ -75,9 +75,14 @@ export interface Settings {
   phases: Phase[];
   events: SeasonEvent[];
   lightWeeks: { start: string; end: string; reason: string }[];
-  timer: { sound: boolean; voice: boolean; countdownBeeps: 3 };
+  timer: { sound: boolean; voice: boolean; countdownBeeps: 3; voiceUri?: string; voiceRate?: number };
   keiserGearHints: { zone: string; gear: number; cadence: number; watts: number; date: string }[];
+  /** Planer: co zwykle jest pod ręką (do układania kolejnych dni). */
+  planner?: { equipment: Equipment[] };
 }
+
+/** Sprzęt / miejsce z planner_rules.json → location_fit. */
+export type Equipment = 'keiser_m3' | 'silownia' | 'schody_lub_bieznia' | 'gory';
 
 export type SessionKind =
   | 'bike'

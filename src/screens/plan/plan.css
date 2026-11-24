@@ -1,0 +1,341 @@
+/* ---------- Plan: najbliższe dni ---------- */
+.days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.day {
+  display: grid;
+  gap: 8px;
+}
+
+.day-when {
+  font-weight: 700;
+  font-family: var(--font-num);
+  font-size: 20px;
+  color: var(--muted);
+}
+
+.day[data-today] .day-when {
+  color: var(--text);
+}
+
+.day-card {
+  --fam: var(--fam-other);
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px 12px 16px;
+  border-radius: var(--radius-m);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 8px solid var(--fam);
+}
+
+.day-card--done {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: color-mix(in srgb, var(--fam) 18%, var(--surface));
+}
+
+.day-card--done svg {
+  color: var(--text);
+}
+
+.day-card--suggest {
+  border-style: dashed solid dashed solid;
+  border-left-style: solid;
+}
+
+.day-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.day-main b {
+  font-size: 20px;
+}
+
+.day-why {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.day-note {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.day-card .btn {
+  min-height: 44px;
+  padding: 0 14px;
+}
+
+.swap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+/* kafelki rodzaju (zamiana, szybki wpis) */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.type-tile {
+  --fam: var(--fam-other);
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-height: 56px;
+  padding: 8px 12px 8px 14px;
+  text-align: left;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--fam);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.type-tile small {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.type-tile[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--fam) 30%, var(--surface));
+  border-color: var(--text);
+  border-left-color: var(--fam);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+
+.type-tile[style*='fam-rest'] {
+  border-left-style: dashed;
+  border-left-color: var(--line);
+}
+
+.add-entry {
+  display: grid;
+  gap: 14px;
+}
+
+/* ---------- kalendarz ---------- */
+.cal-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.cal-head h2 {
+  font-size: 26px;
+}
+
+.cal-head h2::first-letter {
+  text-transform: uppercase;
+}
+
+.cal-nav {
+  width: var(--tap);
+  padding: 0;
+}
+
+.cal-nav--next svg {
+  transform: scaleX(-1);
+}
+
+.cal-grid {
+  display: grid;
+  gap: 4px;
+}
+
+.cal-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.cal-wd {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.cal-day {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 6px 2px;
+  border-radius: var(--radius-s);
+  border: 1px solid transparent;
+  background: var(--surface-2);
+}
+
+.cal-day[data-out] {
+  background: transparent;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.cal-day[data-today] {
+  border-color: var(--text);
+}
+
+.cal-day[aria-selected='true'] {
+  background: var(--text);
+  color: var(--bg);
+  opacity: 1;
+}
+
+.cal-n {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cal-marks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+}
+
+.cal-marks i,
+.cal-legend i {
+  --fam: var(--fam-other);
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--fam);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 25%, transparent);
+}
+
+.cal-marks i[data-planned],
+.cal-legend i[data-planned] {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--fam);
+}
+
+.cal-day[aria-selected='true'] .cal-marks i[data-planned] {
+  box-shadow: inset 0 0 0 2px var(--bg);
+}
+
+.cal-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.cal-legend li {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* ---------- dzień w kalendarzu ---------- */
+.day-panel h2::first-letter {
+  text-transform: uppercase;
+}
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.entry {
+  --fam: var(--fam-other);
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  border-left: 6px solid var(--fam);
+  background: var(--surface-2);
+}
+
+.entry--plan {
+  border-left-style: dashed;
+}
+
+.entry p {
+  font-size: 15px;
+}
+
+.entry-note {
+  margin-top: 4px;
+}
+
+.entry-del {
+  flex: none;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+
+/* ---------- sloty tygodnia ---------- */
+.week-core {
+  font-size: 20px;
+}
+
+.week-core b {
+  font-size: 28px;
+}
+
+.slots {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.slot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  border: 1px dashed var(--line);
+}
+
+.slot[data-core] .slot-cat {
+  font-weight: 700;
+}
+
+.slot[data-filled] {
+  border-style: solid;
+  background: var(--surface-2);
+}
+
+.slot-by {
+  color: var(--muted);
+  text-align: right;
+}
+
+.slot[data-filled] .slot-by {
+  color: var(--text);
+  font-weight: 600;
+}

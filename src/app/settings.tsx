@@ -1,5 +1,6 @@
-import { createContext, use, useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, use, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { db } from '../data/db';
+import { setVoicePrefs } from '../lib/speech';
 import { currentPhase, todayIso } from '../domain/season';
 import type { Phase, Settings } from '../domain/types';
 
@@ -21,6 +22,9 @@ export function SettingsProvider({ initial, children }: { initial: Settings; chi
     setSettings(next);
     await db.settings.put(next);
   }, []);
+
+  // Ustawienia głosu trzymane w module mowy, żeby timer nie musiał ich przekazywać.
+  useEffect(() => setVoicePrefs({ voiceUri: settings.timer.voiceUri, rate: settings.timer.voiceRate }), [settings.timer.voiceUri, settings.timer.voiceRate]);
 
   const phase = useMemo(() => currentPhase(settings.phases, todayIso(), settings.phaseOverride), [settings.phases, settings.phaseOverride]);
 

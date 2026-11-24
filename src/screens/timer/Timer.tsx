@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { navigate, href } from '../../app/route';
 import { useSettings } from '../../app/settings';
 import { Icon } from '../../components/Icon';
-import { Profile } from '../../components/Profile';
+import { barFraction, Profile } from '../../components/Profile';
 import { bikeWorkout } from '../../domain/catalog';
 import { clock, duration, hrText, isLongRest, KEISER_REST_HINT, powerText, repText } from '../../domain/format';
 import type { BikeRxKey, Segment } from '../../domain/types';
@@ -11,6 +11,7 @@ import { unlockAudio } from '../../lib/audio';
 import { hasVoice } from '../../lib/speech';
 import { clearTimer } from '../../lib/timerStore';
 import { lockScreen } from '../../lib/wakeLock';
+import { cadenceRpm, Rider } from './Rider';
 import { TimerDone } from './TimerDone';
 import { useBikeTimer } from './useBikeTimer';
 import './timer.css';
@@ -24,6 +25,7 @@ function metricValue(m: MetricId, t: SegmentTarget): { value: string; unit: stri
 }
 
 const chars = (s: string) => Math.max(3, s.length);
+const PROFILE_H = 60;
 
 export function TimerScreen({ workoutId }: { workoutId: string }) {
   const { phase } = useSettings();
@@ -75,6 +77,7 @@ function TimerRun({ workoutId, rxKey }: { workoutId: string; rxKey: BikeRxKey })
   const secondary = (['power', 'hr', 'cadence'] as MetricId[]).filter((m) => m !== primary);
   const warn = t.running && v.segDurSec >= 10 && v.segLeftSec <= 3.05;
   const parts = segments.map((s, i) => ({ sec: timer.durations[i], pct: s.pct_ftp }));
+  const progress = v.totalSec ? Math.min(1, v.totalElapsedSec / v.totalSec) : 0;
 
   const close = () => {
     clearTimer();
@@ -149,6 +152,7 @@ function TimerRun({ workoutId, rxKey }: { workoutId: string; rxKey: BikeRxKey })
           <h1 className="t-title">{workout.name}</h1>
           <p className="t-total num">
             <b>{clock(v.totalElapsedSec)}</b> z {clock(v.totalSec)}
+            <span className="t-pct">{Math.floor(progress * 100)}%</span>
             <span className="t-left">zostało {clock(v.totalLeftSec)}</span>
           </p>
         </div>
@@ -159,9 +163,15 @@ function TimerRun({ workoutId, rxKey }: { workoutId: string; rxKey: BikeRxKey })
         )}
       </header>
 
-      <div className="t-profile">
-        <Profile parts={parts} height={60} className="t-profile-svg" />
-        <span className="t-mark" style={{ left: `${(v.totalElapsedSec / v.totalSec) * 100}%` }} />
+      <div className="t-profile" style={{ '--p': `${progress * 100}%`, '--bar': barFraction(seg.pct_ftp, PROFILE_H) } as CSSProperties}>
+        <div className="t-profile-bars">
+          <Profile parts={parts} height={PROFILE_H} className="t-profile-svg" />
+          <span className="t-ahead" />
+          <span className="t-mark" />
+        </div>
+        <span className="t-rider-wrap">
+          <Rider rpm={cadenceRpm(seg.cadence)} running={t.running} />
+        </span>
       </div>
 
       <section className="t-slab" aria-label="Bieżący odcinek">
@@ -235,6 +245,7 @@ function TimerRun({ workoutId, rxKey }: { workoutId: string; rxKey: BikeRxKey })
             onClick={() => void save({ timer: { ...settings.timer, voice: !settings.timer.voice } })}
           >
             <Icon name="voice" />
+            <span className="t-btn-label">Głos</span>
           </button>
         )}
         <button type="button" className="t-btn t-btn--sub t-btn--end" data-armed={endArmed || undefined} onClick={onEnd}>

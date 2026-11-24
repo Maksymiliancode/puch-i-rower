@@ -23,6 +23,16 @@
 
   --warn: #c62828;
 
+  /* Rodzaje treningów w kalendarzu i planie */
+  --fam-legs: #f2b51c;
+  --fam-upper: #b58cf0;
+  --fam-bike: var(--zone-z2);
+  --fam-run: var(--zone-tempo);
+  --fam-uphill: var(--zone-thr);
+  --fam-easy: var(--zone-z1);
+  --fam-other: #9aa8b4;
+  --fam-rest: transparent;
+
   --font-text: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-num: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
 

@@ -371,3 +371,60 @@ details summary {
   flex: 1 1 200px;
   font-weight: 600;
 }
+
+/* ---------- Treningi: skróty do działów ---------- */
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.group-title {
+  font-size: 21px;
+  color: var(--muted);
+}
+
+.wo-strength {
+  border-left: 6px solid var(--fam-legs);
+}
+
+.wo-other {
+  border-left: 6px solid var(--line);
+}
+
+/* ---------- Co teraz? ---------- */
+.now {
+  border: 2px solid var(--text);
+}
+
+.now h2 {
+  font-size: 28px;
+}
+
+.now-rhr {
+  width: 120px;
+}
+
+.now-more .switch {
+  min-height: 44px;
+}
+
+.quick svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+  margin-right: 6px;
+}

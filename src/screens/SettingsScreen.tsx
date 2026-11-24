@@ -5,6 +5,7 @@ import { applyImport, db, exportAll, parseExport, planImport, type ImportPlan } 
 import { prettyDate } from '../domain/format';
 import { phaseForDate, todayIso } from '../domain/season';
 import type { FtpEntry, PhaseId, Settings } from '../domain/types';
+import { hasVoice, polishVoices, speak, useVoices, voiceLabel } from '../lib/speech';
 
 type NumKey = 'lthrBike' | 'lthrRun' | 'hrMax' | 'rhrAlert';
 const NUM_FIELDS: { key: NumKey; label: string; hint: string; min: number; max: number }[] = [
@@ -48,6 +49,73 @@ function NumberField({ label, hint, value, min, max, onCommit }: { label: string
         {err ?? hint}
       </span>
     </div>
+  );
+}
+
+const VOICE_SAMPLE = 'Podjazd siłowy. 6 minut. 220 do 250 watów. Kadencja 55 do 65.';
+const RATES = [
+  { v: 0.9, label: 'Wolno' },
+  { v: 1.05, label: 'Normalnie' },
+  { v: 1.2, label: 'Szybko' },
+];
+
+function VoiceSection() {
+  const { settings, save } = useSettings();
+  const voices = polishVoices(useVoices());
+  if (!hasVoice) return null;
+  const uri = voices.some((v) => v.voiceURI === settings.timer.voiceUri) ? settings.timer.voiceUri : (voices[0]?.voiceURI ?? '');
+  const rate = settings.timer.voiceRate ?? 1.05;
+  const set = (patch: Partial<Settings['timer']>) => {
+    const timer = { ...settings.timer, ...patch };
+    void save({ timer });
+    speak(VOICE_SAMPLE, { voiceUri: timer.voiceUri, rate: timer.voiceRate });
+  };
+
+  return (
+    <section className="card" aria-labelledby="voice-h">
+      <h2 id="voice-h">Głos</h2>
+      {voices.length === 0 ? (
+        <p>Ta przeglądarka nie ma polskiego głosu. Na iPhonie pobierz go w ustawieniach (opis niżej).</p>
+      ) : (
+        <div className="field">
+          <label htmlFor="voice">Który głos czyta zapowiedzi</label>
+          <select id="voice" className="input" value={uri} onChange={(e) => set({ voiceUri: e.target.value })}>
+            {voices.map((v) => (
+              <option key={v.voiceURI} value={v.voiceURI}>
+                {voiceLabel(v)}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+      <div className="field">
+        <span className="label" id="rate-l">
+          Tempo mowy
+        </span>
+        <div className="chips" role="group" aria-labelledby="rate-l">
+          {RATES.map((r) => (
+            <button key={r.v} type="button" className="chip chip-text" aria-pressed={Math.abs(rate - r.v) < 0.01} onClick={() => set({ voiceRate: r.v })}>
+              {r.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="row">
+        <button type="button" className="btn" onClick={() => speak(VOICE_SAMPLE)}>
+          <Icon name="voice" />
+          Posłuchaj
+        </button>
+      </div>
+      <details>
+        <summary>Jak dodać ładniejszy głos na iPhonie</summary>
+        <ol className="steps">
+          <li>Ustawienia → Dostępność → Treść mówiona → Głosy → Polski.</li>
+          <li>Wybierz głos (np. Zosia) i pobierz wersję oznaczoną jako „Rozszerzony” albo „Premium”.</li>
+          <li>Zamknij aplikację Puch i Rower całkiem i otwórz ponownie. Nowy głos pojawi się na liście wyżej z dopiskiem o jakości.</li>
+        </ol>
+        <p className="hint">Głosy systemowe działają bez internetu, także w górach. Głosy Siri zwykle nie są dostępne dla aplikacji z przeglądarki.</p>
+      </details>
+    </section>
   );
 }
 
@@ -247,6 +315,8 @@ export function SettingsScreen() {
         </label>
         <p className="hint">Jeśli nie słychać sygnałów, sprawdź głośność i przełącznik wyciszenia z boku iPhone’a.</p>
       </section>
+
+      <VoiceSection />
 
       <DataSection />
       <p className="muted version">Puch i Rower · wersja {__APP_VERSION__}</p>

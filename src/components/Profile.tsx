@@ -11,6 +11,11 @@ interface Props {
 const MAX_PCT = 160;
 const TOP = 6;
 
+/** Wysokość słupka jako ułamek wysokości wykresu (rowerzysta w timerze jedzie po wierzchu słupków). */
+export function barFraction(pct: number, height: number): number {
+  return Math.max(5, (Math.min(pct, MAX_PCT) / MAX_PCT) * (height - TOP)) / height;
+}
+
 /** Przebieg treningu: słupki w kolorach stref, przerywana linia = FTP. */
 export const Profile = memo(function Profile({ parts, height = 84, className }: Props) {
   const total = parts.reduce((a, p) => a + p.sec, 0) || 1;

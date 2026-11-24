@@ -1,0 +1,290 @@
+/* ---------- Nogi na puch ---------- */
+.strength {
+  padding-bottom: calc(180px + env(safe-area-inset-bottom));
+}
+
+.seg-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.seg-switch a {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border-radius: var(--radius-s);
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.seg-switch a[aria-current='page'] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgb(14 26 36 / 0.12);
+}
+
+.st-progress {
+  font-size: 22px;
+}
+
+.st-progress b {
+  font-size: 30px;
+}
+
+.st-saved {
+  border: 2px solid var(--zone-tempo);
+}
+
+.st-legend {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.st-legend i {
+  flex: none;
+  width: 26px;
+  height: 6px;
+  border-radius: 3px;
+  background: #e2a400;
+}
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.checklist label {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.checklist input {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--text);
+}
+
+.checklist input:checked + span {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* karta ćwiczenia */
+.ex {
+  scroll-margin-top: 12px;
+}
+
+.ex[data-done] {
+  border-color: var(--zone-tempo);
+}
+
+.ex-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ex-head h2 {
+  font-size: 26px;
+  flex: 1;
+}
+
+.ex-num {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ex-ok {
+  color: var(--zone-tempo);
+}
+
+.ex-body {
+  display: grid;
+  grid-template-columns: minmax(130px, 42%) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+@media (min-width: 620px) {
+  .ex-body {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+}
+
+.ex-body > :only-child {
+  grid-column: 1 / -1;
+}
+
+.ex-rx {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 10px;
+  margin: 0 0 8px;
+}
+
+.ex-rx dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ex-rx dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.ex-why {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.ex-prev {
+  font-size: 15px;
+}
+
+/* serie */
+.sets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.set {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.set-n {
+  flex: none;
+  width: 22px;
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.set-field {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.set-field .input {
+  width: 74px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.set-check {
+  margin-left: auto;
+  flex: none;
+  width: var(--tap);
+  height: var(--tap);
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-s);
+  border: 2px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.set-check[aria-pressed='true'] {
+  background: var(--zone-tempo);
+  border-color: var(--zone-tempo);
+  color: var(--ink);
+}
+
+.set[data-done] .input {
+  background: var(--surface-2);
+}
+
+/* przerwa */
+.rest-bar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 16px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  background: var(--night);
+  color: var(--snow);
+  box-shadow: 0 10px 30px rgb(14 26 36 / 0.35);
+  overflow: hidden;
+  z-index: 15;
+}
+
+.rest-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--night-3);
+  transform-origin: left center;
+  transition: transform 250ms linear;
+}
+
+.rest-bar > :not(.rest-fill) {
+  position: relative;
+}
+
+.rest-label {
+  font-weight: 600;
+  color: var(--frost-text);
+}
+
+.rest-time {
+  font-size: 40px;
+  line-height: 1;
+  margin-right: auto;
+}
+
+.rest-bar .btn {
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--night-2);
+  border-color: var(--night-line);
+  color: var(--snow);
+}
+
+.rest-bar[data-over] {
+  background: var(--zone-tempo);
+  color: var(--ink);
+}
+
+.rest-bar[data-over] .rest-label {
+  color: var(--ink);
+}
+
+.rest-bar[data-over] .rest-fill {
+  display: none;
+}

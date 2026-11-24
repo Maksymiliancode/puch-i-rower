@@ -1,0 +1,116 @@
+/* Ludziki ćwiczeń: kolory z motywu aplikacji; żółta noga = ta, która pracuje najmocniej. */
+.fig {
+  margin: 0;
+  --fig-ink: var(--text);
+  --fig-far: color-mix(in srgb, var(--text) 45%, var(--surface-2));
+  --fig-hl: #e2a400;
+  --fig-prop: #2d6a9f;
+  --fig-box: color-mix(in srgb, var(--text) 18%, var(--surface-2));
+  --fig-bg: var(--surface-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .fig {
+    --fig-hl: #f2c640;
+    --fig-prop: #7db2e0;
+  }
+}
+
+.fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--fig-bg);
+  border-radius: var(--radius-m);
+}
+
+.fig .limb {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fig .arm {
+  stroke-width: 6;
+}
+
+.fig .ft {
+  stroke-width: 6;
+}
+
+.fig .nr {
+  stroke: var(--fig-ink);
+}
+
+.fig .fr {
+  stroke: var(--fig-far);
+}
+
+.fig .hl {
+  stroke: var(--fig-hl);
+}
+
+.fig .torso {
+  fill: none;
+  stroke: var(--fig-ink);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.fig .head {
+  fill: var(--fig-ink);
+}
+
+.fig .ground {
+  stroke: var(--line);
+  stroke-width: 2;
+}
+
+.fig .plate,
+.fig .db,
+.fig .strap {
+  fill: var(--fig-prop);
+}
+
+.fig .hub {
+  fill: var(--fig-bg);
+}
+
+.fig .box {
+  fill: var(--fig-box);
+}
+
+.fig .shadow {
+  fill: color-mix(in srgb, var(--text) 10%, var(--fig-bg));
+}
+
+.fig .board {
+  fill: none;
+  stroke: var(--fig-prop);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.fig-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  min-height: 36px;
+}
+
+.fig-now {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.fig-play {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-s);
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+}

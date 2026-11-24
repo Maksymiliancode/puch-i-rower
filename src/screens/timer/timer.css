@@ -24,7 +24,7 @@
 /* ---------- pion ---------- */
 .timer {
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto 44px minmax(0, 1fr) minmax(0, 1.05fr) auto;
+  grid-template-rows: auto 92px minmax(0, 1fr) minmax(0, 1.05fr) auto;
   grid-template-areas: 'top' 'profile' 'slab' 'metrics' 'controls';
 }
 
@@ -102,32 +102,120 @@
   color: var(--snow);
 }
 
-/* ---------- mini przebieg ---------- */
+.t-pct {
+  margin-left: 12px;
+  color: var(--snow);
+  font-weight: 600;
+}
+
+/* ---------- przebieg z rowerzystą ----------
+   Przejechana część w pełnym kolorze, reszta przygaszona. Rowerzysta jedzie po
+   wierzchu słupka bieżącego odcinka (--bar = wysokość słupka jako ułamek). */
 .t-profile {
+  --rider-h: 30px;
   grid-area: profile;
   position: relative;
   min-height: 0;
   color: var(--snow);
   align-self: stretch;
+  padding-top: var(--rider-h);
+}
+
+.t-profile-bars {
+  position: relative;
+  height: 100%;
 }
 
 .t-profile-svg {
   display: block;
   width: 100%;
   height: 100%;
-  opacity: 0.9;
+}
+
+.t-ahead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--p);
+  right: 0;
+  background: color-mix(in srgb, var(--night) 62%, transparent);
+  transition: left 200ms linear;
 }
 
 .t-mark {
   position: absolute;
-  top: -3px;
+  top: -4px;
   bottom: -3px;
+  left: var(--p);
   width: 3px;
   margin-left: -1.5px;
   background: var(--snow);
   border-radius: 2px;
   box-shadow: 0 0 0 2px var(--night);
   transition: left 200ms linear;
+}
+
+.t-rider-wrap {
+  position: absolute;
+  left: clamp(20px, var(--p), calc(100% - 20px));
+  bottom: calc(var(--bar) * (100% - var(--rider-h)) - 3px);
+  width: 40px;
+  height: var(--rider-h);
+  transform: translateX(-50%);
+  transition:
+    left 200ms linear,
+    bottom 400ms ease;
+  pointer-events: none;
+}
+
+.t-rider {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 2px var(--night)) drop-shadow(0 0 1px var(--night));
+}
+
+.r-wheel {
+  stroke: var(--snow);
+  stroke-width: 2;
+}
+
+.r-spoke {
+  stroke: var(--snow);
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+
+.r-frame {
+  stroke: var(--snow);
+  stroke-width: 1.8;
+}
+
+.r-body {
+  stroke: var(--zc);
+  stroke-width: 4.4;
+}
+
+.r-arm {
+  stroke: var(--snow);
+  stroke-width: 2;
+}
+
+.r-head {
+  fill: var(--snow);
+}
+
+.r-leg {
+  stroke: var(--snow);
+  stroke-width: 2.8;
+}
+
+.r-far {
+  stroke: var(--frost-text);
 }
 
 /* ---------- blok odcinka (kolor strefy) ---------- */
@@ -345,6 +433,15 @@ button.t-tile:active {
   transition: background-color 120ms ease, transform 80ms ease;
 }
 
+.t-btn svg {
+  flex: none;
+}
+
+/* Gdy jest ostrzeżenie o ekranie, „zostało” chowa się, żeby nic na siebie nie nachodziło. */
+.t-top:has(.t-badge) .t-left {
+  display: none;
+}
+
 .t-btn:hover {
   background: var(--night-3);
 }
@@ -401,18 +498,28 @@ button.t-tile:active {
   .t-controls > .t-btn--end {
     grid-column: span 4;
   }
+
+  .t-controls > .t-btn--sub svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+
+  .t-controls > .t-btn--sub {
+    gap: 3px;
+  }
 }
 
 /* poziom: jeden rząd, Start najszerszy */
 @media (orientation: landscape) {
   .t-controls {
     grid-auto-rows: 54px;
-    grid-template-columns: 1fr 2.4fr 1fr 0.9fr 0.9fr 0.65fr 0.65fr 1.1fr;
+    grid-template-columns: 1fr 2.4fr 1fr 0.9fr 0.9fr 0.65fr 0.9fr 1.1fr;
   }
 
   .t-profile {
     align-self: center;
-    height: 44px;
+    height: 88px;
   }
 
   .t-seg {
@@ -428,6 +535,11 @@ button.t-tile:active {
 
   .t-zone {
     display: none;
+  }
+
+  .t-profile {
+    height: 80px;
+    --rider-h: 28px;
   }
 
   .t-controls {
@@ -556,3 +668,8 @@ button.t-tile:active {
   font-weight: 600;
   color: var(--zone-tempo);
 }
+
+.t-btn-label {
+  font-size: 15px;
+}
+

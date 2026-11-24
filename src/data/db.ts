@@ -137,3 +137,25 @@ export async function applyImport(
     if (opts.replaceSettings && plan.settings) await d.settings.put({ ...plan.settings, id: 'main' });
   });
 }
+
+/** Zapis treningu do dziennika; zaplanowany na ten dzień ten sam trening oznacza jako zrobiony. */
+export async function saveSession(session: Session, d: AppDb = db): Promise<void> {
+  await d.transaction('rw', [d.sessions, d.planned], async () => {
+    await d.sessions.put(session);
+    const planned = await d.planned
+      .where('date')
+      .equals(session.date)
+      .filter((p) => p.status === 'planned' && p.workoutId === session.workoutId)
+      .first();
+    if (planned) await d.planned.update(planned.id, { status: 'done', sessionId: session.id });
+  });
+}
+
+/** Usunięcie wpisu (wywoływać tylko po potwierdzeniu użytkownika). Plan wraca do „zaplanowany”. */
+export async function deleteSession(id: string, d: AppDb = db): Promise<void> {
+  await d.transaction('rw', [d.sessions, d.planned], async () => {
+    await d.sessions.delete(id);
+    const linked = await d.planned.filter((p) => p.sessionId === id).toArray();
+    for (const p of linked) await d.planned.update(p.id, { status: 'planned', sessionId: undefined });
+  });
+}
