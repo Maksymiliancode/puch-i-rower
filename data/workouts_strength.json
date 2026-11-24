@@ -1,0 +1,326 @@
+{
+  "_opis": "Program 'Nogi na puch' (splitboard / skitury). rx f1/f2/f3 → fazy P1/P2/P3 (P4, P5 używają f3, do potwierdzenia). Animacje ludzików SVG są w reference/nogi-na-puch.html (obiekt FIG) – można je przenieść 1:1.",
+  "full_session": {
+    "id": "s_puch",
+    "name": "Nogi na puch – pełny trening",
+    "duration_min": 70,
+    "warmup": {
+      "min": 10,
+      "steps": [
+        "5 minut rower lub orbitrek, spokojnie.",
+        "Biodra 90/90 i kolano do ściany dla kostek, po 5 na stronę.",
+        "10 przysiadów bez obciążenia i 10 wykroków z rotacją tułowia.",
+        "Pierwsze ćwiczenie siłowe zacznij od 1–2 lekkich serii."
+      ]
+    },
+    "note_highlight": "Żółta noga na animacji to noga, która pracuje najmocniej. W pozycji puchowej to tylna noga na desce.",
+    "exercises": [
+      {
+        "order": 1,
+        "id": "skater",
+        "name": "Skoki łyżwiarskie",
+        "why": "Moc i lądowanie na jednej nodze. To samo robisz przy amortyzowaniu dropu i szybkiej zmianie krawędzi. Robisz je na początku, póki nogi są świeże.",
+        "cues": [
+          "Ląduj miękko na śródstopiu, kolano nad stopą, nie do środka.",
+          "Zatrzymaj lądowanie, zanim odbijesz się w drugą stronę.",
+          "Wolna noga za nogą podporową, nie dotyka podłogi."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "2 × 5 na stronę",
+            "tempo": "nisko, lądowanie z zatrzymaniem 2 s",
+            "rest": "60 s"
+          },
+          "f2": {
+            "sets_reps": "4 × 6 na stronę",
+            "tempo": "daleko i dynamicznie, lądowanie z zatrzymaniem",
+            "rest": "90 s"
+          },
+          "f3": {
+            "sets_reps": "3 × 5 na stronę",
+            "tempo": "dynamicznie, lądowanie z zatrzymaniem",
+            "rest": "60–90 s"
+          }
+        },
+        "animation_key": "skater"
+      },
+      {
+        "order": 2,
+        "id": "squat",
+        "name": "Przysiad ze sztangą",
+        "why": "Podstawa siły ud i bioder. Na desce trzymasz to ugięcie przez cały zjazd.",
+        "cues": [
+          "Schodź przynajmniej do uda równoległego z podłogą.",
+          "Kolana w linii palców, pięty na ziemi.",
+          "Napnij brzuch przed każdym powtórzeniem."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 8–10",
+            "tempo": "3 s w dół, 1 s w górę",
+            "rest": "2 min"
+          },
+          "f2": {
+            "sets_reps": "4 × 4–6, ciężko",
+            "tempo": "2 s w dół, mocno w górę",
+            "rest": "3 min"
+          },
+          "f3": {
+            "sets_reps": "3 × 5",
+            "tempo": "2 s w dół, mocno w górę",
+            "rest": "2–3 min"
+          }
+        },
+        "animation_key": "squat"
+      },
+      {
+        "order": 3,
+        "id": "rdl",
+        "name": "Martwy ciąg rumuński",
+        "why": "Tył uda i pośladki. Stabilizują kolano i trzymają cię, gdy deska grzęźnie w puchu.",
+        "cues": [
+          "Ruch zaczyna się od bioder w tył, kolana lekko ugięte i nieruchome.",
+          "Gryf blisko nóg przez cały czas.",
+          "Schodź tak nisko, jak pozwala prosty kręgosłup."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 8–10",
+            "tempo": "3 s w dół",
+            "rest": "2 min"
+          },
+          "f2": {
+            "sets_reps": "4 × 6",
+            "tempo": "3 s w dół",
+            "rest": "2–3 min"
+          },
+          "f3": {
+            "sets_reps": "3 × 6",
+            "tempo": "3 s w dół",
+            "rest": "2 min"
+          }
+        },
+        "animation_key": "rdl"
+      },
+      {
+        "order": 4,
+        "id": "bulgarian",
+        "name": "Przysiad bułgarski",
+        "why": "Każda noga osobno. Wyrównuje różnice między nogami i przygotowuje do pracy na jednej.",
+        "cues": [
+          "Tylna stopa na ławce, ciężar na przedniej nodze.",
+          "Tylne kolano schodzi prawie do podłogi.",
+          "Dodatkowa seria dla nogi, która na desce jest tylna."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 8 na nogę + 1 seria tylną nogą",
+            "tempo": "2–3 s w dół",
+            "rest": "90 s"
+          },
+          "f2": {
+            "sets_reps": "3 × 6 na nogę + 1 seria tylną nogą, ciężej",
+            "tempo": "2 s w dół, mocno w górę",
+            "rest": "2 min"
+          },
+          "f3": {
+            "sets_reps": "2 × 6 na nogę + 1 seria tylną nogą",
+            "tempo": "2 s w dół",
+            "rest": "90 s"
+          }
+        },
+        "animation_key": "bulgarian"
+      },
+      {
+        "order": 5,
+        "id": "stepup",
+        "name": "Wejście na skrzynię",
+        "why": "Siła do podchodzenia stromymi zakosami i wychodzenia z głębokiego śniegu.",
+        "cues": [
+          "Skrzynia na wysokość kolana lub trochę wyżej.",
+          "Wchodzisz siłą nogi na skrzyni, nie odbijasz się tylną.",
+          "W górze unieś wysoko kolano drugiej nogi."
+        ],
+        "extra": "Ćwiczenia 5 i 6 rób na zmianę, jedno po drugim, a przerwę bierz po obu.",
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 10 na nogę",
+            "tempo": "1 s w górę, 2 s w dół",
+            "rest": "w parze z ćwiczeniem 6"
+          },
+          "f2": {
+            "sets_reps": "3 × 6 na nogę, z hantlami",
+            "tempo": "dynamicznie w górę, 2 s w dół",
+            "rest": "w parze z ćwiczeniem 6"
+          },
+          "f3": {
+            "sets_reps": "2 × 8 na nogę",
+            "tempo": "dynamicznie w górę, 2 s w dół",
+            "rest": "w parze z ćwiczeniem 6"
+          }
+        },
+        "animation_key": "stepup"
+      },
+      {
+        "order": 6,
+        "id": "stepdown",
+        "name": "Zejście ekscentryczne ze skrzyni",
+        "why": "Kontrola kolana przy hamowaniu. Robisz to przy każdym skręcie i lądowaniu.",
+        "cues": [
+          "Stoisz na jednej nodze na skrzyni, druga wisi z przodu.",
+          "Opuszczaj się 4 sekundy, aż pięta wolnej nogi dotknie podłogi.",
+          "Kolano nad palcami, biodro nie opada w bok."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 6 na nogę",
+            "tempo": "4 s w dół",
+            "rest": "60–90 s po parze"
+          },
+          "f2": {
+            "sets_reps": "3 × 8 na nogę, z hantlami",
+            "tempo": "4 s w dół",
+            "rest": "90 s po parze"
+          },
+          "f3": {
+            "sets_reps": "2 × 6 na nogę",
+            "tempo": "4 s w dół",
+            "rest": "60–90 s po parze"
+          }
+        },
+        "animation_key": "stepdown"
+      },
+      {
+        "order": 7,
+        "id": "nordic",
+        "name": "Nordic curl",
+        "why": "Najlepsza ochrona tylnej strony uda przed naderwaniem przy upadkach i gwałtownym hamowaniu.",
+        "cues": [
+          "Pięty zablokowane pod drążkiem, maszyną albo przez partnera.",
+          "Ciało w jednej linii od kolan do głowy, nie zginaj bioder.",
+          "Opadaj jak najwolniej, złap się rękami i odepchnij do góry."
+        ],
+        "extra": "Za trudne na start? Uginanie nóg na maszynie 3 × 10 i co tydzień spróbuj 2–3 powtórzeń nordic.",
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 4–5",
+            "tempo": "opadanie 3–4 s",
+            "rest": "2 min"
+          },
+          "f2": {
+            "sets_reps": "3 × 5–6",
+            "tempo": "opadanie 4 s",
+            "rest": "2 min"
+          },
+          "f3": {
+            "sets_reps": "2 × 5",
+            "tempo": "opadanie 4 s",
+            "rest": "2 min"
+          }
+        },
+        "animation_key": "nordic"
+      },
+      {
+        "order": 8,
+        "id": "stance",
+        "name": "Pozycja puchowa",
+        "why": "To, co paliło cię w zeszłym sezonie: długie ugięcie z ciężarem przesuniętym na tylną nogę. Trzymanie pozycji buduje wytrzymałość ud na długie zjazdy.",
+        "cues": [
+          "Rozkrok jak na desce, 60–70% ciężaru na tylnej nodze.",
+          "Kolana ugięte, tułów prosto, ręce luźno przed sobą.",
+          "Co kilka sekund małe sprężynowanie, jakbyś łapał nierówności."
+        ],
+        "extra": null,
+        "rx": {
+          "f1": {
+            "sets_reps": "3 × 60 s",
+            "tempo": "trzymanie z lekkim sprężynowaniem",
+            "rest": "60 s"
+          },
+          "f2": {
+            "sets_reps": "3 × 2–3 min, możesz trzymać hantle",
+            "tempo": "trzymanie ze sprężynowaniem",
+            "rest": "90 s"
+          },
+          "f3": {
+            "sets_reps": "2 × 2 min",
+            "tempo": "trzymanie ze sprężynowaniem",
+            "rest": "60 s"
+          }
+        },
+        "animation_key": "stance"
+      }
+    ],
+    "pairing": "Ćwiczenia 5 (wejście na skrzynię) i 6 (zejście ekscentryczne) na zmianę, przerwa po obu.",
+    "core": {
+      "min": "6–8",
+      "items": [
+        "Pallof press na wyciągu lub z gumą: 3 × 10 na stronę. Wyciąg ciągnie z boku, nie dajesz się obrócić.",
+        "Rąbanie na wyciągu z góry na dół po skosie: 3 × 8 na stronę.",
+        "Deska boczna: 3 × 30–45 s na stronę."
+      ]
+    },
+    "rules": [
+      "Ciężar tak, żeby po serii zostawało 1–3 powtórzenia w zapasie, zgodnie z fazą (rir w season.json).",
+      "Technika i tempo ważniejsze niż kilogramy.",
+      "Tydzień lżejszy: połowa serii z tym samym ciężarem.",
+      "Ból z przodu kolana przy skokach: zostaw skoki na tydzień, zamiast nich dodatkowa seria pozycji puchowej."
+    ],
+    "intensity_hard": true,
+    "legs_load": "heavy",
+    "covers": [
+      [
+        "sila",
+        "sila2"
+      ]
+    ],
+    "equipment": [
+      "silownia"
+    ],
+    "duration_min_range": {
+      "*": [
+        65,
+        75
+      ]
+    }
+  },
+  "short_session": {
+    "id": "s_short",
+    "name": "Siła krótka, 30 minut",
+    "duration_min": 30,
+    "rx": {
+      "f1": "2 serie każdego ćwiczenia, ciężar jak w pełnym treningu",
+      "f2": "2–3 serie każdego ćwiczenia, ciężko",
+      "f3": "2 serie każdego ćwiczenia"
+    },
+    "items": [
+      "Przysiad bułgarski: 8 na nogę.",
+      "Zejście ekscentryczne ze skrzyni: 6 na nogę, 4 s w dół.",
+      "Nordic curl: 4–5 powtórzeń.",
+      "Pozycja puchowa: 60–90 s.",
+      "Pallof press: 10 na stronę."
+    ],
+    "intensity_hard": true,
+    "legs_load": "moderate",
+    "covers": [
+      [
+        "sila2"
+      ]
+    ],
+    "equipment": [
+      "silownia"
+    ],
+    "duration_min_range": {
+      "*": [
+        25,
+        35
+      ]
+    }
+  },
+  "logging": "Dla progresji zapisuj ciężar i powtórzenia przynajmniej dla: przysiad, martwy ciąg rumuński, przysiad bułgarski, wejście na skrzynię (hantle), pozycja puchowa (czas, hantle)."
+}

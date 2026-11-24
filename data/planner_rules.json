@@ -1,0 +1,400 @@
+{
+  "_opis": "Logika planowania tygodnia przeniesiona z 'Nóg na puch' i rozszerzona o rower. Opis algorytmu w docs/04-logika-planowania.md.",
+  "categories": {
+    "sila": "Siła nóg",
+    "dlugi": "Długi tlen",
+    "gora": "Pod górę",
+    "mocny": "Interwały",
+    "luz": "Spokojny tlen",
+    "sila2": "Druga siła",
+    "regen": "Regeneracja"
+  },
+  "slots_by_phase": {
+    "P1": [
+      {
+        "c": "sila",
+        "why": "Najważniejszy trening tygodnia: siła ud na podejścia i zjazdy w puchu."
+      },
+      {
+        "c": "dlugi",
+        "why": "Baza tlenowa. To ona niesie cię przez cały dzień na podejściach."
+      },
+      {
+        "c": "gora",
+        "why": "Najbardziej podobne do skiturów: praca pod górę, najlepiej z plecakiem."
+      },
+      {
+        "c": "mocny",
+        "why": "Podnosi pułap: przy tym samym tętnie podchodzisz szybciej."
+      },
+      {
+        "c": "luz",
+        "why": "Więcej spokojnej objętości bez dokładania zmęczenia."
+      },
+      {
+        "c": "sila2",
+        "why": "Krótka druga dawka siły, gdy masz w tygodniu dużo czasu."
+      },
+      {
+        "c": "luz",
+        "why": "Jeszcze trochę spokojnego tlenu."
+      },
+      {
+        "c": "gora",
+        "why": "Drugi trening pod górę w tygodniu, spokojnym tempem."
+      },
+      {
+        "c": "regen",
+        "why": "Przy tylu treningach ciało potrzebuje odpuszczenia."
+      }
+    ],
+    "P2": [
+      {
+        "c": "sila",
+        "why": "Najważniejszy trening tygodnia: siła ud na podejścia i zjazdy w puchu."
+      },
+      {
+        "c": "dlugi",
+        "why": "Baza tlenowa. To ona niesie cię przez cały dzień na podejściach."
+      },
+      {
+        "c": "gora",
+        "why": "Najbardziej podobne do skiturów: praca pod górę, najlepiej z plecakiem."
+      },
+      {
+        "c": "mocny",
+        "why": "Podnosi pułap: przy tym samym tętnie podchodzisz szybciej."
+      },
+      {
+        "c": "luz",
+        "why": "Więcej spokojnej objętości bez dokładania zmęczenia."
+      },
+      {
+        "c": "sila2",
+        "why": "Krótka druga dawka siły, gdy masz w tygodniu dużo czasu."
+      },
+      {
+        "c": "luz",
+        "why": "Jeszcze trochę spokojnego tlenu."
+      },
+      {
+        "c": "gora",
+        "why": "Drugi trening pod górę w tygodniu, spokojnym tempem."
+      },
+      {
+        "c": "regen",
+        "why": "Przy tylu treningach ciało potrzebuje odpuszczenia."
+      }
+    ],
+    "P3": [
+      {
+        "c": "sila",
+        "why": "Najważniejszy trening tygodnia: siła ud na podejścia i zjazdy w puchu."
+      },
+      {
+        "c": "dlugi",
+        "why": "Baza tlenowa. To ona niesie cię przez cały dzień na podejściach."
+      },
+      {
+        "c": "gora",
+        "why": "Najbardziej podobne do skiturów: praca pod górę, najlepiej z plecakiem."
+      },
+      {
+        "c": "mocny",
+        "why": "Podnosi pułap: przy tym samym tętnie podchodzisz szybciej."
+      },
+      {
+        "c": "luz",
+        "why": "Więcej spokojnej objętości bez dokładania zmęczenia."
+      },
+      {
+        "c": "sila2",
+        "why": "Krótka druga dawka siły, gdy masz w tygodniu dużo czasu."
+      },
+      {
+        "c": "luz",
+        "why": "Jeszcze trochę spokojnego tlenu."
+      },
+      {
+        "c": "gora",
+        "why": "Drugi trening pod górę w tygodniu, spokojnym tempem."
+      },
+      {
+        "c": "regen",
+        "why": "Przy tylu treningach ciało potrzebuje odpuszczenia."
+      }
+    ],
+    "P4": [
+      {
+        "c": "dlugi",
+        "why": "Długa jazda buduje bazę na lato."
+      },
+      {
+        "c": "mocny",
+        "why": "Sweet spot / próg."
+      },
+      {
+        "c": "sila",
+        "why": "Jeden trening siły w tygodniu, żeby utrzymać to, co zbudowane zimą."
+      },
+      {
+        "c": "mocny",
+        "why": "VO₂max, podjazd siłowy, 30/15 albo over-under."
+      },
+      {
+        "c": "luz",
+        "why": "Spokojna objętość."
+      },
+      {
+        "c": "luz",
+        "why": "Spokojna objętość."
+      },
+      {
+        "c": "regen",
+        "why": "Odpuszczenie."
+      }
+    ],
+    "P5": [
+      {
+        "c": "dlugi",
+        "why": "Długa jazda na zewnątrz."
+      },
+      {
+        "c": "mocny",
+        "why": "Jakość: 30/15 lub VO₂max."
+      },
+      {
+        "c": "mocny",
+        "why": "Over-under albo próg."
+      },
+      {
+        "c": "sila",
+        "why": "Krótka siła raz w tygodniu."
+      },
+      {
+        "c": "luz",
+        "why": "Strefa 2."
+      },
+      {
+        "c": "luz",
+        "why": "Strefa 2."
+      },
+      {
+        "c": "regen",
+        "why": "Odpuszczenie."
+      }
+    ]
+  },
+  "core_slots": 3,
+  "light_week_max_slots": 4,
+  "preferences_by_phase": {
+    "P1": {
+      "sila": [
+        "s_puch"
+      ],
+      "dlugi": [
+        "b_z2",
+        "h_pack",
+        "m_day"
+      ],
+      "gora": [
+        "h_pack",
+        "r_hills",
+        "m_day"
+      ],
+      "mocny": [
+        "b_sst",
+        "r_hills",
+        "b_vo2"
+      ],
+      "luz": [
+        "b_easy",
+        "r_easy",
+        "b_z2"
+      ],
+      "sila2": [
+        "s_short",
+        "s_puch"
+      ],
+      "regen": [
+        "mob",
+        "b_easy"
+      ]
+    },
+    "P2": {
+      "sila": [
+        "s_puch"
+      ],
+      "dlugi": [
+        "b_z2",
+        "h_pack",
+        "m_day"
+      ],
+      "gora": [
+        "h_pack",
+        "b_torque",
+        "r_hills",
+        "m_day"
+      ],
+      "mocny": [
+        "b_torque",
+        "b_sst",
+        "b_vo2",
+        "r_hills"
+      ],
+      "luz": [
+        "b_easy",
+        "r_easy",
+        "b_intro",
+        "b_z2"
+      ],
+      "sila2": [
+        "s_short",
+        "s_puch"
+      ],
+      "regen": [
+        "mob",
+        "b_easy"
+      ]
+    },
+    "P3": {
+      "sila": [
+        "s_puch"
+      ],
+      "dlugi": [
+        "m_day",
+        "b_z2",
+        "h_pack"
+      ],
+      "gora": [
+        "m_day",
+        "h_pack",
+        "r_hills"
+      ],
+      "mocny": [
+        "b_vo2",
+        "b_sst",
+        "r_hills",
+        "b_torque"
+      ],
+      "luz": [
+        "b_easy",
+        "r_easy",
+        "b_open",
+        "b_z2"
+      ],
+      "sila2": [
+        "s_short",
+        "s_puch"
+      ],
+      "regen": [
+        "mob",
+        "b_easy"
+      ]
+    },
+    "P4": {
+      "sila": [
+        "s_short",
+        "s_puch"
+      ],
+      "dlugi": [
+        "b_z2",
+        "b_outdoor",
+        "m_day"
+      ],
+      "mocny": [
+        "b_sst",
+        "b_vo2",
+        "b_torque",
+        "b_3015",
+        "b_ou"
+      ],
+      "luz": [
+        "b_easy",
+        "r_easy",
+        "b_z2"
+      ],
+      "regen": [
+        "mob",
+        "b_easy",
+        "walk"
+      ],
+      "gora": [
+        "b_torque",
+        "h_pack",
+        "m_day"
+      ],
+      "sila2": [
+        "s_short"
+      ]
+    },
+    "P5": {
+      "sila": [
+        "s_short"
+      ],
+      "dlugi": [
+        "b_outdoor",
+        "b_z2",
+        "m_day"
+      ],
+      "mocny": [
+        "b_3015",
+        "b_vo2",
+        "b_ou",
+        "b_sst",
+        "b_torque"
+      ],
+      "luz": [
+        "b_outdoor",
+        "b_easy",
+        "b_z2",
+        "r_easy"
+      ],
+      "regen": [
+        "mob",
+        "b_easy",
+        "walk"
+      ],
+      "gora": [
+        "b_torque",
+        "m_day"
+      ],
+      "sila2": [
+        "s_short"
+      ]
+    }
+  },
+  "bike_quality_alternation_P2": "W P2 jakość rowerowa na zmianę: tydzień A podjazd siłowy (b_torque), tydzień B sweet spot (b_sst). Wybieraj ten, którego nie było w poprzednim tygodniu.",
+  "fatigue_rules": [
+    {
+      "id": "hard_after_hard",
+      "rule": "Jeśli ostatni trening (dziś lub wczoraj) miał intensity_hard=true, następny proponuj z intensity_hard=false; jeśli dla bieżącego slotu nie ma lekkiej opcji, weź lżejszy slot i napisz, że mocny zrobić dzień później."
+    },
+    {
+      "id": "legs_spacing",
+      "rule": "Między treningami z legs_load='heavy' (Nogi na puch, góry) a mocnym rowerem (intensity_hard && kind=bike) co najmniej 1 dzień przerwy w obie strony: nie dzień przed ani dzień po Nogach na puch / górach."
+    },
+    {
+      "id": "test_spacing",
+      "rule": "Test FTP (b_test): najwcześniej 48 h po legs_load='heavy', wypoczęty, nie na czczo; najlepiej po dniu wolnym."
+    },
+    {
+      "id": "rhr",
+      "rule": "Tętno spoczynkowe rano >= 50 (baseline 43–45) dwa dni z rzędu → zamień najbliższy mocny trening na spokojny (b_easy / r_easy / mob). Próg 50 edytowalny."
+    },
+    {
+      "id": "fasted",
+      "rule": "Jeśli użytkownik zaznaczy 'na czczo', ukryj/ostrzeż przy treningach z not_fasted=true."
+    },
+    {
+      "id": "knee",
+      "rule": "Ból z przodu kolana: przy Nogach na puch pomiń skoki na tydzień, dodaj serię pozycji puchowej; przy rowerze wróć do kadencji 85–95 zamiast niskiej."
+    },
+    {
+      "id": "after_mountains",
+      "rule": "Dzień po m_day: b_easy, mob albo wolne."
+    }
+  ],
+  "time_fit": "Proponuj tylko treningi, które mieszczą się w zadeklarowanym czasie (z rozgrzewką). Treningi z timerem mają total_min; zakresy (np. 75–120 min) skracaj do dostępnego czasu, nie poniżej dolnej granicy. Gdy czasu < 30 min: b_easy skrócony, mob albo s_short (jeśli siłownia).",
+  "location_fit": "Kontekst 'co masz teraz pod ręką' (wielokrotny wybór): keiser_m3, silownia (sprzęt siłowy, bieżnia), schody_lub_bieznia, gory. Wybór 'silownia' daje też schody_lub_bieznia. Trening jest dostępny, gdy cała jego lista equipment jest dostępna; pusta lista = zawsze dostępny (bieg, spacer, mobilność)."
+}

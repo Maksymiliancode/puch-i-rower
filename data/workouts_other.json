@@ -1,0 +1,272 @@
+{
+  "_opis": "Pozostałe treningi i aktywności. rx per faza siłowa f1/f2/f3 tam, gdzie jest obiekt. equipment = czego potrzeba (pusta lista = da się wszędzie). duration_min_range = [min, max] minut per faza siłowa (f1/f2/f3) albo '*' dla wszystkich; m_day i walk mają szeroki zakres.",
+  "workouts": [
+    {
+      "id": "r_easy",
+      "name": "Bieg spokojny",
+      "short": "Bieg spokojny",
+      "kind": "run",
+      "rx": {
+        "f1": "30–40 minut, możesz przeplatać marszem",
+        "f2": "40–55 minut",
+        "f3": "30–45 minut"
+      },
+      "how": [
+        "Po sezonie rowerowym zaczynaj od krótszych biegów: płuca są gotowe, ścięgna i łydki jeszcze nie.",
+        "Pole Mokotowskie, Łazienki, Park Skaryszewski, Las Kabacki – miękkie ścieżki odciążają kolana.",
+        "Krótki krok, dużo kroków na minutę, lądowanie pod biodrem."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "luz"
+        ]
+      ],
+      "log_placeholder": "np. 45 min, tętno 142",
+      "equipment": [],
+      "duration_min_range": {
+        "f1": [
+          30,
+          40
+        ],
+        "f2": [
+          40,
+          55
+        ],
+        "f3": [
+          30,
+          45
+        ]
+      }
+    },
+    {
+      "id": "r_hills",
+      "name": "Podbiegi",
+      "short": "Podbiegi",
+      "kind": "run",
+      "rx": {
+        "f1": "6–8 × 45–60 s mocno pod górę, w dół marszem",
+        "f2": "8–10 × 60–90 s, w dół truchtem",
+        "f3": "6 × 90 s, w dół truchtem"
+      },
+      "how": [
+        "Najpierw 15 minut truchtu i kilka przebieżek.",
+        "Gdzie: Kopiec Powstania Warszawskiego, Górka Szczęśliwicka, Kopa Cwila.",
+        "Pod górę mocno, ale równo: ostatni podbieg tak szybki jak pierwszy.",
+        "W dół spokojnie i pod kontrolą – to też trening ud pod zjazdy."
+      ],
+      "zone": "vo2",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "gora",
+          "mocny"
+        ]
+      ],
+      "log_placeholder": "np. 8 × 60 s, Kopiec",
+      "equipment": [],
+      "duration_min_range": {
+        "f1": [
+          45,
+          55
+        ],
+        "f2": [
+          50,
+          60
+        ],
+        "f3": [
+          45,
+          55
+        ]
+      }
+    },
+    {
+      "id": "h_pack",
+      "name": "Podejścia z plecakiem",
+      "short": "Podejścia z plecakiem",
+      "kind": "hike",
+      "rx": {
+        "f1": "45–60 minut, plecak 5–8 kg",
+        "f2": "60–90 minut, plecak 8–12 kg",
+        "f3": "45–60 minut, plecak 8 kg"
+      },
+      "how": [
+        "Schody na Kopcu Powstania Warszawskiego, Górka Szczęśliwicka, klatka schodowa w bloku albo bieżnia na siłowni z nachyleniem 12–15%.",
+        "Równe tempo w strefie 2, z kijami, jeśli się da – tak jak na fokach.",
+        "W dół spokojnie, kolana nad stopami. Plecak możesz obciążyć butelkami z wodą."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "gora",
+          "dlugi"
+        ]
+      ],
+      "log_placeholder": "np. 60 min, 10 kg, 25 wejść",
+      "equipment": [
+        "schody_lub_bieznia"
+      ],
+      "duration_min_range": {
+        "f1": [
+          45,
+          60
+        ],
+        "f2": [
+          60,
+          90
+        ],
+        "f3": [
+          45,
+          60
+        ]
+      }
+    },
+    {
+      "id": "m_day",
+      "name": "Wyjście w góry / skitury",
+      "short": "Góry",
+      "kind": "mountains",
+      "rx": {
+        "f1": "dzień w górach, 800–1500 m przewyższenia",
+        "f2": "dzień w górach, 1000–1500 m przewyższenia",
+        "f3": "główny trening sezonu: im więcej przewyższenia w równym tempie, tym lepiej"
+      },
+      "how": [
+        "Liczy się naraz jako długi tlen i trening pod górę.",
+        "Podejścia w strefie 2: tempo, które utrzymasz cały dzień, nie gonienie.",
+        "Następnego dnia coś lekkiego albo wolne."
+      ],
+      "zone": "z2",
+      "intensity_hard": true,
+      "legs_load": "heavy",
+      "covers": [
+        [
+          "dlugi"
+        ],
+        [
+          "gora"
+        ]
+      ],
+      "log_placeholder": "np. Kasprowy, 1100 m",
+      "equipment": [
+        "gory"
+      ],
+      "duration_min_range": {
+        "f1": [
+          240,
+          600
+        ],
+        "f2": [
+          240,
+          600
+        ],
+        "f3": [
+          240,
+          600
+        ]
+      }
+    },
+    {
+      "id": "mob",
+      "name": "Mobilność i rolowanie",
+      "short": "Mobilność",
+      "kind": "mobility",
+      "rx": "20–30 minut",
+      "how": [
+        "Rolowanie ud, pośladków i łydek.",
+        "Biodra 90/90, kolano do ściany, rozciąganie zginaczy bioder.",
+        "Dobre przed TV i w dzień po górach."
+      ],
+      "zone": null,
+      "intensity_hard": false,
+      "legs_load": "none",
+      "covers": [
+        [
+          "regen"
+        ]
+      ],
+      "log_placeholder": "np. 25 min wieczorem",
+      "equipment": [],
+      "duration_min_range": {
+        "*": [
+          20,
+          30
+        ]
+      }
+    },
+    {
+      "id": "walk",
+      "name": "Spacer / dzień w ruchu",
+      "short": "Spacer",
+      "kind": "walk",
+      "rx": "dowolnie",
+      "how": [
+        "Np. zwiedzanie miasta na wyjeździe. Liczy się jako aktywność, ale nie jako trening z planu, chyba że trwał 90+ min w terenie."
+      ],
+      "zone": null,
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "regen"
+        ]
+      ],
+      "equipment": [],
+      "duration_min_range": {
+        "*": [
+          20,
+          600
+        ]
+      }
+    },
+    {
+      "id": "s_upper",
+      "name": "Siłownia: góra ciała",
+      "short": "Siłownia góra",
+      "kind": "strength_upper",
+      "rx": "według uznania (np. klatka, plecy)",
+      "how": [
+        "Użytkownik robi to poza planem nóg. Nie wypełnia slotów 'Siła nóg', ale jest w historii."
+      ],
+      "zone": null,
+      "intensity_hard": false,
+      "legs_load": "none",
+      "covers": [],
+      "equipment": [
+        "silownia"
+      ],
+      "duration_min_range": {
+        "*": [
+          45,
+          75
+        ]
+      }
+    },
+    {
+      "id": "other",
+      "name": "Inna aktywność",
+      "short": "Inne",
+      "kind": "other",
+      "rx": "dowolnie",
+      "how": [
+        "Dowolny wpis: nazwa, czas, odczucie 1–10, notatka."
+      ],
+      "zone": null,
+      "intensity_hard": false,
+      "legs_load": "none",
+      "covers": [],
+      "equipment": [],
+      "duration_min_range": {
+        "*": [
+          10,
+          600
+        ]
+      }
+    }
+  ]
+}

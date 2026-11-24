@@ -1,0 +1,5005 @@
+{
+  "_opis": "Treningi rowerowe na Keiserze M3. rx = wersja na fazę rowerową (sm=P2 Siła i moc, ss=P3 Sezon, pr=P4 Po Alpach, la=P5 Lato; P1 używa sm). segments: sec, pct_ftp, label, cadence (tekst), cue, rep [i,n], set [i,n], after_rep (przerwa po powtórzeniu). covers = kategorie slotów tygodnia, które trening wypełnia (patrz planner_rules.json). legs_load = obciążenie nóg (dla reguł zmęczenia). not_fasted = nie robić na czczo. duration_min_range (tylko treningi o zmiennej długości): [min,max] minut; timer skraca/wydłuża główny segment strefy 2 do wybranego czasu. Pozostałe treningi mają stałą długość total_min.",
+  "workouts": [
+    {
+      "id": "b_intro",
+      "name": "Pierwsza jazda: ustaw rower i rozjedź się",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "start"
+      ],
+      "why": "Pierwszy rower od lata. Ustawiasz Keisera i pas, sprawdzasz, ile watów to dla ciebie strefa 2, i uczysz się dźwigni oporu przed podjazdami siłowymi. Bez zmęczenia, idealne przed siłownią w kolejnych dniach.",
+      "how": [
+        "Siodło: na dole obrotu kolano lekko ugięte (około 25–30°), biodra nie kołyszą się na boki.",
+        "Kierownica na tyle wysoko, żeby plecy i kark były luźne przez godzinę.",
+        "Sparuj pas Polar z zegarkiem i włącz „Rower stacjonarny” przed startem timera.",
+        "Moc i tętno w timerze pokazują się jako tętno i % FTP, dopóki nie zrobisz testu. Patrz na tętno."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "luz"
+        ]
+      ],
+      "not_fasted": false,
+      "phases_recommended": [
+        "sm"
+      ],
+      "rx": {
+        "sm": {
+          "text": "około 50 minut: rozgrzewka, 15 min strefy 2, kadencja wysoka i niska, schłodzenie",
+          "garmin_title": "Pierwsza jazda Z2 50 min",
+          "total_min": 51,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka i ustawienia",
+              "cadence": "85–95",
+              "cue": "Pierwsze minuty: sprawdź siodło (na dole obrotu kolano lekko ugięte) i czy zegarek widzi pas"
+            },
+            {
+              "sec": 900,
+              "pct_ftp": 68,
+              "label": "Strefa 2",
+              "cadence": "85–95",
+              "cue": "Ustaw opór tak, żeby tętno doszło do 132–145. Zapamiętaj waty z konsoli przy tętnie około 140"
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 60,
+              "label": "Szybka kadencja",
+              "cadence": "100–110",
+              "cue": "Lekki opór, biodra spokojne na siodle, bez podskakiwania",
+              "rep": [
+                1,
+                4
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 65,
+              "label": "Normalnie",
+              "cadence": "90",
+              "cue": "Wróć do strefy 2",
+              "rep": [
+                1,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 60,
+              "label": "Szybka kadencja",
+              "cadence": "100–110",
+              "cue": "Lekki opór, biodra spokojne na siodle, bez podskakiwania",
+              "rep": [
+                2,
+                4
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 65,
+              "label": "Normalnie",
+              "cadence": "90",
+              "cue": "Wróć do strefy 2",
+              "rep": [
+                2,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 60,
+              "label": "Szybka kadencja",
+              "cadence": "100–110",
+              "cue": "Lekki opór, biodra spokojne na siodle, bez podskakiwania",
+              "rep": [
+                3,
+                4
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 65,
+              "label": "Normalnie",
+              "cadence": "90",
+              "cue": "Wróć do strefy 2",
+              "rep": [
+                3,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 60,
+              "label": "Szybka kadencja",
+              "cadence": "100–110",
+              "cue": "Lekki opór, biodra spokojne na siodle, bez podskakiwania",
+              "rep": [
+                4,
+                4
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 60,
+              "label": "Lekko",
+              "cadence": "90",
+              "cue": "Za chwilę niska kadencja"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 75,
+              "label": "Niska kadencja",
+              "cadence": "60–65",
+              "cue": "Dociśnij opór dźwignią, w siodle. Tętno ma zostać w strefie 2",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 60,
+              "label": "Normalnie",
+              "cadence": "90",
+              "cue": "Odpuść opór",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 75,
+              "label": "Niska kadencja",
+              "cadence": "60–65",
+              "cue": "Dociśnij opór dźwignią, w siodle. Tętno ma zostać w strefie 2",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 60,
+              "label": "Normalnie",
+              "cadence": "90",
+              "cue": "Odpuść opór",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 75,
+              "label": "Niska kadencja",
+              "cadence": "60–65",
+              "cue": "Dociśnij opór dźwignią, w siodle. Tętno ma zostać w strefie 2",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko. Na koniec zapisz na kartce waty ze strefy 2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_z2",
+      "name": "Długa jazda w strefie 2",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "skitury",
+        "lato"
+      ],
+      "why": "Baza tlenowa, która niesie cię przez cały dzień podchodzenia i przez długie letnie jazdy. To najważniejsza jazda na rowerze w tygodniu bez gór.",
+      "how": [
+        "Kadencja 85–95. Trzymaj realny opór, żeby koło zamachowe nie kręciło nogami za ciebie.",
+        "Pilnuj tętna i watów. Jeśli pod koniec tętno rośnie przy tych samych watach, to normalne, nie dokładaj.",
+        "Ponad 90 minut: bidon i coś do jedzenia co 30–40 minut.",
+        "W timerze możesz wydłużyć lub skrócić odcinek przyciskami +1 i −1 min."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "dlugi",
+          "luz"
+        ]
+      ],
+      "not_fasted": false,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "75–120 minut równo",
+          "garmin_title": "Z2 100 min",
+          "total_min": 100,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95"
+            },
+            {
+              "sec": 5100,
+              "pct_ftp": 68,
+              "label": "Strefa 2",
+              "cadence": "85–95",
+              "cue": "Równy opór, rozmawiasz pełnymi zdaniami. Pij co 15 min"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95"
+            }
+          ]
+        },
+        "ss": {
+          "text": "60–90 minut, tylko gdy w weekend nie ma gór",
+          "garmin_title": "Z2 75 min",
+          "total_min": 75,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95"
+            },
+            {
+              "sec": 3600,
+              "pct_ftp": 68,
+              "label": "Strefa 2",
+              "cadence": "85–95",
+              "cue": "Równy opór, rozmawiasz pełnymi zdaniami"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95"
+            }
+          ]
+        },
+        "pr": {
+          "text": "2–2,5 godziny; od marca możesz wyjść na zewnątrz",
+          "garmin_title": "Z2 140 min",
+          "total_min": 140,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95"
+            },
+            {
+              "sec": 7500,
+              "pct_ftp": 70,
+              "label": "Strefa 2",
+              "cadence": "85–95",
+              "cue": "Równo. Jedz co 30–40 min"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95"
+            }
+          ]
+        },
+        "la": {
+          "text": "na zewnątrz 3–4 godziny, w deszcz 90–120 minut na Keiserze",
+          "garmin_title": "Z2 120 min",
+          "total_min": 120,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95"
+            },
+            {
+              "sec": 6300,
+              "pct_ftp": 70,
+              "label": "Strefa 2",
+              "cadence": "85–95",
+              "cue": "Równo. Jedz co 30–40 min"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95"
+            }
+          ]
+        }
+      },
+      "duration_min_range": {
+        "sm": [
+          75,
+          120
+        ],
+        "ss": [
+          60,
+          90
+        ],
+        "pr": [
+          120,
+          150
+        ],
+        "la": [
+          90,
+          120
+        ]
+      }
+    },
+    {
+      "id": "b_easy",
+      "name": "Spokojne rozkręcenie",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "regeneracja"
+      ],
+      "why": "Dzień po siłowni albo po górach lekka jazda szybciej usuwa sztywność z ud niż kanapa. Nie dokłada zmęczenia.",
+      "how": [
+        "Ma być łatwo, lżej niż ci się wydaje. Wysoka kadencja 90–100, mały opór.",
+        "Na koniec 5 minut rolowania ud i pośladków."
+      ],
+      "zone": "z1",
+      "intensity_hard": false,
+      "legs_load": "none",
+      "covers": [
+        [
+          "luz",
+          "regen"
+        ]
+      ],
+      "not_fasted": false,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "30–45 minut, dzień po „Nogach na puch”",
+          "garmin_title": "Rozkręcenie 40 min",
+          "total_min": 40,
+          "segments": [
+            {
+              "sec": 2400,
+              "pct_ftp": 55,
+              "label": "Rozkręcenie",
+              "cadence": "90–100",
+              "cue": "Mały opór, wysoka kadencja. Lżej, niż ci się wydaje"
+            }
+          ]
+        },
+        "ss": {
+          "text": "30–45 minut w poniedziałek po górach",
+          "garmin_title": "Rozkręcenie 40 min",
+          "total_min": 40,
+          "segments": [
+            {
+              "sec": 2400,
+              "pct_ftp": 55,
+              "label": "Rozkręcenie",
+              "cadence": "90–100",
+              "cue": "Mały opór, wysoka kadencja"
+            }
+          ]
+        },
+        "pr": {
+          "text": "45–60 minut",
+          "garmin_title": "Spokojnie 55 min",
+          "total_min": 55,
+          "segments": [
+            {
+              "sec": 3300,
+              "pct_ftp": 58,
+              "label": "Spokojnie",
+              "cadence": "90–100",
+              "cue": "Mały opór, wysoka kadencja"
+            }
+          ]
+        },
+        "la": {
+          "text": "60–90 minut na luzie",
+          "garmin_title": "Spokojnie 75 min",
+          "total_min": 75,
+          "segments": [
+            {
+              "sec": 4500,
+              "pct_ftp": 60,
+              "label": "Spokojnie",
+              "cadence": "90–100",
+              "cue": "Na luzie"
+            }
+          ]
+        }
+      },
+      "duration_min_range": {
+        "sm": [
+          30,
+          45
+        ],
+        "ss": [
+          30,
+          45
+        ],
+        "pr": [
+          45,
+          60
+        ],
+        "la": [
+          60,
+          90
+        ]
+      }
+    },
+    {
+      "id": "b_torque",
+      "name": "Podjazd siłowy na niskiej kadencji",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "skitury",
+        "góry latem"
+      ],
+      "why": "Na fokach uda pracują długo pod dużym oporem i w wolnym rytmie. Niska kadencja przy umiarkowanym tętnie uczy je dokładnie tego, bez obciążania kolan jak przy skokach.",
+      "how": [
+        "Cały czas w siodle, tułów spokojny, nacisk płynny przez cały obrót.",
+        "Opór dobierz tak, żeby przy 55–65 obrotach waty były w tempie. Tętno bywa tu niższe niż zwykle, więc trzymaj się watów.",
+        "Pierwszy raz zacznij od kadencji 70, a schodź niżej z tygodnia na tydzień."
+      ],
+      "zone": "tempo",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "gora",
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "15 min rozgrzewki, 4 × 6 min na kadencji 55–65, przerwa 3 min lekko na 90",
+          "garmin_title": "Podjazd siłowy 4×6 min kad 60",
+          "total_min": 56,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 360,
+              "pct_ftp": 82,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                1,
+                4
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 360,
+              "pct_ftp": 82,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                2,
+                4
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 360,
+              "pct_ftp": 82,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                3,
+                4
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                3,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 360,
+              "pct_ftp": 82,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                4,
+                4
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "ss": {
+          "text": "15 min rozgrzewki, 3 × 8 min na kadencji 60, przerwa 3 min",
+          "garmin_title": "Podjazd siłowy 3×8 min kad 60",
+          "total_min": 53,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "pr": {
+          "text": "15 min rozgrzewki, 3 × 10 min na kadencji 55–65, przerwa 4 min (co drugi tydzień)",
+          "garmin_title": "Podjazd siłowy 3×10 min kad 60",
+          "total_min": 61,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "la": {
+          "text": "przed górskim wyjazdem: 3 × 10 min na kadencji 60",
+          "garmin_title": "Podjazd siłowy 3×10 min kad 60",
+          "total_min": 61,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 84,
+              "label": "Podjazd siłowy",
+              "cadence": "55–65",
+              "cue": "W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_sst",
+      "name": "Sweet spot / próg",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "skitury",
+        "lato"
+      ],
+      "why": "To wysiłek długiego, stromego podejścia w równym tempie. Podnosi moc, którą utrzymasz godzinę, a latem tempo na podjazdach.",
+      "how": [
+        "Każde powtórzenie równo, bez zrywu na początku.",
+        "Ostatnie powtórzenie tak mocne jak pierwsze. Jeśli nie wychodzi, następnym razem odejmij 5–10 W.",
+        "Kadencja 85–95."
+      ],
+      "zone": {
+        "sm": "sst",
+        "ss": "sst",
+        "pr": "thr",
+        "la": "thr"
+      },
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "15 min rozgrzewki, 3 × 12 min, przerwa 5 min",
+          "garmin_title": "Sweet spot 3×12 min",
+          "total_min": 69,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 91,
+              "label": "Sweet spot",
+              "cadence": "85–95",
+              "cue": "Równo, bez zrywu na początku",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 91,
+              "label": "Sweet spot",
+              "cadence": "85–95",
+              "cue": "Równo, bez zrywu na początku",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 91,
+              "label": "Sweet spot",
+              "cadence": "85–95",
+              "cue": "Równo, bez zrywu na początku",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "ss": {
+          "text": "15 min rozgrzewki, 2 × 15 min, przerwa 5 min",
+          "garmin_title": "Sweet spot 2×15 min",
+          "total_min": 58,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 900,
+              "pct_ftp": 91,
+              "label": "Sweet spot",
+              "cadence": "85–95",
+              "cue": "Równo, bez zrywu na początku",
+              "rep": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 900,
+              "pct_ftp": 91,
+              "label": "Sweet spot",
+              "cadence": "85–95",
+              "cue": "Równo, bez zrywu na początku",
+              "rep": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "pr": {
+          "text": "15 min rozgrzewki, 3 × 12 min na progu; po 3 tygodniach 2 × 20 min",
+          "garmin_title": "Próg 3×12 min",
+          "total_min": 69,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 98,
+              "label": "Próg",
+              "cadence": "85–95",
+              "cue": "Równo. Ostatnie powtórzenie tak mocne jak pierwsze",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 98,
+              "label": "Próg",
+              "cadence": "85–95",
+              "cue": "Równo. Ostatnie powtórzenie tak mocne jak pierwsze",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 720,
+              "pct_ftp": 98,
+              "label": "Próg",
+              "cadence": "85–95",
+              "cue": "Równo. Ostatnie powtórzenie tak mocne jak pierwsze",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "la": {
+          "text": "2 × 20 min na progu albo jeden długi podjazd w terenie",
+          "garmin_title": "Próg 2×20 min",
+          "total_min": 69,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 98,
+              "label": "Próg",
+              "cadence": "85–95",
+              "cue": "Równo. Ostatnie powtórzenie tak mocne jak pierwsze",
+              "rep": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 360,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 98,
+              "label": "Próg",
+              "cadence": "85–95",
+              "cue": "Równo. Ostatnie powtórzenie tak mocne jak pierwsze",
+              "rep": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_vo2",
+      "name": "Interwały VO₂max",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "skitury",
+        "lato"
+      ],
+      "why": "Podnoszą pułap tlenowy: przy tym samym tętnie podchodzisz i jedziesz szybciej. Wystarczy raz w tygodniu.",
+      "how": [
+        "Mocno, ale tak, żeby utrzymać waty we wszystkich powtórzeniach.",
+        "Przerwy naprawdę lekko.",
+        "Nie rób dzień po siłowni ani dzień przed górami."
+      ],
+      "zone": "vo2",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "zamiennie z podbiegami: 15 min rozgrzewki, 5 × 3 min, przerwa 3 min lekko",
+          "garmin_title": "VO2max 5×3 min",
+          "total_min": 50,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                1,
+                5
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                1,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                2,
+                5
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                2,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                3,
+                5
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                3,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                4,
+                5
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                4,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                5,
+                5
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "ss": {
+          "text": "w tygodniu bez gór: 15 min rozgrzewki, 4 × 4 min, przerwa 4 min",
+          "garmin_title": "VO2max 4×4 min",
+          "total_min": 51,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                1,
+                4
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                1,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                2,
+                4
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                2,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                3,
+                4
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                3,
+                4
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                4,
+                4
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "pr": {
+          "text": "od marca: 15 min rozgrzewki, 5 × 4 min, przerwa 4 min",
+          "garmin_title": "VO2max 5×4 min",
+          "total_min": 59,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                1,
+                5
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                1,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                2,
+                5
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                2,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                3,
+                5
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                3,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                4,
+                5
+              ]
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                4,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 240,
+              "pct_ftp": 110,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                5,
+                5
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "la": {
+          "text": "6 × 4 min albo 5 × 5 min, przerwy tak długie jak powtórzenia",
+          "garmin_title": "VO2max 5×5 min",
+          "total_min": 68,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 108,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                1,
+                5
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                1,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 108,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                2,
+                5
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                2,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 108,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                3,
+                5
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                3,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 108,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                4,
+                5
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Przerwa",
+              "cadence": "85",
+              "cue": "Naprawdę lekko",
+              "rep": [
+                4,
+                5
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 108,
+              "label": "VO₂max",
+              "cadence": "95–105",
+              "cue": "Mocno, ale tak, żeby utrzymać do końca",
+              "rep": [
+                5,
+                5
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_3015",
+      "name": "30/15",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "lato"
+      ],
+      "why": "Krótkie, ostre powtórzenia z krótką przerwą. Dłużej trzymają cię blisko tętna maksymalnego niż zwykłe interwały, a na Keiserze wystarczy zmieniać opór dźwignią.",
+      "how": [
+        "30 sekund mocniej niż przy 4-minutowych interwałach, 15 sekund prawie bez oporu.",
+        "Seria ma być równa: ostatnie 30 sekund jak pierwsze.",
+        "Zastępuje VO₂max w danym tygodniu, nie dochodzi do niego."
+      ],
+      "zone": "vo2",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "pr": {
+          "text": "od kwietnia: 2 serie × 10 × (30 s mocno / 15 s lekko), 3 min między seriami",
+          "garmin_title": "30/15 2×10",
+          "total_min": 40,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                1,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                1,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                2,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                2,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                3,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                3,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                4,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                4,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                5,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                5,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                6,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                6,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                7,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                7,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                8,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                8,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                9,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                9,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                10,
+                10
+              ],
+              "set": [
+                1,
+                2
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa między seriami",
+              "cadence": "85",
+              "cue": "Lekko, oddychaj",
+              "set": [
+                1,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                1,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                1,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                2,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                2,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                3,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                3,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                4,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                4,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                5,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                5,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                6,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                6,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                7,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                7,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                8,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                8,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                9,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                9,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                10,
+                10
+              ],
+              "set": [
+                2,
+                2
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "la": {
+          "text": "3 serie × 13 × (30 s mocno / 15 s lekko), 3 min między seriami",
+          "garmin_title": "30/15 3×13",
+          "total_min": 58,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                13,
+                13
+              ],
+              "set": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa między seriami",
+              "cadence": "85",
+              "cue": "Lekko, oddychaj",
+              "set": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                13,
+                13
+              ],
+              "set": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 50,
+              "label": "Przerwa między seriami",
+              "cadence": "85",
+              "cue": "Lekko, oddychaj",
+              "set": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                1,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                2,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                3,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                4,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                5,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                6,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                7,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                8,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                9,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                10,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                11,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 15,
+              "pct_ftp": 50,
+              "label": "15 s lekko",
+              "cadence": "80",
+              "cue": "Prawie bez oporu",
+              "rep": [
+                12,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 30,
+              "pct_ftp": 125,
+              "label": "30 s mocno",
+              "cadence": "100–110",
+              "cue": "Dociśnij opór dźwignią",
+              "rep": [
+                13,
+                13
+              ],
+              "set": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_ou",
+      "name": "Over-under",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "lato"
+      ],
+      "why": "Na zmianę trochę poniżej i trochę powyżej progu. Uczy przyspieszać na stromszym odcinku podjazdu i wracać do tempa bez zatrzymania.",
+      "how": [
+        "Część „pod” trzymaj naprawdę pod progiem, żeby było z czego przyspieszać.",
+        "Przy „nad” dociśnij opór, nie tylko kadencję."
+      ],
+      "zone": "thr",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "pr": {
+          "text": "od kwietnia: 3 × 8 min (2 min 92% / 1 min 105%), przerwa 5 min",
+          "garmin_title": "Over-under 3×8 min",
+          "total_min": 57,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 105,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        },
+        "la": {
+          "text": "3 × 12 min (2 min 92% / 1 min 108%), przerwa 5 min",
+          "garmin_title": "Over-under 3×12 min",
+          "total_min": 69,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 55,
+              "label": "Przerwa",
+              "cadence": "90",
+              "cue": "Lekko, rozkręć nogi",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 108,
+              "label": "Nad progiem",
+              "cadence": "90–100",
+              "cue": "Dociśnij opór, nie tylko kadencję",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 92,
+              "label": "Pod progiem",
+              "cadence": "85–95",
+              "cue": "Równo, trochę poniżej progu",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "85–95",
+              "cue": "Lekko, wyrównaj oddech"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_open",
+      "name": "Przetarcie przed górami",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "skitury",
+        "lato"
+      ],
+      "why": "Dzień przed górami, kursem albo wyjazdem w Alpy. Krótkie pobudzenie sprawia, że następnego dnia nogi są świeże, a nie uśpione.",
+      "how": [
+        "Bez zmęczenia: masz zejść z roweru z uczuciem, że możesz więcej."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "luz"
+        ]
+      ],
+      "not_fasted": false,
+      "phases_recommended": [
+        "sm",
+        "ss",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "30–40 min: strefa 2, w środku 3 × 1 min mocno i 3 × 10 s sprint",
+          "garmin_title": "Przetarcie 35 min",
+          "total_min": 34,
+          "segments": [
+            {
+              "sec": 720,
+              "pct_ftp": 60,
+              "label": "Strefa 2",
+              "cadence": "90",
+              "cue": "Spokojnie"
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90"
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 55,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        },
+        "ss": {
+          "text": "dzień przed wyjazdem i przed Alpami: 30–40 min z 3 × 1 min mocno",
+          "garmin_title": "Przetarcie 35 min",
+          "total_min": 34,
+          "segments": [
+            {
+              "sec": 720,
+              "pct_ftp": 60,
+              "label": "Strefa 2",
+              "cadence": "90",
+              "cue": "Spokojnie"
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90"
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 55,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        },
+        "la": {
+          "text": "dzień przed długą jazdą albo zawodami",
+          "garmin_title": "Przetarcie 35 min",
+          "total_min": 34,
+          "segments": [
+            {
+              "sec": 720,
+              "pct_ftp": 60,
+              "label": "Strefa 2",
+              "cadence": "90",
+              "cue": "Spokojnie"
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 60,
+              "pct_ftp": 110,
+              "label": "1 min mocno",
+              "cadence": "95–105",
+              "cue": "Mocno, ale bez zajeżdżania się",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 55,
+              "label": "Lekko",
+              "cadence": "90"
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                1,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                1,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                2,
+                3
+              ]
+            },
+            {
+              "sec": 90,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "85",
+              "rep": [
+                2,
+                3
+              ],
+              "after_rep": true
+            },
+            {
+              "sec": 10,
+              "pct_ftp": 200,
+              "label": "Sprint 10 s",
+              "cadence": "110+",
+              "cue": "Na maksa, w siodle",
+              "rep": [
+                3,
+                3
+              ]
+            },
+            {
+              "sec": 480,
+              "pct_ftp": 55,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_test",
+      "name": "Test FTP na Keiserze",
+      "kind": "bike",
+      "equipment": [
+        "keiser_m3"
+      ],
+      "goals": [
+        "pomiar"
+      ],
+      "why": "Ustala waty i próg tętna dla wszystkich stref. Rób co 6–8 tygodni, najlepiej po lżejszym tygodniu.",
+      "how": [
+        "FTP to około 95% średnich watów z 20 minut. Próg tętna to średnie tętno z ostatnich 10 minut testu.",
+        "Starszy Keiser M3 szacuje waty. Porównuj je tylko z tym samym rowerem.",
+        "Zapisz test w Garminie jako osobną aktywność i wyślij mi plik FIT, a sprawdzę próg."
+      ],
+      "zone": "thr",
+      "intensity_hard": true,
+      "legs_load": "moderate",
+      "covers": [
+        [
+          "mocny"
+        ]
+      ],
+      "not_fasted": true,
+      "phases_recommended": [
+        "sm",
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "sm": {
+          "text": "teraz, na starcie fazy: 15 min rozgrzewki, 20 min tak mocno, jak równo utrzymasz, 10 min schłodzenia",
+          "garmin_title": "Test FTP 20 min",
+          "total_min": 53,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 105,
+              "label": "Przebudzenie",
+              "cadence": "95",
+              "cue": "Krótko mocniej"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "90",
+              "cue": "Za chwilę test"
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 100,
+              "label": "TEST 20 min",
+              "cadence": "85–95",
+              "cue": "Tak mocno, jak równo utrzymasz. Ostatnie 5 min daj, co zostało. Zapamiętaj średnie waty i tętno z ostatnich 10 min"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        },
+        "ss": {
+          "text": "nie w sezonie; zrób go po Alpach",
+          "garmin_title": "Test FTP 20 min",
+          "total_min": 53,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 105,
+              "label": "Przebudzenie",
+              "cadence": "95",
+              "cue": "Krótko mocniej"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "90",
+              "cue": "Za chwilę test"
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 100,
+              "label": "TEST 20 min",
+              "cadence": "85–95",
+              "cue": "Tak mocno, jak równo utrzymasz. Ostatnie 5 min daj, co zostało. Zapamiętaj średnie waty i tętno z ostatnich 10 min"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        },
+        "pr": {
+          "text": "po pierwszym tygodniu po Alpach i znowu pod koniec kwietnia",
+          "garmin_title": "Test FTP 20 min",
+          "total_min": 53,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 105,
+              "label": "Przebudzenie",
+              "cadence": "95",
+              "cue": "Krótko mocniej"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "90",
+              "cue": "Za chwilę test"
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 100,
+              "label": "TEST 20 min",
+              "cadence": "85–95",
+              "cue": "Tak mocno, jak równo utrzymasz. Ostatnie 5 min daj, co zostało. Zapamiętaj średnie waty i tętno z ostatnich 10 min"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        },
+        "la": {
+          "text": "w czerwcu, a potem tylko gdy chcesz sprawdzić formę",
+          "garmin_title": "Test FTP 20 min",
+          "total_min": 53,
+          "segments": [
+            {
+              "sec": 600,
+              "pct_ftp": 55,
+              "label": "Rozgrzewka",
+              "cadence": "85–95",
+              "cue": "Spokojnie, rozkręć nogi"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 70,
+              "label": "Rozgrzewka: mocniej",
+              "cadence": "90",
+              "cue": "Strefa 2"
+            },
+            {
+              "sec": 120,
+              "pct_ftp": 85,
+              "label": "Rozgrzewka: tempo",
+              "cadence": "90",
+              "cue": "Pobudź nogi przed pracą"
+            },
+            {
+              "sec": 180,
+              "pct_ftp": 105,
+              "label": "Przebudzenie",
+              "cadence": "95",
+              "cue": "Krótko mocniej"
+            },
+            {
+              "sec": 300,
+              "pct_ftp": 50,
+              "label": "Lekko",
+              "cadence": "90",
+              "cue": "Za chwilę test"
+            },
+            {
+              "sec": 1200,
+              "pct_ftp": 100,
+              "label": "TEST 20 min",
+              "cadence": "85–95",
+              "cue": "Tak mocno, jak równo utrzymasz. Ostatnie 5 min daj, co zostało. Zapamiętaj średnie waty i tętno z ostatnich 10 min"
+            },
+            {
+              "sec": 600,
+              "pct_ftp": 50,
+              "label": "Schłodzenie",
+              "cadence": "90"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_outdoor",
+      "name": "Jazda na zewnątrz",
+      "kind": "bike",
+      "equipment": [
+        "rower_szosowy"
+      ],
+      "goals": [
+        "lato"
+      ],
+      "why": "Latem główna forma jazdy. Długa jazda w strefie 2 w Beskidy albo 80–100 km po płaskim; mocniejsze odcinki na podjazdach.",
+      "how": [
+        "Dane z Garmina/Stravy (prędkość, przewyższenie, tętno).",
+        "Waty z Keisera i z szosy są nieporównywalne."
+      ],
+      "zone": "z2",
+      "intensity_hard": false,
+      "legs_load": "light",
+      "covers": [
+        [
+          "dlugi",
+          "luz"
+        ]
+      ],
+      "not_fasted": false,
+      "phases_recommended": [
+        "pr",
+        "la"
+      ],
+      "rx": {
+        "pr": {
+          "text": "od marca zamiast długiej jazdy na Keiserze: 2–2,5 h",
+          "segments": []
+        },
+        "la": {
+          "text": "3–4 h, Beskidy albo 80–100 km po płaskim",
+          "segments": []
+        }
+      },
+      "uwaga": "Bez timera segmentowego; tylko log.",
+      "duration_min_range": {
+        "pr": [
+          120,
+          150
+        ],
+        "la": [
+          180,
+          240
+        ]
+      }
+    }
+  ]
+}

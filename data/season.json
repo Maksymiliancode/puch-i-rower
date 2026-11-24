@@ -1,0 +1,254 @@
+{
+  "_opis": "Fazy sezonu, wydarzenia i tygodnie lżejsze. Daty edytowalne w ustawieniach aplikacji. Fazy rowerowe i siłowe są zsynchronizowane: każda faza wskazuje, której wersji (rx) treningów użyć.",
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Fundament",
+      "start": "2026-10-27",
+      "end": "2026-11-23",
+      "strength_rx": "f1",
+      "bike_rx": "sm",
+      "bike_role": "Rower okazjonalnie; plan rowerowy startuje w P2.",
+      "strength_text": "Uczysz się ruchów i budujesz bazę: wolne opuszczanie, umiarkowany ciężar, więcej powtórzeń. Ścięgna i kolana dostają czas, żeby przyzwyczaić się do skoków i pracy na jednej nodze.",
+      "rir": "2–3 powtórzenia w zapasie"
+    },
+    {
+      "id": "P2",
+      "name": "Siła i moc",
+      "start": "2026-11-24",
+      "end": "2026-12-21",
+      "strength_rx": "f2",
+      "bike_rx": "sm",
+      "bike_role": "Rower 2 razy w tygodniu, najwyżej 3.",
+      "bike_text": "Siłownia jest teraz najcięższa, więc rower daje głównie tlen. Jedna jazda to długa strefa 2 (gdy w weekend nie ma gór), druga to jakość: na zmianę tydzień z podjazdem siłowym i tydzień ze sweet spotem. Dzień po „Nogach na puch” możesz dorzucić spokojne rozkręcenie.",
+      "strength_text": "Cięższe przysiady i martwe ciągi, więcej dynamicznych skoków, dłuższe utrzymywanie pozycji puchowej. To faza, która najbardziej podnosi siłę ud przed sezonem.",
+      "rir": "1–2 powtórzenia w zapasie"
+    },
+    {
+      "id": "P3",
+      "name": "Sezon skiturowy (utrzymanie siły)",
+      "start": "2026-12-22",
+      "end": "2027-02-14",
+      "strength_rx": "f3",
+      "bike_rx": "ss",
+      "bike_role": "Rower 1–2 razy, tylko w tygodniach bez gór.",
+      "bike_text": "Góry są głównym treningiem. Rower służy do rozkręcenia nóg po weekendzie, krótkiej jakości w tygodniu bez gór i przetarcia dzień przed wyjazdem. W lżejszych tygodniach (8–14 stycznia i 7–13 lutego) robisz tylko rozkręcenie i przetarcie.",
+      "strength_text": "Mniej serii, ten sam ciężar. Dni na skiturach i w Bielsku robią resztę. W tygodniu przed kursem i przed Alpami zrób połowę serii.",
+      "rir": "ciężar jak w fazie 2, mniej serii"
+    },
+    {
+      "id": "P4",
+      "name": "Po Alpach: rower wraca",
+      "start": "2027-02-15",
+      "end": "2027-04-30",
+      "strength_rx": "f3",
+      "bike_rx": "pr",
+      "bike_role": "Rower 3–4 razy w tygodniu, siła raz.",
+      "bike_text": "Teraz budujesz formę na lato. Długa jazda rośnie do 2–2,5 godziny, sweet spot przechodzi w próg, a od kwietnia dochodzą 30/15 i over-under. Siła zostaje jako jeden krótki trening w tygodniu. Co czwarty tydzień zrób lżej, z połową interwałów.",
+      "strength_text": "Siła raz w tygodniu (Siła krótka albo połowa serii Nóg na puch, ciężar jak w f3). Szczegółowy program siłowy na wiosnę do ustalenia z użytkownikiem.",
+      "rir": "1–2 powtórzenia w zapasie"
+    },
+    {
+      "id": "P5",
+      "name": "Lato na rowerze",
+      "start": "2027-05-01",
+      "end": "2027-09-30",
+      "strength_rx": "f3",
+      "bike_rx": "la",
+      "bike_role": "Rower 3–5 razy, głównie na zewnątrz.",
+      "bike_text": "Jeździsz na zewnątrz, a Keiser zostaje na interwały i na deszcz. Jedna długa jazda w tygodniu, w Beskidy albo 80–100 km po płaskim, jedna lub dwie jakości i reszta w strefie 2. Siła raz w tygodniu krótko, żeby nie stracić tego, co zbudowałeś zimą.",
+      "strength_text": "Siła raz w tygodniu krótko, żeby nie stracić tego, co zbudowane zimą.",
+      "rir": "1–2 powtórzenia w zapasie"
+    }
+  ],
+  "events": [
+    {
+      "id": "kurs",
+      "name": "Kurs lawinowy, Tatry",
+      "date": "2027-01-15"
+    },
+    {
+      "id": "alpy",
+      "name": "Alpy",
+      "date": "2027-02-14",
+      "uwaga": "Data przybliżona (tydzień lżejszy 7–13.02). Potwierdź z użytkownikiem."
+    }
+  ],
+  "light_weeks": [
+    {
+      "start": "2027-01-08",
+      "end": "2027-01-14",
+      "reason": "przed kursem lawinowym",
+      "rules": "Najwyżej 4 treningi; siła połową serii z tym samym ciężarem; interwały krótsze; rower tylko rozkręcenie i przetarcie."
+    },
+    {
+      "start": "2027-02-07",
+      "end": "2027-02-13",
+      "reason": "przed Alpami",
+      "rules": "Jak wyżej."
+    }
+  ],
+  "ideal_weeks": {
+    "sm": {
+      "_faza_rowerowa": "sm",
+      "days": [
+        {
+          "day": "pn",
+          "kind": "siła",
+          "text": "Nogi na puch"
+        },
+        {
+          "day": "wt",
+          "kind": "rower",
+          "text": "Spokojne rozkręcenie 30–45 min"
+        },
+        {
+          "day": "sr",
+          "kind": "rower",
+          "text": "Podjazd siłowy albo sweet spot"
+        },
+        {
+          "day": "cz",
+          "kind": "inne",
+          "text": "Bieg spokojny lub wolne"
+        },
+        {
+          "day": "pt",
+          "kind": "siła",
+          "text": "Siła krótka"
+        },
+        {
+          "day": "sb",
+          "kind": "inne",
+          "text": "Góry albo długa jazda 90–120 min"
+        },
+        {
+          "day": "nd",
+          "kind": "inne",
+          "text": "Wolne albo podejścia z plecakiem"
+        }
+      ]
+    },
+    "ss": {
+      "_faza_rowerowa": "ss",
+      "days": [
+        {
+          "day": "pn",
+          "kind": "rower",
+          "text": "Rozkręcenie po górach 30–45 min"
+        },
+        {
+          "day": "wt",
+          "kind": "siła",
+          "text": "Nogi na puch, utrzymanie"
+        },
+        {
+          "day": "sr",
+          "kind": "rower",
+          "text": "VO₂max 4 × 4 min lub sweet spot 2 × 15"
+        },
+        {
+          "day": "cz",
+          "kind": "inne",
+          "text": "Bieg spokojny lub wolne"
+        },
+        {
+          "day": "pt",
+          "kind": "rower",
+          "text": "Przetarcie przed górami 35 min"
+        },
+        {
+          "day": "sb",
+          "kind": "inne",
+          "text": "Góry / skitury"
+        },
+        {
+          "day": "nd",
+          "kind": "inne",
+          "text": "Góry / skitury"
+        }
+      ]
+    },
+    "pr": {
+      "_faza_rowerowa": "pr",
+      "days": [
+        {
+          "day": "pn",
+          "kind": "inne",
+          "text": "Wolne"
+        },
+        {
+          "day": "wt",
+          "kind": "rower",
+          "text": "Sweet spot / próg"
+        },
+        {
+          "day": "sr",
+          "kind": "siła",
+          "text": "Siła krótka + rozkręcenie 30 min"
+        },
+        {
+          "day": "cz",
+          "kind": "rower",
+          "text": "VO₂max lub podjazd siłowy"
+        },
+        {
+          "day": "pt",
+          "kind": "inne",
+          "text": "Wolne"
+        },
+        {
+          "day": "sb",
+          "kind": "rower",
+          "text": "Długa jazda 2–2,5 h"
+        },
+        {
+          "day": "nd",
+          "kind": "rower",
+          "text": "Spokojnie 60–90 min lub bieg"
+        }
+      ]
+    },
+    "la": {
+      "_faza_rowerowa": "la",
+      "days": [
+        {
+          "day": "pn",
+          "kind": "inne",
+          "text": "Wolne"
+        },
+        {
+          "day": "wt",
+          "kind": "rower",
+          "text": "30/15 albo VO₂max"
+        },
+        {
+          "day": "sr",
+          "kind": "rower",
+          "text": "Strefa 2, 90 min"
+        },
+        {
+          "day": "cz",
+          "kind": "rower",
+          "text": "Over-under albo próg"
+        },
+        {
+          "day": "pt",
+          "kind": "siła",
+          "text": "Siła krótka"
+        },
+        {
+          "day": "sb",
+          "kind": "rower",
+          "text": "Długa jazda 3–4 h"
+        },
+        {
+          "day": "nd",
+          "kind": "rower",
+          "text": "Spokojnie 60–90 min"
+        }
+      ]
+    }
+  },
+  "ideal_weeks_uwaga": "Przykładowe rozkłady dni z planu rowerowego. Dni są umowne: użytkownik ma dynamiczne tygodnie, więc aplikacja planuje po priorytetach (planner_rules.json), a ten rozkład służy jako domyślne ułożenie tygodnia, które można przesuwać."
+}

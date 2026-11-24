@@ -1,0 +1,61 @@
+{
+  "_opis": "Profil startowy. Wszystkie liczby edytowalne w ustawieniach aplikacji; to wartości z 24.11.2026.",
+  "name": "Maksymilian (Maks)",
+  "language": "pl",
+  "timezone": "Europe/Warsaw",
+  "home": "Warszawa (często Bielsko-Biała, Tatry)",
+  "goals": [
+    "Skitury/splitboard: kurs lawinowy w Tatrach 15.01.2027, Alpy w połowie lutego 2027",
+    "Rower latem 2027: długie jazdy, góry (Beskidy)"
+  ],
+  "priorities": "Zimą najważniejsze: siła nóg (Nogi na puch), góry, podejścia. Rower to dodatek. Po Alpach rower staje się głównym treningiem.",
+  "week_style": "Dynamiczne tygodnie, wyjazdy (np. Kopenhaga 27–29.11.2026). Dni treningów nie są stałe; plan ma być elastyczny i podpowiadać 'co teraz' na podstawie historii i dostępnego czasu.",
+  "metrics": {
+    "ftp_keiser_w": {
+      "value": 290,
+      "status": "wstępny szacunek z 24.11.2026 (220 W na biegu 12 przy tętnie ~145–150 = górna granica Z2). Test FTP planowany 2.12.2026.",
+      "history": [
+        {
+          "date": "2026-11-24",
+          "value": 290,
+          "source": "estimate"
+        }
+      ]
+    },
+    "lthr_bike": {
+      "value": 163,
+      "status": "szacunek z najlepszych 20 min jazd na zewnątrz (170–172). Potwierdzić testem: średnie tętno z ostatnich 10 min testu."
+    },
+    "lthr_run": {
+      "value": 167,
+      "status": "około 3–5 uderzeń więcej niż na rowerze"
+    },
+    "hr_max_observed": {
+      "run": 191,
+      "bike": 190,
+      "garmin_setting": 195
+    },
+    "rhr_baseline": {
+      "range": [
+        43,
+        45
+      ],
+      "today_2026_11_24": 44,
+      "alert_threshold": 50,
+      "note": "11–17.11.2026 było 51–53 po Tatrach i mocnym podejściu."
+    },
+    "vo2max_garmin_run": 57
+  },
+  "equipment": {
+    "keiser_m3": "Stary Keiser M3 (bez Bluetooth). Konsola: kadencja, waty (szacowane, niekalibrowane, ±10% wg instrukcji, ale powtarzalne), kcal, czas, bieg 1–24, tętno z pasa Polar (5 kHz). Średnie: przestać pedałować 3 s. Reset po 60 s bez pedałowania! Bieg 10 ≈ 180 W, bieg 12 ≈ 220 W przy ~85–90 rpm (24.11.2026).",
+    "hr_strap": "Polar (nadaje jednocześnie do Keisera i przez Bluetooth do zegarka).",
+    "watch": "Garmin (Forerunner/Fenix – nieustalony model). Nagrywa 'Indoor Cycling' tylko z czasem i tętnem. Synchronizacja z Garmin Connect i Stravą.",
+    "phone": "iPhone (iOS). Telefon na kierownicy Keisera pokazuje timer.",
+    "gym": "Siłownia ze sztangą, hantlami, skrzynią, wyciągiem."
+  },
+  "known_notes": [
+    "Na czczo: tylko spokojne treningi; słodki napój nawadniający w trakcie.",
+    "Garmin ma strefy od HRmax 195 – zalecane przestawienie kolarskich na %LTHR 163.",
+    "Waty Keisera nieporównywalne z miernikiem mocy na szosie."
+  ]
+}

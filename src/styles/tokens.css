@@ -1,0 +1,55 @@
+/* Tokeny: noc na grani + śnieg. Kolory stref są jasne i nasycone,
+   żeby ciemny tekst na nich miał kontrast ≥ 7:1 (czytelność z odległości ramion). */
+:root {
+  --night: #0e1a24;
+  --night-2: #142532;
+  --night-3: #1c3344;
+  --night-line: #2b4659;
+  --snow: #f3f6f8;
+  --snow-2: #e3eaf0;
+  --snow-line: #ccd7e0;
+  --ink: #0e1a24;
+  --ink-2: #3f5466;
+  --frost-text: #9fb3c3;
+
+  --zone-z1: #b7ccdc;
+  --zone-z2lo: #b7ccdc;
+  --zone-z2: #74b6e6;
+  --zone-tempo: #5acdb4;
+  --zone-sst: #f4c542;
+  --zone-thr: #f6a53b;
+  --zone-vo2: #ff8b5e;
+  --zone-sprint: #ff7474;
+
+  --warn: #c62828;
+
+  --font-text: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-num: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --tap: 52px;
+
+  /* Motyw aplikacji (poza timerem): jasny */
+  --bg: var(--snow);
+  --surface: #ffffff;
+  --surface-2: var(--snow-2);
+  --text: var(--ink);
+  --muted: var(--ink-2);
+  --line: var(--snow-line);
+  --focus: #1f6fb2;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--night);
+    --surface: var(--night-2);
+    --surface-2: var(--night-3);
+    --text: var(--snow);
+    --muted: var(--frost-text);
+    --line: var(--night-line);
+    --focus: #8cc8f2;
+    color-scheme: dark;
+  }
+}

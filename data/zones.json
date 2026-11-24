@@ -1,0 +1,109 @@
+{
+  "_opis": "Strefy liczone z FTP (W, na tym konkretnym Keiserze) i progu tętna na rowerze (LTHR). Zakresy w % FTP i % LTHR. Na nogach (bieg, podejścia) tętno przy tym samym wysiłku jest zwykle o 5–10 uderzeń wyższe niż na rowerze.",
+  "zones": {
+    "z1": {
+      "name": "Lekko",
+      "pct_ftp": [
+        45,
+        60
+      ],
+      "pct_lthr": [
+        72,
+        82
+      ],
+      "feel": "bardzo swobodnie, oddech nosem",
+      "color_token": "--z1"
+    },
+    "z2": {
+      "name": "Strefa 2",
+      "pct_ftp": [
+        56,
+        75
+      ],
+      "pct_lthr": [
+        81,
+        89
+      ],
+      "feel": "swobodnie, rozmawiasz pełnymi zdaniami",
+      "color_token": "--z2"
+    },
+    "tempo": {
+      "name": "Tempo",
+      "pct_ftp": [
+        76,
+        87
+      ],
+      "pct_lthr": [
+        86,
+        92
+      ],
+      "feel": "równo i stanowczo, krótkie zdania",
+      "color_token": "--z3"
+    },
+    "sst": {
+      "name": "Sweet spot",
+      "pct_ftp": [
+        88,
+        94
+      ],
+      "pct_lthr": [
+        90,
+        95
+      ],
+      "feel": "ciężko, ale równo",
+      "color_token": "--z4"
+    },
+    "thr": {
+      "name": "Próg",
+      "pct_ftp": [
+        95,
+        102
+      ],
+      "pct_lthr": [
+        95,
+        100
+      ],
+      "feel": "mocno, pojedyncze słowa",
+      "color_token": "--z4"
+    },
+    "vo2": {
+      "name": "VO₂max",
+      "pct_ftp": [
+        106,
+        120
+      ],
+      "pct_lthr": [
+        100,
+        106
+      ],
+      "feel": "bardzo mocno, końcówka na granicy",
+      "color_token": "--z5"
+    },
+    "sprint": {
+      "name": "Sprint",
+      "pct_ftp": [
+        150,
+        250
+      ],
+      "pct_lthr": null,
+      "feel": "na maksa, 10 sekund",
+      "color_token": "--z5"
+    },
+    "z2lo": {
+      "name": "Lekka strefa 2",
+      "pct_ftp": [
+        50,
+        65
+      ],
+      "pct_lthr": [
+        75,
+        85
+      ],
+      "feel": "bardzo swobodnie, możesz oddychać nosem",
+      "color_token": "--z1"
+    }
+  },
+  "pct_to_zone_rule": "p<=60 → z1; p<=75 → z2; p<=87 → tempo; p<=94 → sst; p<=102 → thr; p<=140 → vo2; wyżej → sprint",
+  "rounding": "Waty zaokrąglaj do 5 W. Tętno do całości.",
+  "timer_target_rule": "W segmencie timera: dla p<=102 pokazuj zakres całej strefy; dla p>102 pokazuj p-4..p+4 %FTP; sprint = 'na maksa'. Tętno: dla segmentów krótszych niż 60 s 'nie patrz'; dla vo2 '>100% LTHR'; inaczej zakres strefy."
+}

@@ -1,0 +1,558 @@
+/* ============ Timer ============
+   Zawsze ciemny (noc), blok odcinka w kolorze strefy — strefę widać kątem oka.
+   Rozmiary cyfr liczone z zapytań o kontener (cqw/cqh), więc wypełniają miejsce
+   niezależnie od telefonu i orientacji. --chars = liczba znaków wartości. */
+
+.timer {
+  --zc: var(--zone-z2);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--night);
+  color: var(--snow);
+  color-scheme: dark;
+  display: grid;
+  gap: 8px;
+  padding: max(8px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+    max(10px, env(safe-area-inset-left));
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---------- pion ---------- */
+.timer {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 44px minmax(0, 1fr) minmax(0, 1.05fr) auto;
+  grid-template-areas: 'top' 'profile' 'slab' 'metrics' 'controls';
+}
+
+/* ---------- poziom (telefon na kierownicy) ---------- */
+@media (orientation: landscape) {
+  .timer {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'top profile' 'slab metrics' 'controls controls';
+    column-gap: 10px;
+  }
+}
+
+/* ---------- górny pasek ---------- */
+.t-top {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.t-titles {
+  min-width: 0;
+  display: grid;
+}
+
+.t-title {
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--frost-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t-total {
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--frost-text);
+  white-space: nowrap;
+}
+
+.t-total b {
+  color: var(--snow);
+  font-weight: 600;
+}
+
+.t-left {
+  margin-left: 12px;
+}
+
+.t-badge {
+  margin-left: auto;
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--zone-sst);
+  color: var(--zone-sst);
+  white-space: nowrap;
+}
+
+.t-icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--night-line);
+  background: var(--night-2);
+  color: var(--snow);
+}
+
+/* ---------- mini przebieg ---------- */
+.t-profile {
+  grid-area: profile;
+  position: relative;
+  min-height: 0;
+  color: var(--snow);
+  align-self: stretch;
+}
+
+.t-profile-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.t-mark {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 3px;
+  margin-left: -1.5px;
+  background: var(--snow);
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--night);
+  transition: left 200ms linear;
+}
+
+/* ---------- blok odcinka (kolor strefy) ---------- */
+.t-slab {
+  grid-area: slab;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  gap: 2px;
+  padding: 10px 16px 12px;
+  border-radius: var(--radius-m);
+  background: var(--zc);
+  color: var(--ink);
+  transition: background-color 250ms ease;
+}
+
+.t-rep {
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t-seg {
+  font-size: clamp(22px, 4.2vmax, 34px);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t-clock-wrap {
+  container-type: size;
+  min-height: 0;
+  display: grid;
+  align-items: center;
+}
+
+.t-clock {
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  font-size: min(100cqh, calc(190cqw / var(--chars, 4)));
+  white-space: nowrap;
+}
+
+.t-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.t-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: left center;
+  transition: transform 200ms linear;
+}
+
+.t-zone {
+  margin-top: 6px;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t-zone b {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Ostatnie 3 sekundy: blok robi się biały, cyfry czerwone. */
+.timer[data-warn] .t-slab {
+  background: var(--snow);
+}
+
+.timer[data-warn] .t-clock {
+  color: var(--warn);
+}
+
+/* ---------- cele ---------- */
+.t-metrics {
+  grid-area: metrics;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1.55fr) minmax(0, 1fr) auto auto;
+  gap: 8px;
+}
+
+.t-tile {
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 6px 12px 4px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--night-line);
+  background: var(--night-2);
+  color: var(--snow);
+  text-align: left;
+}
+
+button.t-tile:active {
+  background: var(--night-3);
+}
+
+.t-tile--primary {
+  border: 2px solid var(--zc);
+  background: var(--night-2);
+}
+
+.t-mlabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--frost-text);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.t-tile--primary .t-mlabel {
+  font-size: 18px;
+  color: var(--snow);
+}
+
+.t-pin {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--frost-text);
+}
+
+.t-mvalue {
+  container-type: size;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.t-mvalue b {
+  font-weight: 700;
+  line-height: 0.9;
+  white-space: nowrap;
+  font-size: min(92cqh, calc(150cqw / var(--chars, 5)));
+}
+
+.t-mvalue small {
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: var(--frost-text);
+  font-size: min(34cqh, 9cqw);
+  align-self: flex-end;
+  padding-bottom: 0.3em;
+}
+
+.t-secondary {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.t-cue {
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--snow);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.t-cue--hint {
+  color: var(--zone-sst);
+}
+
+.t-next {
+  font-size: 16px;
+  color: var(--frost-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t-next b {
+  color: var(--snow);
+}
+
+/* ---------- sterowanie ---------- */
+.t-controls {
+  grid-area: controls;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-auto-rows: 56px;
+  gap: 8px;
+}
+
+.t-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--night-line);
+  background: var(--night-2);
+  color: var(--snow);
+  font-weight: 600;
+  font-size: 17px;
+  transition: background-color 120ms ease, transform 80ms ease;
+}
+
+.t-btn:hover {
+  background: var(--night-3);
+}
+
+.t-btn:active {
+  transform: scale(0.97);
+}
+
+.t-btn--main {
+  background: var(--snow);
+  color: var(--ink);
+  border-color: var(--snow);
+  font-size: 22px;
+  font-family: var(--font-num);
+  font-weight: 700;
+}
+
+.t-btn--main:hover {
+  background: var(--snow-2);
+}
+
+.t-btn[aria-pressed='false'] {
+  color: var(--frost-text);
+}
+
+.t-btn--end[data-armed] {
+  background: var(--warn);
+  border-color: var(--warn);
+  color: #fff;
+}
+
+/* pion: duży rząd Wstecz / Start / Dalej, pod nim mniejsze przyciski */
+@media (orientation: portrait) {
+  .t-controls {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .t-controls > .t-btn {
+    grid-column: span 3;
+  }
+
+  .t-controls > .t-btn--main {
+    grid-column: span 6;
+  }
+
+  .t-controls > .t-btn--sub {
+    grid-row: 2;
+    grid-column: span 2;
+    padding: 0 4px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .t-controls > .t-btn--end {
+    grid-column: span 4;
+  }
+}
+
+/* poziom: jeden rząd, Start najszerszy */
+@media (orientation: landscape) {
+  .t-controls {
+    grid-auto-rows: 54px;
+    grid-template-columns: 1fr 2.4fr 1fr 0.9fr 0.9fr 0.65fr 0.65fr 1.1fr;
+  }
+
+  .t-profile {
+    align-self: center;
+    height: 44px;
+  }
+
+  .t-seg {
+    font-size: clamp(20px, 5.6vh, 30px);
+  }
+}
+
+/* Niski ekran w poziomie (iPhone mini/SE): ciaśniej, bez opisu strefy. */
+@media (orientation: landscape) and (max-height: 400px) {
+  .timer {
+    gap: 6px;
+  }
+
+  .t-zone {
+    display: none;
+  }
+
+  .t-controls {
+    grid-auto-rows: 48px;
+  }
+
+  .t-cue,
+  .t-next {
+    font-size: 15px;
+  }
+
+  .t-cue {
+    -webkit-line-clamp: 1;
+  }
+
+  .t-rep {
+    font-size: 15px;
+  }
+}
+
+/* ---------- ekran po treningu ---------- */
+.timer--done {
+  display: block;
+  overflow-y: auto;
+  -webkit-user-select: text;
+  user-select: text;
+  --surface: var(--night-2);
+  --surface-2: var(--night-3);
+  --text: var(--snow);
+  --muted: var(--frost-text);
+  --line: var(--night-line);
+  --bg: var(--night);
+}
+
+.t-done {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.t-done-head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.t-done-head h1 {
+  font-size: 36px;
+}
+
+.t-done-check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--zc);
+  color: var(--ink);
+}
+
+.t-done-sub {
+  color: var(--frost-text);
+}
+
+.t-done-grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 720px) {
+  .t-done-grid {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+}
+
+.t-done-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-m);
+  background: var(--night-2);
+  border: 1px solid var(--night-line);
+}
+
+.t-done-card h2 {
+  font-size: 22px;
+}
+
+.t-done-hint {
+  color: var(--frost-text);
+  font-size: 15px;
+}
+
+.t-done-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.t-garmin {
+  font-family: var(--font-num);
+  font-size: 22px;
+  padding: 12px 14px;
+  border-radius: var(--radius-s);
+  background: var(--night);
+  border: 1px solid var(--night-line);
+  -webkit-user-select: all;
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+
+.t-done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.t-done-saved {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+  color: var(--zone-tempo);
+}

@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nogi na puch – trening siłowy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5F7; --panel:#E4ECF2; --ink:#1B2632; --muted:#5A6A79; --far:#8D9CAB;
+  --glacier:#2D6A9F; --beacon:#E2A400; --line:#C9D5DF; --box:#CDD8E1; --shadow:#DCE4EB;
+  --sel:#2D6A9F; --selfill:rgba(45,106,159,.16);
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121B24; --panel:#1B2733; --ink:#E4EBF1; --muted:#97A7B5; --far:#5F7183;
+    --glacier:#7DB2E0; --beacon:#F2C640; --line:#2D3C4A; --box:#33465A; --shadow:#1A2530;
+    --sel:#7DB2E0; --selfill:rgba(125,178,224,.18); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121B24; --panel:#1B2733; --ink:#E4EBF1; --muted:#97A7B5; --far:#5F7183;
+  --glacier:#7DB2E0; --beacon:#F2C640; --line:#2D3C4A; --box:#33465A; --shadow:#1A2530;
+  --sel:#7DB2E0; --selfill:rgba(125,178,224,.18); color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:980px;margin:0 auto;padding:40px 22px 80px}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;letter-spacing:.005em;line-height:1.05;margin:0}
+h1{font-size:clamp(52px,11vw,104px);font-weight:700}
+.lede{max-width:60ch;color:var(--muted);margin:14px 0 0;font-size:18px}
+h2{font-size:34px;margin-bottom:14px}
+h3{font-size:30px}
+p{margin:0 0 10px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--glacier);outline-offset:3px;border-radius:4px}
+
+/* season profile */
+.season{margin:36px 0 0}
+.season-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -22px;padding:0 22px}
+.season svg{display:block;width:100%;min-width:620px;height:auto}
+.seg{cursor:pointer}
+.seg .area{fill:transparent;transition:fill .25s}
+.seg .ridge{fill:none;stroke:var(--far);stroke-width:3;stroke-linejoin:round;transition:stroke .25s}
+.seg[aria-pressed="true"] .area{fill:var(--selfill)}
+.seg[aria-pressed="true"] .ridge{stroke:var(--sel);stroke-width:4}
+.seg:hover .ridge{stroke:var(--ink)}
+.seg .name{font-family:"Barlow Condensed",sans-serif;font-size:21px;font-weight:600;fill:var(--muted)}
+.seg[aria-pressed="true"] .name{fill:var(--ink)}
+.seg .dates{font-size:13px;fill:var(--muted)}
+.seg:focus{outline:none}
+.seg:focus-visible .area{stroke:var(--glacier);stroke-width:2}
+.tick{font-size:13px;fill:var(--muted)}
+.axis{stroke:var(--line);stroke-width:1.5}
+.taper{fill:url(#hatch)}
+.taper-t{font-size:12px;fill:var(--muted)}
+.flag{fill:var(--beacon)}
+.pole{stroke:var(--ink);stroke-width:2}
+.mark{font-size:14px;font-weight:700;fill:var(--ink)}
+.hint{font-size:14px;color:var(--muted);margin-top:6px}
+
+.phase-info{margin-top:22px;border-left:4px solid var(--glacier);padding:4px 0 4px 18px;max-width:68ch}
+.phase-info h2{margin:0 0 4px;font-size:30px}
+.phase-info .when{color:var(--muted);margin-bottom:6px}
+
+/* session */
+.session{margin-top:56px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;color:var(--muted);margin-bottom:8px}
+.meta b{color:var(--ink)}
+.warm{background:var(--panel);border-radius:14px;padding:18px 22px;margin:22px 0 10px}
+.warm h3{font-size:24px;margin-bottom:6px}
+.warm ul,.cues{margin:0;padding-left:20px}
+.warm li,.cues li{margin:3px 0}
+.legend{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:15px;margin:18px 0 0}
+.legend i{display:inline-block;width:26px;height:6px;border-radius:3px;background:var(--beacon)}
+
+.ex{display:grid;grid-template-columns:270px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line)}
+.ex:first-of-type{border-top:0}
+.fig{position:relative}
+.fig svg{display:block;width:100%;height:auto;background:var(--panel);border-radius:14px}
+.figbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;min-height:30px}
+.now{font-size:14px;color:var(--muted)}
+.play{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 12px;font-size:14px;cursor:pointer}
+.play:hover{border-color:var(--muted)}
+.num{font-family:"Barlow Condensed",sans-serif;font-size:20px;color:var(--glacier);font-weight:600}
+.why{color:var(--muted);margin:8px 0 14px;max-width:60ch}
+.rx{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:0 0 14px}
+.rx dt{color:var(--muted)}
+.rx dd{margin:0;font-weight:700}
+.extra{font-size:15px;color:var(--muted);margin-top:10px}
+.done{display:inline-flex;align-items:center;gap:10px;margin-top:14px;cursor:pointer;user-select:none}
+.done input{width:22px;height:22px;accent-color:var(--glacier);cursor:pointer}
+.ex.is-done .fig svg{opacity:.55}
+
+.core{background:var(--panel);border-radius:14px;padding:20px 22px;margin-top:10px}
+.core h3{font-size:26px;margin-bottom:8px}
+.reset{margin-top:28px;border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 18px;cursor:pointer}
+.reset:hover{border-color:var(--muted)}
+.notes{margin-top:56px;max-width:68ch}
+.notes h2{font-size:30px}
+.notes p{color:var(--ink)}
+
+/* figure strokes */
+.limb{fill:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.arm{stroke-width:6}
+.ft{stroke-width:6}
+.nr{stroke:var(--ink)} .fr{stroke:var(--far)} .hl{stroke:var(--beacon)}
+.torso{fill:none;stroke:var(--ink);stroke-width:10;stroke-linecap:round}
+.head{fill:var(--ink)}
+.ground{stroke:var(--line);stroke-width:2}
+.plate,.db,.strap{fill:var(--glacier)}
+.hub{fill:var(--panel)}
+.box{fill:var(--box)}
+.shadow{fill:var(--shadow)}
+.board{fill:none;stroke:var(--glacier);stroke-width:6;stroke-linecap:round}
+
+/* progress log */
+.seg .count{font-size:13px;font-weight:700;fill:var(--glacier)}
+.tally{font-weight:700;color:var(--glacier);margin:6px 0 0}
+.log{border:2px solid var(--glacier);border-radius:14px;padding:20px 22px;margin-top:22px}
+.log h3{font-size:26px;margin-bottom:4px}
+.log .sub{color:var(--muted);margin-bottom:14px;font-size:15px}
+.tallies{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px;padding:0;list-style:none}
+.tallies li{background:var(--panel);border-radius:10px;padding:8px 14px;min-width:120px}
+.tallies li.cur{outline:2px solid var(--glacier)}
+.tallies .n{display:block;font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--ink)}
+.tallies .l{font-size:14px;color:var(--muted)}
+.save{border:0;background:var(--glacier);color:var(--bg);border-radius:999px;padding:10px 22px;font-weight:700;cursor:pointer}
+.save:disabled{opacity:.5;cursor:default}
+.undo{border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 16px;margin-left:8px;cursor:pointer;font-size:15px}
+.status{font-size:15px;color:var(--muted);margin:10px 0 0;min-height:1.4em}
+.history{margin:12px 0 0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
+.history li{padding:4px 0;border-top:1px solid var(--line)}
+.history b{color:var(--ink)}
+.log.ready .save{box-shadow:0 0 0 4px var(--selfill)}
+
+/* weekly plan */
+.plan{margin-top:56px}
+.plan-lede{color:var(--muted);max-width:64ch;margin:0 0 18px}
+.weeknav{display:flex;align-items:center;gap:14px;margin:0 0 16px}
+.weeknav b{font-family:"Barlow Condensed",sans-serif;font-size:24px;font-weight:600}
+.wk-sum{font-size:15px;color:var(--muted)}
+.weeknav button{flex:none;border:1px solid var(--line);background:transparent;border-radius:999px;width:40px;height:40px;font-size:22px;line-height:1;cursor:pointer}
+.weeknav button:disabled{opacity:.3;cursor:default}
+.taper-note{background:var(--panel);border-left:4px solid var(--beacon);border-radius:0 10px 10px 0;padding:10px 16px;margin:0 0 16px}
+.next{border:2px solid var(--glacier);border-radius:14px;padding:20px 22px;margin:0 0 6px}
+.next-k{font-size:13px;font-weight:700;color:var(--glacier);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.next h3{font-size:34px;margin-bottom:8px}
+.next .today,.next .swapn{font-size:15px;color:var(--muted);margin:0 0 8px}
+.next .swapn{color:var(--ink);border-left:3px solid var(--beacon);padding-left:10px}
+.zt b{color:var(--ink)}
+.rx dd.zt{font-weight:400}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;align-items:center}
+.chips span{color:var(--muted);font-size:15px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 13px;font-size:15px;cursor:pointer}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--selfill);border-color:var(--glacier);font-weight:700}
+.pstatus{font-size:15px;color:var(--glacier);font-weight:700;min-height:1.4em;margin:6px 0 10px}
+.slots{list-style:none;margin:0;padding:0}
+.slot{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:start}
+.slot .mk{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px;color:var(--muted)}
+.slot.ok .mk{background:var(--glacier);border-color:var(--glacier);color:var(--bg)}
+.slot.nx .mk{border-color:var(--glacier);color:var(--glacier)}
+.sl-t{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.sl-s{font-size:15px;color:var(--muted)}
+.slot.ok .sl-s{color:var(--ink)}
+.tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.tag.nx{color:var(--glacier);border-color:var(--glacier)}
+.del{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 8px;margin-left:4px;border-radius:6px}
+.del:hover{color:var(--ink)}
+.del.arm{color:var(--ink);background:var(--panel);font-weight:700}
+.extra-done{font-size:15px;color:var(--muted);margin:10px 0 0}
+.extra-done b{color:var(--ink)}
+.zones{background:var(--panel);border-radius:14px;padding:14px 20px;margin:26px 0 0}
+.zones summary{cursor:pointer;font-weight:700}
+.zones p{font-size:15px;color:var(--muted)}
+.zf{display:flex;flex-wrap:wrap;gap:12px 22px;margin:14px 0}
+.zf label,.logf label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted)}
+.zf input{width:150px}
+.plan input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.cat-h{font-size:32px;margin:44px 0 0}
+.grp h4{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:600;color:var(--muted);margin:24px 0 4px;text-transform:uppercase;letter-spacing:.05em}
+.wo{border-top:1px solid var(--line);padding:16px 0}
+.wo h5{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:600;margin:0 0 2px;line-height:1.1}
+.wo .cnt{font-size:14px;color:var(--muted);margin:0 0 10px}
+.wo .badge{color:var(--glacier);font-weight:700}
+.how{margin:0 0 12px}
+.how summary{cursor:pointer;color:var(--glacier);font-weight:700;font-size:15px;margin:0 0 6px}
+.logf{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;background:var(--panel);border-radius:12px;padding:14px 16px;margin-top:8px}
+.next .logf{background:var(--selfill)}
+.logf label:nth-child(2){flex:1 1 220px}
+.logf label:nth-child(2) input{width:100%}
+.logf-b{display:flex;gap:8px;align-items:center}
+.logf .undo{margin-left:0}
+
+@media (max-width:680px){
+  .next{padding:16px}
+  .next h3{font-size:30px}
+  .wrap{padding:28px 18px 64px}
+  .ex{grid-template-columns:1fr;gap:14px}
+  .fig{max-width:340px}
+  .season-scroll{margin:0 -18px;padding:0 18px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Nogi na puch</h1>
+    <p class="lede">Zimowy plan pod splitboard: trening siłowy nóg, a do tego rower, bieganie, podbiegi i góry. Wybierz fazę na profilu sezonu, a plan tygodnia podpowie, co zrobić dalej, i dopasuje czasy, serie i intensywność.</p>
+  </header>
+
+  <section class="season" aria-label="Fazy przygotowań">
+    <div class="season-scroll"><svg id="profile" viewBox="0 -12 800 246" role="group" aria-label="Profil sezonu od końca października do Alp"></svg></div>
+    <p class="hint">Zakreskowane pola to tygodnie lżejsze: przed kursem i przed Alpami.</p>
+    <div class="phase-info" aria-live="polite">
+      <h2 id="ph-name"></h2>
+      <div class="when" id="ph-when"></div>
+      <p id="ph-text"></p>
+      <p class="tally" id="ph-tally"></p>
+    </div>
+  </section>
+
+  <section class="plan" id="plan" aria-label="Plan tygodnia">
+    <h2>Plan tygodnia</h2>
+    <p class="plan-lede">Każdy trening zajmuje jedno miejsce w tygodniu, a podobne treningi są wymienne: długą jazdę zastąpisz podejściami z plecakiem albo górami. Kolejność to priorytet. Jeśli w tygodniu zrobisz tylko 2–3 treningi, niech to będą trzy pierwsze.</p>
+    <div class="weeknav"><button id="wk-prev" type="button" aria-label="Poprzedni tydzień">‹</button><div><b id="wk-label"></b><div class="wk-sum" id="wk-sum"></div></div><button id="wk-next" type="button" aria-label="Następny tydzień">›</button></div>
+    <div class="taper-note" id="taper" hidden></div>
+    <div class="next" id="next" aria-live="polite"></div>
+    <p class="pstatus" id="pstatus" aria-live="polite"></p>
+    <ol class="slots" id="slots"></ol>
+    <p class="extra-done" id="extra"></p>
+    <details class="zones">
+      <summary>Twoje strefy: waty i tętno</summary>
+      <div class="zf">
+        <label>FTP na Keiserze (W)<input id="z-ftp" type="number" inputmode="numeric" min="50" max="600" placeholder="np. 240"></label>
+        <label>Próg tętna (uderzenia/min)<input id="z-lthr" type="number" inputmode="numeric" min="100" max="220" placeholder="np. 165"></label>
+      </div>
+      <p>Wpisz liczby, a treningi pokażą konkretne waty i tętno. Nie znasz ich? Zrób test na Keiserze: 15 minut rozgrzewki, potem 20 minut tak mocno, jak równo utrzymasz. FTP to około 95% średnich watów z tych 20 minut. Średnie tętno z ostatnich 10 minut testu przyjmij jako próg tętna. Powtórz test co 6–8 tygodni.</p>
+      <p>Starszy Keiser M3 szacuje waty. Nie porównuj ich z innym rowerem, ale z dnia na dzień są powtarzalne, i to wystarczy. Tętno bierz z Polara. Biegając i podchodząc masz przy tym samym wysiłku zwykle o 5–10 uderzeń więcej niż na rowerze, więc na nogach możesz dodać te kilka uderzeń.</p>
+    </details>
+    <h3 class="cat-h">Wszystkie treningi</h3>
+    <div id="catalog"></div>
+  </section>
+
+  <section class="session" id="sila">
+    <h2>Trening siłowy: nogi na puch</h2>
+    <div class="meta"><span>Czas: <b>około 70 minut</b></span><span>Ciężar: <b id="rir"></b></span></div>
+    <div class="warm">
+      <h3>Rozgrzewka, 10 minut</h3>
+      <ul>
+        <li>5 minut rower lub orbitrek, spokojnie.</li>
+        <li>Biodra 90/90 i kolano do ściany dla kostek, po 5 na stronę.</li>
+        <li>10 przysiadów bez obciążenia i 10 wykroków z rotacją tułowia.</li>
+        <li>Pierwsze ćwiczenie siłowe zacznij od 1–2 lekkich serii.</li>
+      </ul>
+    </div>
+    <div class="legend"><i></i>Żółta noga to noga, która pracuje najmocniej. W pozycji puchowej to twoja tylna noga na desce.</div>
+    <div id="list"></div>
+
+    <div class="core">
+      <h3>Na koniec: core, 6–8 minut</h3>
+      <ul class="cues">
+        <li><b>Pallof press</b> na wyciągu lub z gumą: 3 × 10 na stronę. Wyciąg ciągnie z boku, ty nie dajesz się obrócić.</li>
+        <li><b>Rąbanie na wyciągu</b> z góry na dół po skosie: 3 × 8 na stronę. To ta sama rotacja, którą inicjujesz skręt.</li>
+        <li><b>Deska boczna</b>: 3 × 30–45 sekund na stronę.</li>
+      </ul>
+    </div>
+    <div class="log" id="log">
+      <h3>Twoje treningi</h3>
+      <p class="sub">Po treningu zapisz go tutaj. Liczy się do fazy wybranej na profilu sezonu.</p>
+      <ul class="tallies" id="tallies"></ul>
+      <button class="save" id="save" type="button">Zapisz dzisiejszy trening</button><button class="undo" id="undo" type="button" hidden>Cofnij ostatni</button>
+      <p class="status" id="status" aria-live="polite"></p>
+      <ul class="history" id="history"></ul>
+    </div>
+    <button class="reset" id="reset" type="button">Wyczyść odhaczenia</button>
+  </section>
+
+  <section class="notes">
+    <h2>Kilka zasad</h2>
+    <p>Dobieraj ciężar tak, żeby po serii zostawały ci jeszcze 1–3 powtórzenia w zapasie, zgodnie z fazą. Technika i tempo są ważniejsze niż kilogramy.</p>
+    <p>W tygodniu przed kursem (8–14 stycznia) i w tygodniu przed Alpami zrób połowę serii z tym samym ciężarem. Przyjeżdżasz wtedy wypoczęty, a siła zostaje.</p>
+    <p>Jeśli przy skokach pojawia się ból z przodu kolana, zostaw skoki na tydzień i zrób zamiast nich dodatkową serię pozycji puchowej.</p>
+  </section>
+</main>
+<script>
+const FIG = (function () {
+  const G = 170;
+  const TH = 40, SH = 40, TO = 50, UA = 28, FA = 26;
+
+  function ik(r, t, a, b, s) {
+    const dx = t[0] - r[0], dy = t[1] - r[1];
+    const d = Math.hypot(dx, dy);
+    const dd = Math.min(Math.max(d, Math.abs(a - b) + 0.5), a + b - 0.5);
+    const base = Math.atan2(dy, dx);
+    const c = (a * a + dd * dd - b * b) / (2 * a * dd);
+    const al = Math.acos(Math.max(-1, Math.min(1, c)));
+    const ang = base + s * al;
+    const j = [r[0] + a * Math.cos(ang), r[1] + a * Math.sin(ang)];
+    const ux = t[0] - j[0], uy = t[1] - j[1];
+    const ul = Math.hypot(ux, uy) || 1;
+    return [j, [j[0] + b * ux / ul, j[1] + b * uy / ul]];
+  }
+
+  function fold(r, t, a, b, out) {
+    const dx = t[0] - r[0], dy = t[1] - r[1];
+    const d = Math.hypot(dx, dy) || 1;
+    const len = a + b - 0.5;
+    const e = d > len ? [r[0] + dx * len / d, r[1] + dy * len / d] : t;
+    const bend = Math.max(0, 1 - d / (a + b));
+    const m = [(r[0] + e[0]) / 2, (r[1] + e[1]) / 2];
+    return [[m[0] + out * bend * 24, m[1] - bend * 4], e];
+  }
+
+  function joints(p) {
+    const front = p.view === 'front';
+    const t = p.torso * Math.PI / 180;
+    const dir = [Math.sin(t), -Math.cos(t)];
+    const perp = [Math.cos(t), Math.sin(t)];
+    const hw = front ? 7 : 0, sw = front ? 13 : 0;
+    const add = (a, v, k) => [a[0] + v[0] * k, a[1] + v[1] * k];
+    const hip = p.hip;
+    const hip1 = add(hip, perp, -hw), hip2 = add(hip, perp, hw);
+    const sc = add(hip, dir, TO);
+    const s1 = add(sc, perp, -sw), s2 = add(sc, perp, sw);
+    const head = add(add(sc, dir, 16), front ? [0, 0] : perp, front ? 0 : 2);
+    let l1, l2, a1, a2;
+    const hand1 = [s1[0] + p.h1[0], s1[1] + p.h1[1]];
+    const hand2 = [s2[0] + p.h2[0], s2[1] + p.h2[1]];
+    if (front) {
+      l1 = fold(hip1, p.f1, TH, SH, -1); l2 = fold(hip2, p.f2, TH, SH, 1);
+      a1 = fold(s1, hand1, UA, FA, -1); a2 = fold(s2, hand2, UA, FA, 1);
+    } else {
+      l1 = ik(hip, p.f1, TH, SH, -1); l2 = ik(hip, p.f2, TH, SH, -1);
+      a1 = ik(sc, hand1, UA, FA, p.as || 1); a2 = ik(sc, hand2, UA, FA, p.as || 1);
+    }
+    return { front, hip, hip1, hip2, sc, s1, s2, head, l1, l2, a1, a2, dir, perp };
+  }
+
+  const f = n => n.toFixed(1);
+  const line = (pts, cls) => `<polyline class="${cls}" points="${pts.map(q => f(q[0]) + ',' + f(q[1])).join(' ')}"/>`;
+
+  function foot(root, ankle, dirx, front, cls) {
+    if (front) return `<line class="${cls} ft" x1="${f(ankle[0] - 5)}" y1="${f(ankle[1] + 3)}" x2="${f(ankle[0] + 5)}" y2="${f(ankle[1] + 3)}"/>`;
+    return `<line class="${cls} ft" x1="${f(ankle[0] - 3 * dirx)}" y1="${f(ankle[1] + 2)}" x2="${f(ankle[0] + 10 * dirx)}" y2="${f(ankle[1] + 3)}"/>`;
+  }
+
+  function draw(p, ex) {
+    const J = joints(p);
+    const hl = p.hl || '';
+    const c1 = (hl === 'f1' || hl === 'both') ? 'hl' : (J.front ? 'nr' : 'fr');
+    const c2 = (hl === 'f2' || hl === 'both') ? 'hl' : 'nr';
+    const a1c = J.front ? 'nr' : 'fr';
+    const r1 = J.front ? J.hip1 : J.hip, r2 = J.front ? J.hip2 : J.hip;
+    const sr1 = J.front ? J.s1 : J.sc, sr2 = J.front ? J.s2 : J.sc;
+    const props = ex.props ? ex.props(J, p) : { back: '', front: '' };
+    let s = '';
+    s += `<ellipse class="shadow" cx="${f(J.hip[0])}" cy="${G + 1}" rx="${f(26 - Math.max(0, (G - 80 - J.hip[1])) * 0.2)}" ry="3"/>`;
+    s += props.back;
+    // far side
+    s += line([r1, J.l1[0], J.l1[1]], 'limb ' + c1);
+    s += foot(r1, J.l1[1], p.f1d || 1, J.front, c1);
+    if (!J.front) s += line([sr1, J.a1[0], J.a1[1]], 'limb arm ' + a1c);
+    if (props.mid) s += props.mid;
+    // torso + head
+    s += line(J.front ? [[(J.hip1[0] + J.hip2[0]) / 2, J.hip[1]], J.sc] : [J.hip, J.sc], 'torso');
+    if (J.front) s += line([J.hip1, J.hip2], 'limb nr') + line([J.s1, J.s2], 'limb nr');
+    s += `<circle class="head" cx="${f(J.head[0])}" cy="${f(J.head[1])}" r="9"/>`;
+    // near side
+    s += line([r2, J.l2[0], J.l2[1]], 'limb ' + c2);
+    s += foot(r2, J.l2[1], p.f2d || 1, J.front, c2);
+    if (J.front) s += line([sr1, J.a1[0], J.a1[1]], 'limb arm nr');
+    s += line([sr2, J.a2[0], J.a2[1]], 'limb arm nr');
+    s += props.front;
+    return s;
+  }
+
+  function lerp(a, b, t) {
+    if (typeof a === 'number' && typeof b === 'number') return a + (b - a) * t;
+    if (Array.isArray(a)) return a.map((v, i) => lerp(v, b[i], t));
+    if (a && typeof a === 'object') { const o = {}; for (const k in a) o[k] = (k in b) ? lerp(a[k], b[k], t) : a[k]; return o; }
+    return a;
+  }
+  const ease = t => t * t * (3 - 2 * t);
+
+  function poseAt(ex, time) {
+    const kf = ex.kf, total = kf[kf.length - 1][0];
+    const tt = ((time % total) + total) % total;
+    for (let i = 0; i < kf.length - 1; i++) {
+      const [t0, p0] = kf[i], [t1, p1, label] = kf[i + 1];
+      if (tt >= t0 && tt <= t1) {
+        const k = t1 > t0 ? ease((tt - t0) / (t1 - t0)) : 1;
+        return { pose: lerp(ex.poses[p0], ex.poses[p1], k), label };
+      }
+    }
+    return { pose: ex.poses[kf[0][1]], label: kf[1][2] };
+  }
+
+  const ground = `<line class="ground" x1="0" y1="${G}" x2="200" y2="${G}"/>`;
+  const plate = (c, r) => `<circle class="plate" cx="${f(c[0])}" cy="${f(c[1])}" r="${r}"/><circle class="hub" cx="${f(c[0])}" cy="${f(c[1])}" r="2.5"/>`;
+  const db = c => `<rect class="db" x="${f(c[0] - 7)}" y="${f(c[1] - 3.5)}" width="14" height="7" rx="2.5"/>`;
+  const box = (x1, x2, y) => `<rect class="box" x="${x1}" y="${y}" width="${x2 - x1}" height="${G - y}" rx="2"/>`;
+
+  const side = (o) => Object.assign({ view: 'side', f1d: 1, f2d: 1 }, o);
+  const front = (o) => Object.assign({ view: 'front' }, o);
+
+  const EX = {
+    skater: {
+      poses: {
+        R: front({ hip: [140, 112], torso: -8, f1: [118, 138], f2: [152, 165], h1: [28, 32], h2: [12, 40] }),
+        A: front({ hip: [100, 70], torso: 0, f1: [90, 142], f2: [110, 142], h1: [-18, 30], h2: [18, 30] }),
+        L: front({ hip: [60, 112], torso: 8, f1: [48, 165], f2: [82, 138], h1: [-12, 40], h2: [-28, 32] })
+      },
+      kf: [[0, 'R'], [1.2, 'R', 'utrzymaj lądowanie'], [1.6, 'A', 'odbicie w bok'], [2.0, 'L', 'miękkie lądowanie'], [3.2, 'L', 'utrzymaj lądowanie'], [3.6, 'A', 'odbicie w bok'], [4.0, 'R', 'miękkie lądowanie']],
+      props: () => ({ back: ground, front: '' })
+    },
+    squat: {
+      poses: {
+        up: side({ hip: [95, 88], torso: 6, f1: [97, 165], f2: [100, 165], h1: [-14, 6], h2: [-12, 8], as: -1 }),
+        down: side({ hip: [78, 128], torso: 38, f1: [97, 165], f2: [100, 165], h1: [-14, 6], h2: [-12, 8], as: -1 })
+      },
+      kf: [[0, 'up'], [0.6, 'up', 'start'], [3.6, 'down', 'w dół 3 s'], [4.1, 'down', 'pauza na dole'], [5.1, 'up', 'w górę 1 s']],
+      props: (J) => ({ back: ground, front: plate([J.sc[0] - J.perp[0] * 6 + J.dir[0] * 2, J.sc[1] - J.perp[1] * 6 + J.dir[1] * 2], 12) })
+    },
+    rdl: {
+      poses: {
+        up: side({ hip: [93, 89], torso: 4, f1: [97, 165], f2: [100, 165], h1: [4, 52], h2: [6, 51] }),
+        down: side({ hip: [68, 104], torso: 70, f1: [97, 165], f2: [100, 165], h1: [-6, 50], h2: [-4, 49] })
+      },
+      kf: [[0, 'up'], [0.6, 'up', 'start'], [3.6, 'down', 'biodra w tył 3 s'], [4.1, 'down', 'rozciągnięcie tyłu uda'], [5.1, 'up', 'biodra w przód']],
+      props: (J) => ({ back: ground, front: plate(J.a2[1], 15) })
+    },
+    bulgarian: {
+      poses: {
+        up: side({ hip: [88, 96], torso: 8, f1: [46, 136], f2: [120, 165], f1d: -1, h1: [0, 52], h2: [2, 52], hl: 'f2' }),
+        down: side({ hip: [83, 128], torso: 16, f1: [46, 136], f2: [120, 165], f1d: -1, h1: [0, 52], h2: [2, 52], hl: 'f2' })
+      },
+      kf: [[0, 'up'], [0.6, 'up', 'start'], [3.1, 'down', 'w dół 2–3 s'], [3.5, 'down', 'tylne kolano nad podłogą'], [4.6, 'up', 'w górę']],
+      props: (J) => ({ back: ground + `<rect class="box" x="14" y="140" width="40" height="8" rx="2"/><rect class="box" x="18" y="148" width="5" height="22"/><rect class="box" x="45" y="148" width="5" height="22"/>`, mid: db(J.a1[1]), front: db(J.a2[1]) })
+    },
+    stepup: {
+      poses: {
+        down: side({ hip: [92, 104], torso: 18, f1: [80, 165], f2: [128, 136], h1: [-2, 50], h2: [4, 50], hl: 'f2' }),
+        up: side({ hip: [126, 60], torso: 4, f1: [166, 100], f2: [128, 136], h1: [4, 49], h2: [-2, 50], hl: 'f2' })
+      },
+      kf: [[0, 'down'], [0.6, 'down', 'start'], [1.6, 'up', 'w górę siłą przedniej nogi'], [2.2, 'up', 'kolano wysoko'], [4.2, 'down', 'powoli w dół 2 s']],
+      props: (J) => ({ back: ground + box(104, 160, 140), mid: db(J.a1[1]), front: db(J.a2[1]) })
+    },
+    stepdown: {
+      poses: {
+        up: side({ hip: [106, 60], torso: 4, f1: [128, 126], f2: [110, 136], h1: [22, 32], h2: [26, 30], hl: 'f2' }),
+        down: side({ hip: [98, 94], torso: 24, f1: [134, 164], f2: [110, 136], h1: [30, 22], h2: [34, 20], hl: 'f2' })
+      },
+      kf: [[0, 'up'], [0.6, 'up', 'start'], [4.6, 'down', 'w dół 4 s'], [5.0, 'down', 'pięta dotyka podłogi'], [6.0, 'up', 'w górę']],
+      props: () => ({ back: ground + box(62, 122, 140), front: '' })
+    },
+    nordic: {
+      poses: {
+        up: side({ hip: [70, 126], torso: 0, f1: [30, 165], f2: [32, 165], f1d: -1, f2d: -1, h1: [12, 22], h2: [14, 20], hl: 'both' }),
+        mid: side({ hip: [88.8, 130.7], torso: 28, f1: [30, 165], f2: [32, 165], f1d: -1, f2d: -1, h1: [12, 22], h2: [14, 20], hl: 'both' }),
+        low: side({ hip: [102.8, 143.1], torso: 55, f1: [30, 165], f2: [32, 165], f1d: -1, f2d: -1, h1: [16, 28], h2: [18, 26], hl: 'both' }),
+        catch: side({ hip: [108.8, 156.3], torso: 76, f1: [30, 165], f2: [32, 165], f1d: -1, f2d: -1, h1: [4, 24], h2: [6, 24], hl: 'both' })
+      },
+      kf: [[0, 'up'], [0.6, 'up', 'start'], [2.6, 'mid', 'powoli w przód'], [4.6, 'low', 'hamuj tyłem uda'], [5.2, 'catch', 'złap się rękami'], [5.7, 'catch', 'odepchnij się'], [7.0, 'up', 'wróć do góry']],
+      props: () => ({ back: ground + `<rect class="box" x="56" y="164" width="30" height="6" rx="2"/>`, front: `<rect class="strap" x="20" y="158" width="20" height="6" rx="2"/>` })
+    },
+    stance: {
+      poses: {
+        a: front({ hip: [110, 112], torso: -2, f1: [68, 163], f2: [132, 163], h1: [-12, 36], h2: [12, 36], hl: 'f2' }),
+        b: front({ hip: [112, 122], torso: -1, f1: [68, 163], f2: [132, 163], h1: [-14, 32], h2: [14, 32], hl: 'f2' })
+      },
+      kf: [[0, 'a'], [1.4, 'a', 'trzymaj'], [1.9, 'b', 'amortyzuj'], [2.4, 'a', 'trzymaj'], [2.9, 'b', 'amortyzuj'], [3.6, 'a', 'trzymaj']],
+      props: () => ({ back: `<line class="ground snow" x1="0" y1="${G + 2}" x2="200" y2="${G + 2}"/>`, front: `<path class="board" d="M36 160 Q38 168 50 168 L152 168 Q162 168 164 163"/>` })
+    }
+  };
+
+  return { EX, draw, poseAt };
+})();
+if (typeof module !== 'undefined') module.exports = FIG;
+
+(function(){
+const PH = {
+  f1:{name:'Fundament',when:'27 października – 23 listopada',rir:'2–3 powtórzenia w zapasie',
+      text:'Uczysz się ruchów i budujesz bazę: wolne opuszczanie, umiarkowany ciężar, więcej powtórzeń. Ścięgna i kolana dostają czas, żeby przyzwyczaić się do skoków i pracy na jednej nodze.'},
+  f2:{name:'Siła i moc',when:'24 listopada – 21 grudnia',rir:'1–2 powtórzenia w zapasie',
+      text:'Cięższe przysiady i martwe ciągi, więcej dynamicznych skoków, dłuższe utrzymywanie pozycji puchowej. To faza, która najbardziej podnosi siłę ud przed sezonem.'},
+  f3:{name:'Utrzymanie',when:'22 grudnia – Alpy',rir:'ciężar jak w fazie 2, mniej serii',
+      text:'Mniej serii, ten sam ciężar. Dni na skiturach i w Bielsku robią resztę. W tygodniu przed kursem i przed Alpami zrób połowę serii.'}
+};
+const LIST = [
+ {k:'skater',name:'Skoki łyżwiarskie',why:'Moc i lądowanie na jednej nodze. To samo robisz przy amortyzowaniu dropu i szybkiej zmianie krawędzi. Robisz je na początku, póki nogi są świeże.',
+  rx:{f1:['2 × 5 na stronę','nisko, lądowanie z zatrzymaniem 2 s','60 s'],f2:['4 × 6 na stronę','daleko i dynamicznie, lądowanie z zatrzymaniem','90 s'],f3:['3 × 5 na stronę','dynamicznie, lądowanie z zatrzymaniem','60–90 s']},
+  cues:['Ląduj miękko na śródstopiu, kolano nad stopą, nie do środka.','Zatrzymaj lądowanie, zanim odbijesz się w drugą stronę.','Wolna noga za nogą podporową, nie dotyka podłogi.']},
+ {k:'squat',name:'Przysiad ze sztangą',why:'Podstawa siły ud i bioder. Na desce trzymasz to ugięcie przez cały zjazd.',
+  rx:{f1:['3 × 8–10','3 s w dół, 1 s w górę','2 min'],f2:['4 × 4–6, ciężko','2 s w dół, mocno w górę','3 min'],f3:['3 × 5','2 s w dół, mocno w górę','2–3 min']},
+  cues:['Schodź przynajmniej do uda równoległego z podłogą.','Kolana w linii palców, pięty na ziemi.','Napnij brzuch przed każdym powtórzeniem.']},
+ {k:'rdl',name:'Martwy ciąg rumuński',why:'Tył uda i pośladki. Stabilizują kolano i trzymają cię, gdy deska grzęźnie w puchu.',
+  rx:{f1:['3 × 8–10','3 s w dół','2 min'],f2:['4 × 6','3 s w dół','2–3 min'],f3:['3 × 6','3 s w dół','2 min']},
+  cues:['Ruch zaczyna się od bioder w tył, kolana lekko ugięte i nieruchome.','Gryf blisko nóg przez cały czas.','Schodź tak nisko, jak pozwala prosty kręgosłup.']},
+ {k:'bulgarian',name:'Przysiad bułgarski',why:'Każda noga osobno. Wyrównuje różnice między nogami i przygotowuje do pracy na jednej.',
+  rx:{f1:['3 × 8 na nogę + 1 seria tylną nogą','2–3 s w dół','90 s'],f2:['3 × 6 na nogę + 1 seria tylną nogą, ciężej','2 s w dół, mocno w górę','2 min'],f3:['2 × 6 na nogę + 1 seria tylną nogą','2 s w dół','90 s']},
+  cues:['Tylna stopa na ławce, ciężar na przedniej nodze.','Tylne kolano schodzi prawie do podłogi.','Dodatkowa seria dla nogi, która na desce jest tylna.']},
+ {k:'stepup',name:'Wejście na skrzynię',why:'Siła do podchodzenia stromymi zakosami i wychodzenia z głębokiego śniegu.',
+  rx:{f1:['3 × 10 na nogę','1 s w górę, 2 s w dół','w parze z ćwiczeniem 6'],f2:['3 × 6 na nogę, z hantlami','dynamicznie w górę, 2 s w dół','w parze z ćwiczeniem 6'],f3:['2 × 8 na nogę','dynamicznie w górę, 2 s w dół','w parze z ćwiczeniem 6']},
+  cues:['Skrzynia na wysokość kolana lub trochę wyżej.','Wchodzisz siłą nogi na skrzyni, nie odbijasz się tylną.','W górze unieś wysoko kolano drugiej nogi.'],
+  extra:'Ćwiczenia 5 i 6 rób na zmianę, jedno po drugim, a przerwę bierz po obu.'},
+ {k:'stepdown',name:'Zejście ekscentryczne ze skrzyni',why:'Kontrola kolana przy hamowaniu. Robisz to przy każdym skręcie i lądowaniu.',
+  rx:{f1:['3 × 6 na nogę','4 s w dół','60–90 s po parze'],f2:['3 × 8 na nogę, z hantlami','4 s w dół','90 s po parze'],f3:['2 × 6 na nogę','4 s w dół','60–90 s po parze']},
+  cues:['Stoisz na jednej nodze na skrzyni, druga wisi z przodu.','Opuszczaj się 4 sekundy, aż pięta wolnej nogi dotknie podłogi.','Kolano nad palcami, biodro nie opada w bok.']},
+ {k:'nordic',name:'Nordic curl',why:'Najlepsza ochrona tylnej strony uda przed naderwaniem przy upadkach i gwałtownym hamowaniu.',
+  rx:{f1:['3 × 4–5','opadanie 3–4 s','2 min'],f2:['3 × 5–6','opadanie 4 s','2 min'],f3:['2 × 5','opadanie 4 s','2 min']},
+  cues:['Pięty zablokowane pod drążkiem, maszyną albo przez partnera.','Ciało w jednej linii od kolan do głowy, nie zginaj bioder.','Opadaj jak najwolniej, złap się rękami i odepchnij do góry.'],
+  extra:'Za trudne na start? Uginanie nóg na maszynie 3 × 10 i co tydzień spróbuj 2–3 powtórzeń nordic.'},
+ {k:'stance',name:'Pozycja puchowa',why:'To, co paliło cię w zeszłym sezonie: długie ugięcie z ciężarem przesuniętym na tylną nogę. Trzymanie pozycji buduje wytrzymałość ud na długie zjazdy.',
+  rx:{f1:['3 × 60 s','trzymanie z lekkim sprężynowaniem','60 s'],f2:['3 × 2–3 min, możesz trzymać hantle','trzymanie ze sprężynowaniem','90 s'],f3:['2 × 2 min','trzymanie ze sprężynowaniem','60 s']},
+  cues:['Rozkrok jak na desce, 60–70% ciężaru na tylnej nodze.','Kolana ugięte, tułów prosto, ręce luźno przed sobą.','Co kilka sekund małe sprężynowanie, jakbyś łapał nierówności.']}
+];
+
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let phase = store.get('nnp-phase', defaultPhase());
+let done = store.get('nnp-done', {});
+function defaultPhase(){
+  const now=new Date(), y=2026;
+  if(now < new Date(y,10,24)) return 'f1';
+  if(now < new Date(y,11,22)) return 'f2';
+  return 'f3';
+}
+
+/* season profile */
+const NS='http://www.w3.org/2000/svg';
+const D=116, X=d=>30+d*740/D, BASE=206;
+const R=[[0,190],[5,182],[9,186],[14,172],[19,176],[24,160],[28,152],[33,146],[37,150],[42,132],[47,136],[52,118],[56,112],[60,116],[64,108],[68,112],[72,104],[76,92],[80,62],[83,78],[86,96],[90,90],[95,82],[99,86],[103,70],[107,50],[110,30],[113,46],[116,58]];
+const SEGS=[['f1',0,28],['f2',28,56],['f3',56,116]];
+const LAB={f1:[2,128],f2:[30,98],f3:[57,66]};
+const DATES={f1:'27.10 – 23.11',f2:'24.11 – 21.12',f3:'22.12 – Alpy'};
+function buildProfile(){
+  const svg=document.getElementById('profile');
+  let h=`<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--line)" stroke-width="3"/></pattern></defs>`;
+  [[73,80],[103,110]].forEach(([a,b])=>{h+=`<rect class="taper" x="${X(a)}" y="0" width="${X(b)-X(a)}" height="${BASE}"/><text class="taper-t" x="${(X(a)+X(b))/2}" y="${BASE-6}" text-anchor="middle">lżej</text>`});
+  h+=`<line class="axis" x1="20" y1="${BASE}" x2="790" y2="${BASE}"/>`;
+  [['listopad',5],['grudzień',35],['styczeń',66],['luty',97]].forEach(([m,d])=>{h+=`<line class="axis" x1="${X(d)}" y1="${BASE}" x2="${X(d)}" y2="${BASE+6}"/><text class="tick" x="${X(d)+4}" y="${BASE+20}">${m}</text>`});
+  svg.innerHTML=h;
+  SEGS.forEach(([id,a,b])=>{
+    const pts=R.filter(p=>p[0]>=a&&p[0]<=b).map(p=>[X(p[0]),p[1]]);
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('class','seg');g.setAttribute('role','button');g.setAttribute('tabindex','0');
+    g.setAttribute('aria-label',`Faza ${PH[id].name}, ${PH[id].when}`);g.dataset.ph=id;
+    const poly=pts.map(p=>p.join(',')).join(' ');
+    const [lx,ly]=LAB[id];
+    g.innerHTML=`<polygon class="area" points="${poly} ${X(b)},${BASE} ${X(a)},${BASE}"/><polyline class="ridge" points="${poly}"/><text class="name" x="${X(lx)}" y="${ly}">${PH[id].name}</text><text class="dates" x="${X(lx)}" y="${ly+17}">${DATES[id]}</text><text class="count" data-cnt="${id}" x="${X(lx)}" y="${ly+34}"></text>`;
+    g.addEventListener('click',()=>setPhase(id));
+    g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setPhase(id)}});
+    svg.appendChild(g);
+  });
+  const fl=(d,y,top,txt,anchor)=>{const x=X(d);return `<line class="pole" x1="${x}" y1="${y}" x2="${x}" y2="${top}"/><path class="flag" d="M${x} ${top} L${x+16} ${top+6} L${x} ${top+12}Z"/><text class="mark" x="${anchor==='end'?x-6:x+22}" y="${top+11}" text-anchor="${anchor}">${txt}</text>`};
+  const m=document.createElementNS(NS,'g');m.setAttribute('aria-hidden','true');m.style.pointerEvents='none';
+  m.innerHTML=fl(80,62,28,'Kurs lawinowy, Tatry 15.01','end')+fl(110,30,-6,'Alpy','end');
+  svg.appendChild(m);
+}
+
+/* exercises */
+function buildList(){
+  const box=document.getElementById('list');
+  box.innerHTML=LIST.map((e,i)=>`
+  <article class="ex" id="ex-${e.k}">
+    <div class="fig">
+      <svg viewBox="0 -20 200 196" role="img" aria-label="Animacja: ${e.name}"><g class="g"></g></svg>
+      <div class="figbar"><span class="now" aria-hidden="true"></span><button class="play" type="button">Pauza</button></div>
+    </div>
+    <div>
+      <div class="num">${i+1}</div>
+      <h3>${e.name}</h3>
+      <p class="why">${e.why}</p>
+      <dl class="rx"><dt>Serie</dt><dd data-r="0"></dd><dt>Tempo</dt><dd data-r="1"></dd><dt>Przerwa</dt><dd data-r="2"></dd></dl>
+      <ul class="cues">${e.cues.map(c=>`<li>${c}</li>`).join('')}</ul>
+      ${e.extra?`<p class="extra">${e.extra}</p>`:''}
+      <label class="done"><input type="checkbox" data-k="${e.k}"> Zrobione dzisiaj</label>
+    </div>
+  </article>`).join('');
+  box.querySelectorAll('.done input').forEach(cb=>{
+    cb.checked=!!done[cb.dataset.k];
+    cb.closest('.ex').classList.toggle('is-done',cb.checked);
+    cb.addEventListener('change',()=>{done[cb.dataset.k]=cb.checked;store.set('nnp-done',done);cb.closest('.ex').classList.toggle('is-done',cb.checked)});
+  });
+}
+function setPhase(id){
+  phase=id;store.set('nnp-phase',id);
+  document.querySelectorAll('.seg').forEach(g=>g.setAttribute('aria-pressed',g.dataset.ph===id?'true':'false'));
+  document.getElementById('ph-name').textContent='Faza: '+PH[id].name;
+  document.getElementById('ph-when').textContent=PH[id].when;
+  document.getElementById('ph-text').textContent=PH[id].text;
+  document.getElementById('rir').textContent=PH[id].rir;
+  LIST.forEach(e=>{const el=document.getElementById('ex-'+e.k);el.querySelectorAll('[data-r]').forEach(dd=>dd.textContent=e.rx[id][+dd.dataset.r])});
+  renderLog();
+}
+
+/* progress log: private per person in the artifact db, local fallback */
+let sessions = store.get('nnp-sessions', []); // [{id, phase, date, ts}]
+let remote = null; // collection ref when db is available
+let busy = false;
+const pl = n => {const a=n%10,b=n%100; return n===1?'trening':(a>=2&&a<=4&&!(b>=12&&b<=14))?'treningi':'treningów'};
+const today = () => {const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmt = s => {const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('pl-PL',{weekday:'short',day:'numeric',month:'long'})};
+const isStr = s => !s.w || s.w==='s_puch';
+let undoArm = false;
+const countIn = id => sessions.filter(s=>s.phase===id&&isStr(s)).length;
+const setStatus = t => {document.getElementById('status').textContent=t};
+function renderLog(){
+  const ul=document.getElementById('tallies'); if(!ul) return;
+  ul.innerHTML=Object.keys(PH).map(id=>`<li class="${id===phase?'cur':''}"><span class="n">${countIn(id)}</span><span class="l">${PH[id].name}</span></li>`).join('');
+  document.querySelectorAll('[data-cnt]').forEach(t=>{const n=countIn(t.dataset.cnt);t.textContent=n?`${n} ${pl(n)}`:''});
+  const n=countIn(phase);
+  document.getElementById('ph-tally').textContent=n?`Masz już ${n} ${pl(n)} w tej fazie.`:'Jeszcze żadnego treningu w tej fazie.';
+  const sorted=sessions.filter(isStr).sort((a,b)=>b.ts-a.ts);
+  const doneToday=sessions.some(s=>isStr(s)&&s.date===today()&&s.phase===phase);
+  const save=document.getElementById('save');
+  save.textContent=doneToday?'Dzisiejszy już zapisany – dodaj kolejny':'Zapisz dzisiejszy trening';
+  save.disabled=busy;
+  const ub=document.getElementById('undo');
+  ub.hidden=!sorted.length;
+  ub.textContent=undoArm&&sorted.length?`Usunąć trening z ${fmt(sorted[0].date)}? Kliknij jeszcze raz`:'Cofnij ostatni';
+  document.getElementById('history').innerHTML=sorted.slice(0,6).map(s=>`<li><b>${fmt(s.date)}</b> · ${PH[s.phase]?PH[s.phase].name:s.phase}</li>`).join('');
+  const all=document.querySelectorAll('.done input');
+  document.getElementById('log').classList.toggle('ready',all.length>0&&[...all].every(c=>c.checked)&&!doneToday);
+  renderPlan();
+}
+async function addSession(){
+  if(busy) return; busy=true; renderLog();
+  const s={w:'s_puch',phase,date:today(),ts:Date.now()};
+  try{
+    if(remote){const ref=await remote.add(s);s.id=ref.id}
+    else s.id='l'+s.ts;
+    sessions.push(s); store.set('nnp-sessions',sessions);
+    const n=countIn(phase);
+    setStatus(`Zapisane. To twój ${n}. trening w fazie ${PH[phase].name}.`);
+  }catch(e){setStatus('Nie udało się zapisać. Spróbuj ponownie za chwilę.')}
+  busy=false; renderLog();
+}
+async function undoLast(){
+  if(busy||!sessions.length) return;
+  const strs=sessions.filter(isStr); if(!strs.length) return;
+  const last=[...strs].sort((a,b)=>b.ts-a.ts)[0];
+  if(!undoArm){undoArm=true;renderLog();setTimeout(()=>{if(undoArm){undoArm=false;renderLog()}},4000);return}
+  undoArm=false;
+  busy=true; renderLog();
+  try{
+    if(remote&&!String(last.id).startsWith('l')) await remote.doc(last.id).delete();
+    sessions=sessions.filter(s=>s!==last); store.set('nnp-sessions',sessions);
+    setStatus('Usunięto ostatni wpis.');
+  }catch(e){setStatus('Nie udało się usunąć. Spróbuj ponownie.')}
+  busy=false; renderLog();
+}
+document.getElementById('save').addEventListener('click',addSession);
+document.getElementById('undo').addEventListener('click',undoLast);
+document.getElementById('list').addEventListener('change',renderLog);
+(async()=>{
+  try{
+    if(!window.claude||!claude.use) return;
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    if(!db||!user) return;
+    const uid=await user.id(); if(!uid) return;
+    const col=db.collection('data/users/'+uid);
+    const snap=await col.get();
+    const fromDb=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(s=>s.phase&&s.date);
+    // carry over anything saved only locally before the db was reachable
+    const local=sessions.filter(s=>String(s.id).startsWith('l'));
+    for(const s of local){try{const rest=Object.assign({},s);delete rest.id;const r=await col.add(rest);fromDb.push(Object.assign({id:r.id},rest))}catch(e){fromDb.push(s)}}
+    const zd=snap.docs.find(d=>d.id==='zones');
+    if(zd){const v=zd.data()||{};if(v.ftp||v.lthr){zones={ftp:v.ftp||null,lthr:v.lthr||null};store.set('nnp-zones',zones);document.getElementById('z-ftp').value=zones.ftp||'';document.getElementById('z-lthr').value=zones.lthr||''}}
+    else if(zones.ftp||zones.lthr){try{Promise.resolve(col.doc('zones').set(zones)).catch(()=>{})}catch(e){}}
+    remote=col; sessions=fromDb; store.set('nnp-sessions',sessions); renderLog();
+  }catch(e){/* stay on local storage */}
+})();
+
+buildList();
+/* animation */
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const figs=LIST.map(e=>{
+  const el=document.getElementById('ex-'+e.k);
+  return {ex:FIG.EX[e.k],g:el.querySelector('.g'),now:el.querySelector('.now'),btn:el.querySelector('.play'),playing:!reduce,visible:false,t:0,last:null,label:''};
+});
+function paint(f){
+  const r=FIG.poseAt(f.ex,f.t);
+  f.g.innerHTML=FIG.draw(r.pose,f.ex);
+  const lbl=f.playing?r.label:'';
+  if(lbl!==f.label){f.label=lbl;f.now.textContent=lbl}
+}
+figs.forEach(f=>{
+  f.t=reduce?f.ex.kf[2][0]:0;
+  paint(f);
+  f.btn.textContent=f.playing?'Pauza':'Odtwórz';
+  f.btn.addEventListener('click',()=>{f.playing=!f.playing;f.last=null;f.btn.textContent=f.playing?'Pauza':'Odtwórz';paint(f)});
+});
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(en=>{const f=figs.find(x=>x.g.closest('svg')===en.target);if(f){f.visible=en.isIntersecting;f.last=null}}),{rootMargin:'80px'});
+  figs.forEach(f=>io.observe(f.g.closest('svg')));
+}else figs.forEach(f=>f.visible=true);
+function loop(ts){
+  figs.forEach(f=>{
+    if(!f.playing||!f.visible)return;
+    if(f.last!==null)f.t+=(ts-f.last)/1000;
+    f.last=ts;paint(f);
+  });
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+document.getElementById('reset').addEventListener('click',()=>{done={};store.set('nnp-done',done);document.querySelectorAll('.done input').forEach(cb=>{cb.checked=false;cb.closest('.ex').classList.remove('is-done')});renderLog()});
+
+/* ===== plan tygodnia ===== */
+const CATS={sila:'Siła nóg',dlugi:'Długi tlen',gora:'Pod górę',mocny:'Interwały',luz:'Spokojny tlen',sila2:'Druga siła',regen:'Regeneracja'};
+const SLOTS=[
+ {c:'sila',why:'Najważniejszy trening tygodnia: siła ud na podejścia i zjazdy w puchu.'},
+ {c:'dlugi',why:'Baza tlenowa. To ona niesie cię przez cały dzień na podejściach.'},
+ {c:'gora',why:'Najbardziej podobne do skiturów: praca pod górę, najlepiej z plecakiem.'},
+ {c:'mocny',why:'Podnosi pułap: przy tym samym tętnie podchodzisz szybciej.'},
+ {c:'luz',why:'Więcej spokojnej objętości bez dokładania zmęczenia.'},
+ {c:'sila2',why:'Krótka druga dawka siły, gdy masz w tygodniu dużo czasu.'},
+ {c:'luz',why:'Jeszcze trochę spokojnego tlenu.'},
+ {c:'gora',why:'Drugi trening pod górę w tygodniu, spokojnym tempem.'},
+ {c:'regen',why:'Przy tylu treningach ciało potrzebuje odpuszczenia.'}
+];
+const CORE=3;
+const W={
+ s_puch:{short:'Nogi na puch',name:'Nogi na puch – pełny trening',covers:[['sila','sila2']],hard:true,link:'#sila',
+   rx:'około 70 minut, serie i powtórzenia według fazy – ćwiczenia niżej',ph:'np. przysiad 70 kg',
+   how:['Najlepiej w dzień bez interwałów; spokojna jazda dzień później dobrze rozluźnia nogi.','Możesz go zapisać tutaj albo przyciskiem pod ćwiczeniami – liczy się tak samo.']},
+ s_short:{short:'Siła krótka',name:'Siła krótka, 30 minut',covers:[['sila2']],hard:true,
+   rx:{f1:'2 serie każdego ćwiczenia, ciężar jak w pełnym treningu',f2:'2–3 serie każdego ćwiczenia, ciężko',f3:'2 serie każdego ćwiczenia'},ph:'np. bułgarski 2 × 8 z 16 kg',
+   how:['Przysiad bułgarski: 8 na nogę.','Zejście ekscentryczne ze skrzyni: 6 na nogę, 4 s w dół.','Nordic curl: 4–5 powtórzeń.','Pozycja puchowa: 60–90 s.','Pallof press: 10 na stronę.']},
+ k_long:{short:'Długa jazda',name:'Długa jazda w strefie 2',covers:[['dlugi','luz']],hard:false,mode:'bike',z:'z2',
+   rx:{f1:'75–90 minut równo',f2:'90–120 minut równo',f3:'60–90 minut, gdy w weekend nie ma gór'},ph:'np. 90 min, 165 W, tętno 136',
+   how:['Kadencja 85–95. Trzymaj realny opór, żeby koło zamachowe nie kręciło nogami za ciebie.','Pilnuj watów. Jeśli tętno pod koniec rośnie przy tych samych watach, to normalne – nie dokładaj.','Przy jeździe ponad 90 minut bidon i coś do jedzenia. Idealne przed serialem.']},
+ k_easy:{short:'Spokojna jazda',name:'Spokojna jazda',covers:[['luz','regen']],hard:false,mode:'bike',z:'z2lo',
+   rx:{f1:'40–60 minut',f2:'45–60 minut',f3:'30–45 minut, dobre dzień po górach'},ph:'np. 45 min, 130 W',
+   how:['Ma być łatwo. Lepiej za lekko niż za mocno.','Dobra dzień po sile albo po górach – nogi szybciej się regenerują.']},
+ k_sst:{short:'Sweet spot',name:'Sweet spot / próg na rowerze',covers:[['mocny']],hard:true,mode:'bike',z:{f1:'sst',f2:'thr',f3:'sst'},
+   rx:{f1:'15 min rozgrzewki, 3 × 10 min, przerwa 5 min, 10 min schłodzenia',f2:'15 min rozgrzewki, 3 × 12 min na progu, przerwa 5 min (albo 2 × 20 min)',f3:'15 min rozgrzewki, 2 × 15 min, przerwa 5 min'},ph:'np. 3 × 10 min, 225 W',
+   how:['Każde powtórzenie równo, bez zrywu na początku.','Ostatnie powtórzenie ma być tak samo mocne jak pierwsze. Jeśli nie jest, następnym razem odejmij 5–10 W.','To dokładnie ten wysiłek, co strome, długie podejście w równym tempie.']},
+ k_vo2:{short:'VO₂max na rowerze',name:'Interwały VO₂max na rowerze',covers:[['mocny']],hard:true,mode:'bike',z:'vo2',
+   rx:{f1:'15 min rozgrzewki, 5 × 3 min, przerwa 3 min lekko',f2:'15 min rozgrzewki, 5 × 4 min, przerwa 4 min lekko',f3:'15 min rozgrzewki, 4 × 4 min, przerwa 4 min lekko'},ph:'np. 5 × 4 min, 280 W',
+   how:['Mocno, ale tak, żeby utrzymać waty we wszystkich powtórzeniach.','Przerwy naprawdę lekko, żeby kolejne powtórzenie było jakościowe.','Nie rób dzień po siłowni ani przed górami.']},
+ r_easy:{short:'Bieg spokojny',name:'Bieg spokojny',covers:[['luz']],hard:false,mode:'foot',z:'z2',
+   rx:{f1:'30–40 minut, możesz przeplatać marszem',f2:'40–55 minut',f3:'30–45 minut'},ph:'np. 45 min, tętno 142',
+   how:['Po sezonie rowerowym zaczynaj od krótszych biegów: płuca są gotowe, ścięgna i łydki jeszcze nie.','Pole Mokotowskie, Łazienki, Park Skaryszewski, Las Kabacki – miękkie ścieżki odciążają kolana.','Krótki krok, dużo kroków na minutę, lądowanie pod biodrem.']},
+ r_hills:{short:'Podbiegi',name:'Podbiegi',covers:[['gora','mocny']],hard:true,mode:'foot',z:'vo2',
+   rx:{f1:'6–8 × 45–60 s mocno pod górę, w dół marszem',f2:'8–10 × 60–90 s, w dół truchtem',f3:'6 × 90 s, w dół truchtem'},ph:'np. 8 × 60 s, Kopiec',
+   how:['Najpierw 15 minut truchtu i kilka przebieżek.','Gdzie: Kopiec Powstania Warszawskiego, Górka Szczęśliwicka, Kopa Cwila.','Pod górę mocno, ale równo: ostatni podbieg tak szybki jak pierwszy.','W dół spokojnie i pod kontrolą – to też trening ud pod zjazdy.']},
+ h_pack:{short:'Podejścia z plecakiem',name:'Podejścia z plecakiem',covers:[['gora','dlugi']],hard:false,mode:'foot',z:'z2',
+   rx:{f1:'45–60 minut, plecak 5–8 kg',f2:'60–90 minut, plecak 8–12 kg',f3:'45–60 minut, plecak 8 kg'},ph:'np. 60 min, 10 kg, 25 wejść',
+   how:['Schody na Kopcu Powstania Warszawskiego, Górka Szczęśliwicka, klatka schodowa w bloku albo bieżnia na siłowni z nachyleniem 12–15%.','Równe tempo w strefie 2, z kijami, jeśli się da – tak jak na fokach.','W dół spokojnie, kolana nad stopami. Plecak możesz obciążyć butelkami z wodą.']},
+ m_day:{short:'Góry',name:'Wyjście w góry / skitury',covers:[['dlugi'],['gora']],hard:true,mode:'foot',z:'z2',
+   rx:{f1:'dzień w górach, 800–1500 m przewyższenia',f2:'dzień w górach, 1000–1500 m przewyższenia',f3:'główny trening sezonu: im więcej przewyższenia w równym tempie, tym lepiej'},ph:'np. Kasprowy, 1100 m',
+   how:['Liczy się naraz jako długi tlen i trening pod górę.','Podejścia w strefie 2: tempo, które utrzymasz cały dzień, nie gonienie.','Następnego dnia coś lekkiego albo wolne.']},
+ mob:{short:'Mobilność',name:'Mobilność i rolowanie',covers:[['regen']],hard:false,
+   rx:'20–30 minut',ph:'np. 25 min wieczorem',
+   how:['Rolowanie ud, pośladków i łydek.','Biodra 90/90, kolano do ściany, rozciąganie zginaczy bioder.','Dobre przed TV i w dzień po górach.']}
+};
+const GROUPS=[['Siła',['s_puch','s_short']],['Rower – Keiser M3',['k_long','k_easy','k_sst','k_vo2']],['Bieganie',['r_easy','r_hills']],['Pod górę i góry',['h_pack','m_day']],['Regeneracja',['mob']]];
+const PREF={sila:['s_puch'],dlugi:['k_long','h_pack','m_day'],gora:['h_pack','r_hills','m_day'],
+  mocny:{f1:['k_sst','r_hills','k_vo2'],f2:['k_vo2','k_sst','r_hills'],f3:['r_hills','k_sst','k_vo2']},
+  luz:['k_easy','r_easy','k_long'],sila2:['s_short','s_puch'],regen:['mob','k_easy']};
+const TAPER=[['2027-01-08','2027-01-14','przed kursem lawinowym'],['2027-02-07','2027-02-13','przed Alpami']];
+const ZN={
+ z2lo:{n:'Lekka strefa 2',p:[50,65],h:[75,85],rpe:'bardzo swobodnie, możesz oddychać nosem'},
+ z2:{n:'Strefa 2',p:[56,75],h:[81,89],rpe:'swobodnie, rozmawiasz pełnymi zdaniami'},
+ sst:{n:'Sweet spot',p:[88,94],h:[90,95],rpe:'ciężko, ale równo; mówisz krótkimi zdaniami'},
+ thr:{n:'Próg',p:[95,102],h:[95,100],rpe:'mocno, mówisz pojedyncze słowa'},
+ vo2:{n:'VO₂max',p:[106,120],h:[100,106],rpe:'bardzo mocno, końcówka powtórzenia na granicy'}
+};
+let zones=store.get('nnp-zones',{ftp:null,lthr:null});
+let wkOff=0, formFor=null, pendingDel=null, pickOver=null;
+
+const wid=s=>W[s.w]?s.w:'s_puch';
+const rxOf=w=>typeof w.rx==='string'?w.rx:w.rx[phase];
+const zOf=w=>!w.z?null:typeof w.z==='string'?w.z:w.z[phase];
+const prefFor=c=>Array.isArray(PREF[c])?PREF[c]:PREF[c][phase];
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addDays=(d,n)=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x};
+const monday=d=>addDays(d,-((d.getDay()+6)%7));
+const daysBetween=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
+const weekOffsetOf=d=>Math.min(0,Math.round((monday(parse(d))-monday(parse(today())))/(7*864e5)));
+function phaseFor(d){if(d<'2026-11-24')return 'f1';if(d<'2026-12-22')return 'f2';return 'f3'}
+
+function zoneText(z,mode){
+  const Z=ZN[z], f=zones.ftp, l=zones.lthr;
+  const wv=p=>Math.round(f*p/100/5)*5, hv=p=>Math.round(l*p/100);
+  const out=[`<b>${Z.n}</b> – ${Z.rpe}`];
+  if(mode==='bike') out.push(f?`${wv(Z.p[0])}–${wv(Z.p[1])} W`:`${Z.p[0]}–${Z.p[1]}% FTP`);
+  if(z==='vo2') out.push(l?`tętno pod koniec powtórzeń powyżej ${hv(100)}`:'tętno pod koniec powtórzeń powyżej progu');
+  else out.push(l?`tętno ${hv(Z.h[0])}–${hv(Z.h[1])}`:`tętno ${Z.h[0]}–${Z.h[1]}% progu`);
+  return out.join(' · ');
+}
+
+function weekPlan(list,cap){
+  const slots=SLOTS.slice(0,cap);
+  const units=[];
+  list.forEach(s=>W[wid(s)].covers.forEach(alts=>units.push({s,alts})));
+  units.sort((a,b)=>a.alts.length-b.alts.length);
+  const mU=units.map(()=>-1), mS=slots.map(()=>-1);
+  const tryS=(si,seen)=>{
+    for(let u=0;u<units.length;u++){
+      if(seen[u]||!units[u].alts.includes(slots[si].c)) continue;
+      seen[u]=1;
+      if(mU[u]<0||tryS(mU[u],seen)){mU[u]=si;mS[si]=u;return true}
+    }
+    return false;
+  };
+  slots.forEach((_,si)=>tryS(si,[]));
+  const used=new Set(units.filter((u,i)=>mU[i]>=0).map(u=>u.s));
+  return {slots,units,matchS:mS,extra:list.filter(s=>!used.has(s))};
+}
+
+function suggest(plan,list){
+  const free=plan.slots.map((_,i)=>i).filter(i=>plan.matchS[i]<0);
+  if(!free.length) return null;
+  const done=new Set(list.map(wid));
+  const opts=c=>{const p=prefFor(c);return p.filter(x=>!done.has(x)).concat(p.filter(x=>done.has(x)))};
+  const t=today();
+  const last=sessions.filter(s=>s.date<=t).sort((x,y)=>x.date<y.date?1:x.date>y.date?-1:y.ts-x.ts)[0];
+  const tired=!!last&&W[wid(last)].hard&&daysBetween(last.date,t)<=1;
+  let si=free[0], all=opts(plan.slots[si].c), pick=all[0], note='';
+  if(tired&&W[pick].hard){
+    const when=last.date===t?'dziś':'wczoraj';
+    const e=all.find(x=>!W[x].hard);
+    if(e) pick=e;
+    else{
+      for(const fi of free.slice(1)){
+        const o=opts(plan.slots[fi].c), e2=o.find(x=>!W[x].hard);
+        if(e2){note=`Ostatni trening (${W[wid(last)].short}, ${when}) był mocny, więc teraz coś spokojnego. „${CATS[plan.slots[si].c]}” zrób dzień później.`;si=fi;all=o;pick=e2;break}
+      }
+      if(!note) note=`Ostatni trening (${W[wid(last)].short}, ${when}) był mocny. Jeśli nogi są ciężkie, zrób najpierw dzień przerwy.`;
+    }
+  }
+  if(pickOver&&pickOver.si===si&&all.includes(pickOver.id)) pick=pickOver.id;
+  return {si,all,pick,note};
+}
+
+function delBtn(s){
+  const arm=pendingDel===String(s.id);
+  return `<button class="del${arm?' arm':''}" type="button" data-del="${esc(s.id)}" aria-label="Usuń wpis">${arm?'Usunąć?':'×'}</button>`;
+}
+function formHtml(id,wkEnd){
+  const t=today(), def=wkOff===0||wkEnd>t?t:wkEnd;
+  return `<form class="logf" data-w="${id}"><label>Kiedy<input type="date" name="d" value="${def}" max="${t}" required></label><label>Notatka (opcjonalnie)<input type="text" name="n" maxlength="140" placeholder="${esc(W[id].ph||'')}"></label><div class="logf-b"><button class="save" type="submit">Zapisz</button><button class="undo" type="button" data-cancel="1">Anuluj</button></div></form>`;
+}
+function woBody(id,ctx,wkEnd){
+  const w=W[id], z=zOf(w);
+  return `<dl class="rx"><dt>Ile</dt><dd>${rxOf(w)}</dd>${z?`<dt>Jak mocno</dt><dd class="zt">${zoneText(z,w.mode)}</dd>`:''}</dl>`+
+    (w.how?`<details class="how"><summary>Jak to zrobić</summary><ul class="cues">${w.how.map(h=>`<li>${h}</li>`).join('')}</ul></details>`:'')+
+    (w.link?`<p class="extra"><a href="${w.link}">Przejdź do ćwiczeń ↓</a></p>`:'')+
+    (formFor===ctx+':'+id?formHtml(id,wkEnd):`<button class="save" type="button" data-log="${ctx}:${id}">Zrobione</button>`);
+}
+const coversText=w=>w.covers.map(a=>a.map(c=>CATS[c]).join(' lub ')).join(' + ');
+
+function renderPlan(){
+  const root=document.getElementById('plan'); if(!root) return;
+  const t=today();
+  const ws=addDays(monday(parse(t)),7*wkOff), we=addDays(ws,6), a=ymd(ws), b=ymd(we);
+  const list=sessions.filter(s=>s.date>=a&&s.date<=b).sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:x.ts-y.ts);
+  const taper=TAPER.find(([p,q])=>p<=b&&q>=a);
+  const plan=weekPlan(list,taper?4:SLOTS.length);
+  const sug=wkOff===0?suggest(plan,list):null;
+  const coreDone=plan.matchS.slice(0,CORE).filter(u=>u>=0).length;
+  const lab=ws.getMonth()===we.getMonth()?`${ws.getDate()}–${we.toLocaleDateString('pl-PL',{day:'numeric',month:'long'})}`:`${ws.toLocaleDateString('pl-PL',{day:'numeric',month:'long'})} – ${we.toLocaleDateString('pl-PL',{day:'numeric',month:'long'})}`;
+  document.getElementById('wk-label').textContent=(wkOff===0?'Ten tydzień: ':'')+lab;
+  document.getElementById('wk-sum').textContent=`${list.length} ${pl(list.length)} · najważniejsze trzy: ${coreDone} z ${CORE}`;
+  document.getElementById('wk-next').disabled=wkOff>=0;
+  const tp=document.getElementById('taper');
+  tp.hidden=!taper;
+  if(taper) tp.innerHTML=`<b>Tydzień lżejszy ${taper[2]}.</b> Najwyżej 4 treningi, siła połową serii, interwały krótsze. Masz przyjechać wypoczęty.`;
+
+  const nx=document.getElementById('next');
+  if(wkOff!==0){nx.hidden=true;nx.innerHTML=''}
+  else{
+    nx.hidden=false;
+    const todayList=list.filter(s=>s.date===t);
+    const pre=todayList.length?`<p class="today">Dziś zrobione: <b>${todayList.map(s=>W[wid(s)].short).join(', ')}</b>.${sug?' Poniżej propozycja na następny trening.':''}</p>`:'';
+    if(!sug){
+      nx.innerHTML=`<div class="next-k">Tydzień zrobiony</div><h3>Odpocznij</h3>${pre}<p class="why">${taper?'W lżejszym tygodniu to już komplet. Odpoczynek to teraz najlepszy trening.':`Masz komplet: ${list.length} ${pl(list.length)}. Najlepszy następny ruch to dzień wolny. Jeśli i tak chcesz się ruszać, niech będzie lekko:`}</p>`+
+        (taper?'':`<div class="chips">${['k_easy','mob'].map(x=>`<button class="chip" type="button" data-log="next:${x}">${W[x].short} – zapisz</button>`).join('')}</div>`+(formFor&&formFor.startsWith('next:')?formHtml(formFor.slice(5),b):''));
+    }else{
+      const sl=plan.slots[sug.si];
+      nx.innerHTML=`<div class="next-k">Następny trening · ${CATS[sl.c]}</div><h3>${W[sug.pick].name}</h3>${pre}${sug.note?`<p class="swapn">${sug.note}</p>`:''}<p class="why">${sl.why}</p>`+
+        woBody(sug.pick,'next',b)+
+        (sug.all.length>1?`<div class="chips"><span>Zamiennie:</span>${sug.all.map(x=>`<button class="chip" type="button" data-pick="${x}" data-si="${sug.si}" aria-pressed="${x===sug.pick}">${W[x].short}</button>`).join('')}</div>`:'');
+    }
+  }
+
+  document.getElementById('slots').innerHTML=plan.slots.map((sl,i)=>{
+    const u=plan.matchS[i], s=u>=0?plan.units[u].s:null, isN=!!sug&&sug.si===i;
+    return `<li class="slot${s?' ok':''}${isN?' nx':''}"><span class="mk" aria-hidden="true">${s?'✓':i+1}</span><div><div class="sl-t"><b>${CATS[sl.c]}</b>${i<CORE?'<span class="tag">najważniejsze</span>':''}${isN?'<span class="tag nx">następny</span>':''}</div><div class="sl-s">${s?`${W[wid(s)].short} · ${fmt(s.date)}${s.note?' · '+esc(s.note):''}${delBtn(s)}`:'Zamiennie: '+prefFor(sl.c).map(x=>W[x].short).join(' / ')}</div></div></li>`;
+  }).join('');
+  const ex=document.getElementById('extra');
+  ex.innerHTML=plan.extra.length?`<b>Dodatkowo w tym tygodniu:</b> `+plan.extra.map(s=>`${W[wid(s)].short} (${fmt(s.date)})${delBtn(s)}`).join(', '):(list.length?'':'<span>Brak zapisanych treningów w tym tygodniu.</span>');
+
+  const cnt={}; list.forEach(s=>{const k=wid(s);cnt[k]=(cnt[k]||0)+1});
+  document.getElementById('catalog').innerHTML=GROUPS.map(([g,ids])=>`<div class="grp"><h4>${g}</h4>${ids.map(id=>`<article class="wo" id="wo-${id}"><h5>${W[id].name}</h5><p class="cnt">Liczy się jako: ${coversText(W[id])}${cnt[id]?` · <span class="badge">w tym tygodniu ${cnt[id]}×</span>`:''}</p>${woBody(id,'cat',b)}</article>`).join('')}</div>`).join('');
+}
+
+async function putSession(s){
+  if(remote){const r=await remote.add(s);s.id=r.id} else s.id='l'+s.ts;
+  sessions.push(s); store.set('nnp-sessions',sessions);
+}
+async function removeSession(s){
+  if(remote&&!String(s.id).startsWith('l')) await remote.doc(s.id).delete();
+  sessions=sessions.filter(x=>x!==s); store.set('nnp-sessions',sessions);
+}
+const pflash=t=>{document.getElementById('pstatus').textContent=t};
+(function(){
+  const el=document.getElementById('plan');
+  el.addEventListener('click',async e=>{
+    const btn=e.target.closest('button'); if(!btn||!el.contains(btn)) return;
+    const d=btn.dataset;
+    if(d.log){formFor=d.log;renderPlan();const f=el.querySelector('.logf');if(f&&f.scrollIntoView){f.scrollIntoView({block:'nearest'})}return}
+    if(d.cancel){formFor=null;renderPlan();return}
+    if(d.pick){pickOver={si:+d.si,id:d.pick};formFor=null;renderPlan();return}
+    if(d.del){
+      if(pendingDel!==d.del){const k=d.del;pendingDel=k;renderPlan();setTimeout(()=>{if(pendingDel===k){pendingDel=null;renderPlan()}},4000);return}
+      pendingDel=null;
+      const s=sessions.find(x=>String(x.id)===d.del);
+      if(s&&!busy){busy=true;try{await removeSession(s);pflash('Usunięto wpis.')}catch(err){pflash('Nie udało się usunąć. Spróbuj ponownie.')}busy=false}
+      renderLog();return;
+    }
+    if(btn.id==='wk-prev'){wkOff--;formFor=null;renderPlan();return}
+    if(btn.id==='wk-next'){if(wkOff<0)wkOff++;formFor=null;renderPlan();return}
+  });
+  el.addEventListener('submit',async e=>{
+    const f=e.target.closest('.logf'); if(!f) return;
+    e.preventDefault();
+    if(busy) return;
+    const t=today(); let dt=f.elements.d.value||t; if(dt>t) dt=t;
+    const n=f.elements.n.value.trim().slice(0,140);
+    const s={w:f.dataset.w,phase:phaseFor(dt),date:dt,ts:Date.now()}; if(n) s.note=n;
+    busy=true;
+    try{await putSession(s);formFor=null;pickOver=null;wkOff=weekOffsetOf(dt);pflash(`Zapisane: ${W[s.w].short}, ${fmt(dt)}.`)}
+    catch(err){pflash('Nie udało się zapisać. Spróbuj ponownie za chwilę.')}
+    busy=false; renderLog();
+    const nx=document.getElementById('next'); if(nx&&!nx.hidden&&nx.scrollIntoView) nx.scrollIntoView({block:'nearest'});
+  });
+  const zf=document.getElementById('z-ftp'), zl=document.getElementById('z-lthr');
+  const num=v=>{const x=parseInt(v,10);return x>0?x:null};
+  zf.value=zones.ftp||''; zl.value=zones.lthr||'';
+  const onZ=()=>{
+    zones={ftp:num(zf.value),lthr:num(zl.value)}; store.set('nnp-zones',zones); renderPlan();
+    if(remote){try{Promise.resolve(remote.doc('zones').set(zones)).catch(()=>{})}catch(e){}}
+  };
+  zf.addEventListener('change',onZ); zl.addEventListener('change',onZ);
+})();
+
+buildProfile();
+setPhase(phase);
+})();
+
+</script>
+</body>
+</html>

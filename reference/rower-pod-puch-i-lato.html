@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rower pod puch i lato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one column, like "Nogi na puch". Phase switch on top drives the week and every workout card. */
+:root{
+  --bg:#F2F5F7; --panel:#E4ECF2; --ink:#1B2632; --muted:#5A6A79; --line:#C9D5DF;
+  --glacier:#2D6A9F; --beacon:#E2A400;
+  --z1:#9DB8CF; --z2:#4F8FC0; --z3:#2F9E8F; --z4:#E2A400; --z5:#D9603B;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121B24; --panel:#1B2733; --ink:#E4EBF1; --muted:#97A7B5; --line:#2D3C4A;
+    --glacier:#7DB2E0; --beacon:#F2C640;
+    --z1:#5B7890; --z2:#5E9FD0; --z3:#45B8A7; --z4:#F2C640; --z5:#F07E5A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121B24; --panel:#1B2733; --ink:#E4EBF1; --muted:#97A7B5; --line:#2D3C4A;
+  --glacier:#7DB2E0; --beacon:#F2C640;
+  --z1:#5B7890; --z2:#5E9FD0; --z3:#45B8A7; --z4:#F2C640; --z5:#F07E5A;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(48px,10vw,96px);font-weight:700}
+h2{font-size:34px;margin-bottom:12px}
+h3{font-size:27px}
+p{margin:0 0 10px}
+a{color:var(--glacier)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--glacier);outline-offset:3px;border-radius:4px}
+.lede{max-width:62ch;color:var(--muted);margin:14px 0 0;font-size:18px}
+.muted{color:var(--muted)}
+section{margin-top:56px}
+.note{font-size:15px;color:var(--muted);max-width:68ch}
+
+/* data */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0 20px}
+.fact{background:var(--panel);border-radius:12px;padding:14px 16px;display:grid;gap:2px;align-content:start}
+.fact b{font-family:var(--display);font-size:38px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.fact span{font-size:15px;color:var(--muted)}
+.find{margin:0;padding-left:20px;max-width:70ch}
+.find li{margin:6px 0}
+
+/* zones */
+.zin{display:flex;flex-wrap:wrap;gap:14px 24px;margin:14px 0}
+.zin label{display:grid;gap:4px;font-size:15px;color:var(--muted)}
+.zin input{width:130px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-variant-numeric:tabular-nums}
+.ztab-wrap{overflow-x:auto}
+table.ztab{border-collapse:collapse;width:100%;min-width:520px;font-variant-numeric:tabular-nums}
+.ztab th,.ztab td{text-align:left;padding:9px 10px;border-top:1px solid var(--line);vertical-align:top}
+.ztab th{font-size:14px;color:var(--muted);font-weight:400;border-top:0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
+.ph{border:1px solid var(--line);background:transparent;border-radius:12px;padding:10px 12px;text-align:left;cursor:pointer;display:grid;gap:2px}
+.ph b{font-family:var(--display);font-size:21px;font-weight:600;line-height:1.1}
+.ph span{font-size:13px;color:var(--muted)}
+.ph:hover{border-color:var(--muted)}
+.ph[aria-pressed="true"]{border-color:var(--glacier);background:var(--panel);box-shadow:inset 0 0 0 1px var(--glacier)}
+.ph .now{font-size:12px;color:var(--glacier);font-weight:700}
+.phinfo{margin-top:22px;border-left:4px solid var(--glacier);padding:4px 0 4px 18px;max-width:70ch}
+.phinfo h3{margin-bottom:4px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:18px 0 6px}
+.day{background:var(--panel);border-radius:10px;padding:10px 10px 12px;min-height:110px;display:grid;align-content:start;gap:4px}
+.day .d{font-family:var(--display);font-size:18px;font-weight:600;color:var(--muted)}
+.day .w{font-size:14px;line-height:1.3}
+.day.bike{box-shadow:inset 0 4px 0 var(--glacier)}
+.day.str{box-shadow:inset 0 4px 0 var(--beacon)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:22px;height:5px;border-radius:3px;margin-right:6px;vertical-align:3px}
+
+/* workouts */
+.wo{padding:28px 0;border-top:1px solid var(--line);display:grid;gap:10px}
+.wo:first-of-type{border-top:0}
+.wo.off{opacity:.55}
+.wo-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--muted)}
+.tag.off{border-color:var(--muted)}
+.why{color:var(--muted);max-width:66ch;margin:0}
+.prof{display:block;width:100%;height:84px;background:var(--panel);border-radius:10px}
+.prof-cap{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:-4px;font-variant-numeric:tabular-nums}
+.rx{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:0}
+.rx dt{color:var(--muted)}
+.rx dd{margin:0}
+details.how summary{cursor:pointer;color:var(--glacier);font-weight:700}
+.cues{margin:6px 0 0;padding-left:20px;max-width:68ch}
+.cues li{margin:4px 0}
+
+/* rules + garmin */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.rule{background:var(--panel);border-radius:12px;padding:14px 16px}
+.rule h3{font-size:21px;margin-bottom:4px}
+.rule p{margin:0;font-size:16px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px;max-width:72ch}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:12px}
+.steps>li::before{content:counter(s);font-family:var(--display);font-size:24px;font-weight:600;color:var(--glacier);line-height:1.2}
+.steps h3{font-size:22px;margin-bottom:2px}
+.steps p{margin:0 0 4px}
+code{background:var(--panel);padding:1px 6px;border-radius:5px;font-size:15px}
+
+/* timer button on cards */
+.run{justify-self:start;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;background:var(--glacier);color:var(--bg);padding:9px 18px;font-weight:700;cursor:pointer}
+.run:hover{filter:brightness(1.08)}
+.run svg{width:14px;height:14px;fill:currentColor}
+
+/* timer screen */
+.tm{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 14px);gap:10px;overflow-y:auto}
+.tm[hidden]{display:none}
+.tm-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px}
+.tm-top h2{font-size:22px;margin:0}
+.tm-tot{font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tm-prof{position:relative}
+.tm-prof .prof{height:56px}
+.tm-mark{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1.5px;background:var(--ink);border-radius:2px}
+.tm-seg{border-radius:16px;padding:14px 16px 16px;background:var(--panel);box-shadow:inset 6px 0 0 var(--zc,var(--glacier));display:grid;gap:4px}
+.tm-rep{font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tm-name{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05}
+.tm-clock{font-family:var(--display);font-weight:700;font-size:clamp(84px,27vw,150px);line-height:.95;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.tm-clock.warn{color:var(--z5)}
+.tm-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.tm-bar i{display:block;height:100%;background:var(--zc,var(--glacier))}
+.tgt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tgt div{background:var(--panel);border-radius:12px;padding:8px 10px;display:grid;gap:0}
+.tgt span{font-size:13px;color:var(--muted)}
+.tgt b{font-family:var(--display);font-size:30px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.tgt .big{box-shadow:inset 0 0 0 2px var(--zc,var(--glacier))}
+.tm-cue{margin:0;font-size:17px}
+.tm-next{margin:0;font-size:15px;color:var(--muted)}
+.tm-next b{color:var(--ink)}
+.tm-ctl{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:8px;margin-top:auto}
+.tm-ctl button,.tm-sub button{border:1px solid var(--line);background:transparent;border-radius:14px;padding:14px 8px;cursor:pointer;font-weight:700}
+.tm-ctl .go{background:var(--glacier);border-color:var(--glacier);color:var(--bg);font-size:20px}
+.tm-sub{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tm-sub button{padding:10px 6px;font-size:15px;font-weight:400}
+.tm-sub .arm{border-color:var(--z5);color:var(--z5);font-weight:700}
+.tm-hint{font-size:13px;color:var(--muted);margin:0}
+.tm-done{display:grid;gap:10px;background:var(--panel);border-radius:16px;padding:16px}
+.tm-done code{display:block;padding:10px;font-size:16px;white-space:normal;word-break:break-word}
+.tm-done .row{display:flex;gap:8px;flex-wrap:wrap}
+.tm-done button{border:1px solid var(--line);background:transparent;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700}
+body.lock{overflow:hidden}
+
+@media (max-width:760px){
+  .phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .week{grid-template-columns:1fr}
+  .day{min-height:0;grid-template-columns:44px 1fr;align-items:baseline}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Rower pod puch i lato</h1>
+    <p class="lede">Dodatek do planu „Nogi na puch”. Zimą Keiser uzupełnia siłownię i góry: daje tlen i wytrzymałość ud bez obciążania kolan. Po Alpach rower przejmuje prowadzenie i przygotowuje cię do lata. Strefy i liczby wyliczyłem z twojego eksportu z Garmina.</p>
+  </header>
+
+  <section id="dane">
+    <h2>Co widać w twoich danych z Garmina</h2>
+    <div class="facts">
+      <div class="fact"><b>~163</b><span>próg tętna na rowerze, szacunek z najlepszych 20 minut jazdy</span></div>
+      <div class="fact"><b>44</b><span>tętno spoczynkowe dziś; 11–17 listopada było 51–53</span></div>
+      <div class="fact"><b>37 h</b><span>na rowerze od marca do sierpnia: 17 jazd, 833 km</span></div>
+      <div class="fact"><b>57</b><span>VO₂max według Garmina (bieg)</span></div>
+    </div>
+    <ul class="find">
+      <li><b>Próg na rowerze.</b> Twoje najmocniejsze 20 minut na rowerze to średnio 170–172 (Warszawa, lipiec 2025, i podjazd w Bielsku 7 sierpnia). Próg to około 95% tej wartości, czyli około 163. Potwierdzisz to testem na Keiserze. Biegając masz kilka uderzeń więcej, więc te same strefy na nogach przesuń o 3–5 w górę.</li>
+      <li><b>Lato.</b> Najmocniej jechałeś 1 sierpnia: 80 km w 2,5 godziny przy średnim tętnie 145. To górna granica strefy 2, czyli dobra baza do lata. Ostatnia zapisana jazda to 7 sierpnia.</li>
+      <li><b>Zmęczenie.</b> Zwykle rano masz 43–45. Po Tatrach (7–8 listopada) i mocnym podejściu 15 listopada tętno spoczynkowe trzymało się na 51–53, a od 18 listopada spada do 44. Fazę „Siła i moc” zaczynasz więc wypoczęty.</li>
+      <li><b>Czego brakuje.</b> Od 5 października do 6 listopada zegarek prawie nic nie zapisał, a w danych nie ma ani jazd na Keiserze, ani treningów siłowych od startu planu. Na dole strony piszę, jak je nagrywać.</li>
+      <li><b>Strefy w Garminie</b> liczą się teraz od tętna maksymalnego 195, więc strefa 3 obejmuje 137–156 i nic ci nie mówi. Ustaw w Garmin Connect strefy dla kolarstwa od progu (%LTHR) z wartością 163. Wtedy zegarek pokaże te same strefy co ta strona.</li>
+    </ul>
+  </section>
+
+  <section id="strefy">
+    <h2>Twoje strefy</h2>
+    <p class="note">Wpisz FTP z testu na Keiserze, a treningi pokażą waty. Próg tętna jest wpisany z danych z Garmina; po teście wpisz średnie tętno z ostatnich 10 minut.</p>
+    <div class="zin">
+      <label for="ftp">FTP na Keiserze (W)<input id="ftp" type="number" inputmode="numeric" min="80" max="500" placeholder="np. 240"></label>
+      <label for="lthr">Próg tętna na rowerze<input id="lthr" type="number" inputmode="numeric" min="120" max="200" value="163"></label>
+    </div>
+    <div class="ztab-wrap"><table class="ztab" id="ztab"></table></div>
+  </section>
+
+  <section id="fazy">
+    <h2>Rower w sezonie</h2>
+    <p class="note">Fazy zgadzają się z „Nogami na puch”. Wybierz fazę, a tydzień i wszystkie treningi niżej się dopasują.</p>
+    <div class="phases" id="phases" role="group" aria-label="Faza sezonu"></div>
+    <div class="phinfo" id="phinfo"></div>
+    <div class="week" id="week"></div>
+    <div class="legend"><span><i style="background:var(--glacier)"></i>rower</span><span><i style="background:var(--beacon)"></i>siła z „Nóg na puch”</span><span>Dni są przykładowe. Przesuwaj je, byle mocne dni nie szły jeden po drugim.</span></div>
+  </section>
+
+  <section id="treningi">
+    <h2>Treningi na Keiserze</h2>
+    <p class="note">Wykres to przebieg treningu: szerokość to czas, wysokość to intensywność, kolor to strefa. Treningi wyszarzone nie pasują do wybranej fazy. „Uruchom timer” otwiera trening na cały ekran w wersji dla wybranej fazy: odliczanie, waty, tętno i kadencja dla każdego odcinka, a przed zmianą trzy krótkie sygnały.</p>
+    <div id="list"></div>
+  </section>
+
+  <section id="zasady">
+    <h2>Jak łączyć rower z siłownią i górami</h2>
+    <div class="rules">
+      <div class="rule"><h3>Rower jest dodatkiem</h3><p>Do kursu i Alp najważniejsze są siła, góry i podejścia. Gdy brakuje czasu, pierwsza wypada jazda na rowerze, najlepiej ta spokojna.</p></div>
+      <div class="rule"><h3>Mocno po lekkim</h3><p>Podjazdu siłowego, sweet spotu i VO₂max nie rób dzień przed ani dzień po „Nogach na puch” czy górach. Spokojna jazda dzień po siłowni pomaga nogom wrócić.</p></div>
+      <div class="rule"><h3>Tętno rano</h3><p>Jeśli rano masz 50 lub więcej dwa dni z rzędu, zamień najbliższy mocny trening na spokojne rozkręcenie. W listopadzie tak właśnie było po Tatrach.</p></div>
+      <div class="rule"><h3>Kadencja i kolana</h3><p>Niską kadencję wprowadzaj stopniowo, zawsze w siodle i płynnie. Jeśli kolano boli z przodu, wróć do 85–95 obrotów na minutę.</p></div>
+    </div>
+  </section>
+
+  <section id="garmin">
+    <h2>Jak przesyłać mi dane z Garmina</h2>
+    <p class="note">Bez płatnych usług nie ma automatycznej synchronizacji w tym czacie. Wystarczy jednak, że co tydzień lub dwa wrzucisz plik, a ja przeliczę próg, sprawdzę zmęczenie i poprawię plan i tę stronę.</p>
+    <ol class="steps">
+      <li><div><h3>Nagrywaj każdą jazdę na Keiserze</h3><p>Na zegarku wybierz aktywność „Rower stacjonarny”, a pas Polar sparuj jako czujnik tętna. Po jeździe zmień nazwę aktywności w Garmin Connect, np. <code>SST 3×12 · 225 W · kad 90</code>. Waty wpisuj w nazwę, a nie w notatkę, bo notatek nie ma w eksporcie. Tak samo zapisuj „Nogi na puch” jako trening siłowy.</p></div></li>
+      <li><div><h3>Co tydzień: lista aktywności w CSV</h3><p>Na connect.garmin.com w przeglądarce otwórz Aktywności, potem Wszystkie aktywności. Przewiń do najstarszej aktywności, którą chcesz wysłać, i kliknij „Eksportuj CSV” w prawym górnym rogu. Do pliku trafiają tylko aktywności załadowane na liście. Plik wrzuć tutaj do czatu.</p></div></li>
+      <li><div><h3>Pojedynczy trening ze szczegółami</h3><p>Otwórz aktywność na connect.garmin.com, kliknij ikonę koła zębatego i wybierz eksport oryginału. Dostaniesz zip z plikiem FIT, a w nim tętno sekunda po sekundzie. Przydaje się po teście FTP albo po dniu w górach.</p></div></li>
+      <li><div><h3>Co 1–2 miesiące: pełny eksport</h3><p>Taki sam zip jak dziś, z danymi o śnie i tętnie spoczynkowym. Zamawiasz go w ustawieniach konta Garmin, w zarządzaniu danymi, a link przychodzi mailem po pewnym czasie.</p></div></li>
+      <li><div><h3>Na bieżąco, jeśli masz komputer</h3><p>Istnieją darmowe, nieoficjalne serwery MCP dla Garmina, np. projekt garmin_mcp na GitHubie, które działają w aplikacji Claude na komputerze. Trzeba je zainstalować i zalogować się do Garmina. To nie jest narzędzie Garmina, więc może przestać działać, gdy Garmin coś zmieni. Na telefonie nie zadziała.</p></div></li>
+    </ol>
+  </section>
+</div>
+
+<div class="tm" id="tm" role="dialog" aria-modal="true" aria-labelledby="tm-title" hidden>
+  <div class="tm-top"><h2 id="tm-title"></h2><span class="tm-tot" id="tm-tot"></span></div>
+  <div class="tm-prof" id="tm-prof"></div>
+  <div id="tm-body"></div>
+</div>
+
+<script>
+(function(){
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* zones: % of FTP and % of threshold HR */
+const ZN={
+  z1:{n:'Lekko',c:'--z1',p:[45,60],h:[72,82],rpe:'bardzo swobodnie, oddech nosem'},
+  z2:{n:'Strefa 2',c:'--z2',p:[56,75],h:[81,89],rpe:'swobodnie, rozmawiasz pełnymi zdaniami'},
+  tempo:{n:'Tempo',c:'--z3',p:[76,87],h:[86,92],rpe:'równo i stanowczo, krótkie zdania'},
+  sst:{n:'Sweet spot',c:'--z4',p:[88,94],h:[90,95],rpe:'ciężko, ale równo'},
+  thr:{n:'Próg',c:'--z4',p:[95,102],h:[95,100],rpe:'mocno, pojedyncze słowa'},
+  vo2:{n:'VO₂max',c:'--z5',p:[106,120],h:[100,106],rpe:'bardzo mocno, końcówka na granicy'},
+  sprint:{n:'Sprint',c:'--z5',p:[150,250],h:null,rpe:'na maksa, 10 sekund'}
+};
+const zoneOfPct=p=>p<=60?'z1':p<=75?'z2':p<=87?'tempo':p<=102?(p<=94?'sst':'thr'):p<=140?'vo2':'sprint';
+
+let ftp=store.get('rpl-ftp',null), lthr=store.get('rpl-lthr',163);
+const W5=p=>Math.round(ftp*p/100/5)*5, HR=p=>Math.round(lthr*p/100);
+
+function zoneLine(z){
+  const Z=ZN[z], out=[`<b>${Z.n}</b> – ${Z.rpe}`];
+  out.push(ftp?`${W5(Z.p[0])}–${W5(Z.p[1])} W`:`${Z.p[0]}–${Z.p[1]}% FTP`);
+  if(Z.h) out.push(z==='vo2'?`tętno pod koniec powtórzeń powyżej ${HR(100)}`:`tętno ${HR(Z.h[0])}–${HR(Z.h[1])}`);
+  return out.join(' · ');
+}
+function renderZones(){
+  const rows=['z1','z2','tempo','sst','thr','vo2'].map(z=>{const Z=ZN[z];
+    return `<tr><td><span class="sw" style="background:var(${Z.c})"></span>${Z.n}</td><td>${ftp?`${W5(Z.p[0])}–${W5(Z.p[1])} W`:`${Z.p[0]}–${Z.p[1]}% FTP`}</td><td>${z==='vo2'?`powyżej ${HR(100)}`:`${HR(Z.h[0])}–${HR(Z.h[1])}`}</td><td class="muted">${Z.rpe}</td></tr>`}).join('');
+  document.getElementById('ztab').innerHTML=`<thead><tr><th>Strefa</th><th>Moc</th><th>Tętno</th><th>Jak to czuć</th></tr></thead><tbody>${rows}</tbody>`;
+}
+
+/* phases */
+const PH={
+  sm:{name:'Siła i moc',when:'24 listopada – 21 grudnia',per:'Rower 2 razy w tygodniu, najwyżej 3.',
+    text:'Siłownia jest teraz najcięższa, więc rower daje głównie tlen. Jedna jazda to długa strefa 2 (gdy w weekend nie ma gór), druga to jakość: na zmianę tydzień z podjazdem siłowym i tydzień ze sweet spotem. Dzień po „Nogach na puch” możesz dorzucić spokojne rozkręcenie.',
+    week:[['s','Nogi na puch'],['b','Spokojne rozkręcenie 30–45 min'],['b','Podjazd siłowy albo sweet spot'],['o','Bieg spokojny lub wolne'],['s','Siła krótka'],['o','Góry albo długa jazda 90–120 min'],['o','Wolne albo podejścia z plecakiem']],
+    use:['intro','z2','easy','torque','sst','vo2','open','test']},
+  ss:{name:'Sezon skiturowy',when:'22 grudnia – Alpy',per:'Rower 1–2 razy, tylko w tygodniach bez gór.',
+    text:'Góry są głównym treningiem. Rower służy do rozkręcenia nóg po weekendzie, krótkiej jakości w tygodniu bez gór i przetarcia dzień przed wyjazdem. W lżejszych tygodniach (8–14 stycznia i 7–13 lutego) robisz tylko rozkręcenie i przetarcie.',
+    week:[['b','Rozkręcenie po górach 30–45 min'],['s','Nogi na puch, utrzymanie'],['b','VO₂max 4 × 4 min lub sweet spot 2 × 15'],['o','Bieg spokojny lub wolne'],['b','Przetarcie przed górami 35 min'],['o','Góry / skitury'],['o','Góry / skitury']],
+    use:['easy','vo2','sst','open','torque','z2']},
+  pr:{name:'Po Alpach: rower wraca',when:'połowa lutego – kwiecień',per:'Rower 3–4 razy w tygodniu, siła raz.',
+    text:'Teraz budujesz formę na lato. Długa jazda rośnie do 2–2,5 godziny, sweet spot przechodzi w próg, a od kwietnia dochodzą 30/15 i over-under. Siła zostaje jako jeden krótki trening w tygodniu. Co czwarty tydzień zrób lżej, z połową interwałów.',
+    week:[['o','Wolne'],['b','Sweet spot / próg'],['s','Siła krótka + rozkręcenie 30 min'],['b','VO₂max lub podjazd siłowy'],['o','Wolne'],['b','Długa jazda 2–2,5 h'],['b','Spokojnie 60–90 min lub bieg']],
+    use:['z2','easy','sst','torque','vo2','s3015','ou','test']},
+  la:{name:'Lato na rowerze',when:'maj – wrzesień',per:'Rower 3–5 razy, głównie na zewnątrz.',
+    text:'Jeździsz na zewnątrz, a Keiser zostaje na interwały i na deszcz. Jedna długa jazda w tygodniu, w Beskidy albo 80–100 km po płaskim, jedna lub dwie jakości i reszta w strefie 2. Siła raz w tygodniu krótko, żeby nie stracić tego, co zbudowałeś zimą.',
+    week:[['o','Wolne'],['b','30/15 albo VO₂max'],['b','Strefa 2, 90 min'],['b','Over-under albo próg'],['s','Siła krótka'],['b','Długa jazda 3–4 h'],['b','Spokojnie 60–90 min']],
+    use:['z2','easy','vo2','s3015','ou','sst','torque','open','test']}
+};
+const DAYS=['Pn','Wt','Śr','Cz','Pt','Sb','Nd'];
+function defaultPhase(){const t=new Date(),k=t.getFullYear()*10000+(t.getMonth()+1)*100+t.getDate();
+  if(k<20261222) return 'sm'; if(k<20270215) return 'ss'; if(k<20270501) return 'pr'; return 'la'}
+const nowPh=defaultPhase();
+let phase=store.get('rpl-phase',nowPh); if(!PH[phase]) phase=nowPh;
+
+/* segments: minutes, %FTP, label, cadence, cue */
+const S=(m,p,l,cad,cue)=>({m,p,l,cad,cue:cue||''});
+const R=(n,on,off,key)=>{key=key||'rep';const a=[];for(let i=0;i<n;i++){on.forEach(s=>a.push(Object.assign({},s,{[key]:s[key]||[i+1,n]})));if(i<n-1&&off)off.forEach(s=>a.push(Object.assign({},s,{after:true,[key]:s[key]||[i+1,n]})))}return a};
+const WU=[S(10,55,'Rozgrzewka','85–95','Spokojnie, rozkręć nogi'),S(3,70,'Rozgrzewka: mocniej','90','Strefa 2'),S(2,85,'Rozgrzewka: tempo','90','Pobudź nogi przed pracą')];
+const CD=[S(8,50,'Schłodzenie','85–95','Lekko, wyrównaj oddech')];
+const rest=(m,cad)=>S(m,55,'Przerwa',cad||'90','Lekko, rozkręć nogi');
+
+const torqueOn=m=>S(m,m>=8?84:82,'Podjazd siłowy','55–65','W siodle, płynny nacisk przez cały obrót. Tułów spokojny. Trzymaj waty, nie tętno');
+const sstOn=m=>S(m,91,'Sweet spot','85–95','Równo, bez zrywu na początku');
+const thrOn=m=>S(m,98,'Próg','85–95','Równo. Ostatnie powtórzenie tak mocne jak pierwsze');
+const vo2On=(m,p)=>S(m,p||110,'VO₂max','95–105','Mocno, ale tak, żeby utrzymać do końca');
+const s30=S(.5,125,'30 s mocno','100–110','Dociśnij opór dźwignią');
+const s15=S(.25,50,'15 s lekko','80','Prawie bez oporu');
+const under=m=>S(m,92,'Pod progiem','85–95','Równo, trochę poniżej progu');
+const over=(p)=>S(1,p,'Nad progiem','90–100','Dociśnij opór, nie tylko kadencję');
+const OPEN=[S(12,60,'Strefa 2','90','Spokojnie'),...R(3,[S(1,110,'1 min mocno','95–105','Mocno, ale bez zajeżdżania się')],[S(2,55,'Lekko','90')]),S(3,55,'Lekko','90'),
+  ...R(3,[S(10/60,200,'Sprint 10 s','110+','Na maksa, w siodle')],[S(1.5,50,'Lekko','85')]),S(8,55,'Schłodzenie','90')];
+const TEST=[...WU,S(3,105,'Przebudzenie','95','Krótko mocniej'),S(5,50,'Lekko','90','Za chwilę test'),
+  S(20,100,'TEST 20 min','85–95','Tak mocno, jak równo utrzymasz. Ostatnie 5 min daj, co zostało. Zapamiętaj średnie waty i tętno z ostatnich 10 min'),S(10,50,'Schłodzenie','90')];
+
+const WO=[
+ {id:'intro',name:'Pierwsza jazda: ustaw rower i rozjedź się',goal:['start'],z:'z2',
+  why:'Pierwszy rower od lata. Ustawiasz Keisera i pas, sprawdzasz, ile watów to dla ciebie strefa 2, i uczysz się dźwigni oporu przed podjazdami siłowymi. Bez zmęczenia, idealne przed siłownią w kolejnych dniach.',
+  rx:{sm:['około 50 minut: rozgrzewka, 15 min strefy 2, kadencja wysoka i niska, schłodzenie',[
+      S(10,55,'Rozgrzewka i ustawienia','85–95','Pierwsze minuty: sprawdź siodło (na dole obrotu kolano lekko ugięte) i czy zegarek widzi pas'),
+      S(15,68,'Strefa 2','85–95','Ustaw opór tak, żeby tętno doszło do 132–145. Zapamiętaj waty z konsoli przy tętnie około 140'),
+      ...R(4,[S(1,60,'Szybka kadencja','100–110','Lekki opór, biodra spokojne na siodle, bez podskakiwania')],[S(2,65,'Normalnie','90','Wróć do strefy 2')]),
+      S(1,60,'Lekko','90','Za chwilę niska kadencja'),
+      ...R(3,[S(2,75,'Niska kadencja','60–65','Dociśnij opór dźwignią, w siodle. Tętno ma zostać w strefie 2')],[S(2,60,'Normalnie','90','Odpuść opór')]),
+      S(5,50,'Schłodzenie','85–95','Lekko. Na koniec zapisz na kartce waty ze strefy 2')],'Pierwsza jazda Z2 50 min']},
+  how:['Siodło: na dole obrotu kolano lekko ugięte (około 25–30°), biodra nie kołyszą się na boki.','Kierownica na tyle wysoko, żeby plecy i kark były luźne przez godzinę.','Sparuj pas Polar z zegarkiem i włącz „Rower stacjonarny” przed startem timera.','Moc i tętno w timerze pokazują się jako tętno i % FTP, dopóki nie zrobisz testu. Patrz na tętno.']},
+ {id:'z2',name:'Długa jazda w strefie 2',goal:['skitury','lato'],z:'z2',
+  why:'Baza tlenowa, która niesie cię przez cały dzień podchodzenia i przez długie letnie jazdy. To najważniejsza jazda na rowerze w tygodniu bez gór.',
+  rx:{sm:['75–120 minut równo',[S(10,55,'Rozgrzewka','85–95'),S(85,68,'Strefa 2','85–95','Równy opór, rozmawiasz pełnymi zdaniami. Pij co 15 min'),S(5,50,'Schłodzenie','85–95')],'Z2 100 min'],
+      ss:['60–90 minut, tylko gdy w weekend nie ma gór',[S(10,55,'Rozgrzewka','85–95'),S(60,68,'Strefa 2','85–95','Równy opór, rozmawiasz pełnymi zdaniami'),S(5,50,'Schłodzenie','85–95')],'Z2 75 min'],
+      pr:['2–2,5 godziny; od marca możesz wyjść na zewnątrz',[S(10,55,'Rozgrzewka','85–95'),S(125,70,'Strefa 2','85–95','Równo. Jedz co 30–40 min'),S(5,50,'Schłodzenie','85–95')],'Z2 140 min'],
+      la:['na zewnątrz 3–4 godziny, w deszcz 90–120 minut na Keiserze',[S(10,55,'Rozgrzewka','85–95'),S(105,70,'Strefa 2','85–95','Równo. Jedz co 30–40 min'),S(5,50,'Schłodzenie','85–95')],'Z2 120 min']},
+  how:['Kadencja 85–95. Trzymaj realny opór, żeby koło zamachowe nie kręciło nogami za ciebie.','Pilnuj tętna i watów. Jeśli pod koniec tętno rośnie przy tych samych watach, to normalne, nie dokładaj.','Ponad 90 minut: bidon i coś do jedzenia co 30–40 minut.','W timerze możesz wydłużyć lub skrócić odcinek przyciskami +1 i −1 min.']},
+ {id:'easy',name:'Spokojne rozkręcenie',goal:['regeneracja'],z:'z1',
+  why:'Dzień po siłowni albo po górach lekka jazda szybciej usuwa sztywność z ud niż kanapa. Nie dokłada zmęczenia.',
+  rx:{sm:['30–45 minut, dzień po „Nogach na puch”',[S(40,55,'Rozkręcenie','90–100','Mały opór, wysoka kadencja. Lżej, niż ci się wydaje')],'Rozkręcenie 40 min'],
+      ss:['30–45 minut w poniedziałek po górach',[S(40,55,'Rozkręcenie','90–100','Mały opór, wysoka kadencja')],'Rozkręcenie 40 min'],
+      pr:['45–60 minut',[S(55,58,'Spokojnie','90–100','Mały opór, wysoka kadencja')],'Spokojnie 55 min'],
+      la:['60–90 minut na luzie',[S(75,60,'Spokojnie','90–100','Na luzie')],'Spokojnie 75 min']},
+  how:['Ma być łatwo, lżej niż ci się wydaje. Wysoka kadencja 90–100, mały opór.','Na koniec 5 minut rolowania ud i pośladków.']},
+ {id:'torque',name:'Podjazd siłowy na niskiej kadencji',goal:['skitury','góry latem'],z:'tempo',
+  why:'Na fokach uda pracują długo pod dużym oporem i w wolnym rytmie. Niska kadencja przy umiarkowanym tętnie uczy je dokładnie tego, bez obciążania kolan jak przy skokach.',
+  rx:{sm:['15 min rozgrzewki, 4 × 6 min na kadencji 55–65, przerwa 3 min lekko na 90',[...WU,...R(4,[torqueOn(6)],[rest(3)]),...CD],'Podjazd siłowy 4×6 min kad 60'],
+      ss:['15 min rozgrzewki, 3 × 8 min na kadencji 60, przerwa 3 min',[...WU,...R(3,[torqueOn(8)],[rest(3)]),...CD],'Podjazd siłowy 3×8 min kad 60'],
+      pr:['15 min rozgrzewki, 3 × 10 min na kadencji 55–65, przerwa 4 min (co drugi tydzień)',[...WU,...R(3,[torqueOn(10)],[rest(4)]),...CD],'Podjazd siłowy 3×10 min kad 60'],
+      la:['przed górskim wyjazdem: 3 × 10 min na kadencji 60',[...WU,...R(3,[torqueOn(10)],[rest(4)]),...CD],'Podjazd siłowy 3×10 min kad 60']},
+  how:['Cały czas w siodle, tułów spokojny, nacisk płynny przez cały obrót.','Opór dobierz tak, żeby przy 55–65 obrotach waty były w tempie. Tętno bywa tu niższe niż zwykle, więc trzymaj się watów.','Pierwszy raz zacznij od kadencji 70, a schodź niżej z tygodnia na tydzień.']},
+ {id:'sst',name:'Sweet spot / próg',goal:['skitury','lato'],z:{sm:'sst',ss:'sst',pr:'thr',la:'thr'},
+  why:'To wysiłek długiego, stromego podejścia w równym tempie. Podnosi moc, którą utrzymasz godzinę, a latem tempo na podjazdach.',
+  rx:{sm:['15 min rozgrzewki, 3 × 12 min, przerwa 5 min',[...WU,...R(3,[sstOn(12)],[rest(5)]),...CD],'Sweet spot 3×12 min'],
+      ss:['15 min rozgrzewki, 2 × 15 min, przerwa 5 min',[...WU,...R(2,[sstOn(15)],[rest(5)]),...CD],'Sweet spot 2×15 min'],
+      pr:['15 min rozgrzewki, 3 × 12 min na progu; po 3 tygodniach 2 × 20 min',[...WU,...R(3,[thrOn(12)],[rest(5)]),...CD],'Próg 3×12 min'],
+      la:['2 × 20 min na progu albo jeden długi podjazd w terenie',[...WU,...R(2,[thrOn(20)],[rest(6)]),...CD],'Próg 2×20 min']},
+  how:['Każde powtórzenie równo, bez zrywu na początku.','Ostatnie powtórzenie tak mocne jak pierwsze. Jeśli nie wychodzi, następnym razem odejmij 5–10 W.','Kadencja 85–95.']},
+ {id:'vo2',name:'Interwały VO₂max',goal:['skitury','lato'],z:'vo2',
+  why:'Podnoszą pułap tlenowy: przy tym samym tętnie podchodzisz i jedziesz szybciej. Wystarczy raz w tygodniu.',
+  rx:{sm:['zamiennie z podbiegami: 15 min rozgrzewki, 5 × 3 min, przerwa 3 min lekko',[...WU,...R(5,[vo2On(3)],[S(3,50,'Przerwa','85','Naprawdę lekko')]),...CD],'VO2max 5×3 min'],
+      ss:['w tygodniu bez gór: 15 min rozgrzewki, 4 × 4 min, przerwa 4 min',[...WU,...R(4,[vo2On(4)],[S(4,50,'Przerwa','85','Naprawdę lekko')]),...CD],'VO2max 4×4 min'],
+      pr:['od marca: 15 min rozgrzewki, 5 × 4 min, przerwa 4 min',[...WU,...R(5,[vo2On(4)],[S(4,50,'Przerwa','85','Naprawdę lekko')]),...CD],'VO2max 5×4 min'],
+      la:['6 × 4 min albo 5 × 5 min, przerwy tak długie jak powtórzenia',[...WU,...R(5,[vo2On(5,108)],[S(5,50,'Przerwa','85','Naprawdę lekko')]),...CD],'VO2max 5×5 min']},
+  how:['Mocno, ale tak, żeby utrzymać waty we wszystkich powtórzeniach.','Przerwy naprawdę lekko.','Nie rób dzień po siłowni ani dzień przed górami.']},
+ {id:'s3015',name:'30/15',goal:['lato'],z:'vo2',
+  why:'Krótkie, ostre powtórzenia z krótką przerwą. Dłużej trzymają cię blisko tętna maksymalnego niż zwykłe interwały, a na Keiserze wystarczy zmieniać opór dźwignią.',
+  rx:{pr:['od kwietnia: 2 serie × 10 × (30 s mocno / 15 s lekko), 3 min między seriami',[...WU,...R(2,R(10,[s30],[s15]),[S(3,50,'Przerwa między seriami','85','Lekko, oddychaj')],'set'),...CD],'30/15 2×10'],
+      la:['3 serie × 13 × (30 s mocno / 15 s lekko), 3 min między seriami',[...WU,...R(3,R(13,[s30],[s15]),[S(3,50,'Przerwa między seriami','85','Lekko, oddychaj')],'set'),...CD],'30/15 3×13']},
+  how:['30 sekund mocniej niż przy 4-minutowych interwałach, 15 sekund prawie bez oporu.','Seria ma być równa: ostatnie 30 sekund jak pierwsze.','Zastępuje VO₂max w danym tygodniu, nie dochodzi do niego.']},
+ {id:'ou',name:'Over-under',goal:['lato'],z:'thr',
+  why:'Na zmianę trochę poniżej i trochę powyżej progu. Uczy przyspieszać na stromszym odcinku podjazdu i wracać do tempa bez zatrzymania.',
+  rx:{pr:['od kwietnia: 3 × 8 min (2 min 92% / 1 min 105%), przerwa 5 min',[...WU,...R(3,[under(2),over(105),under(2),over(105),under(2)],[rest(5)]),...CD],'Over-under 3×8 min'],
+      la:['3 × 12 min (2 min 92% / 1 min 108%), przerwa 5 min',[...WU,...R(3,[under(2),over(108),under(2),over(108),under(2),over(108),under(3)],[rest(5)]),...CD],'Over-under 3×12 min']},
+  how:['Część „pod” trzymaj naprawdę pod progiem, żeby było z czego przyspieszać.','Przy „nad” dociśnij opór, nie tylko kadencję.']},
+ {id:'open',name:'Przetarcie przed górami',goal:['skitury','lato'],z:'z2',
+  why:'Dzień przed górami, kursem albo wyjazdem w Alpy. Krótkie pobudzenie sprawia, że następnego dnia nogi są świeże, a nie uśpione.',
+  rx:{sm:['30–40 min: strefa 2, w środku 3 × 1 min mocno i 3 × 10 s sprint',OPEN,'Przetarcie 35 min'],
+      ss:['dzień przed wyjazdem i przed Alpami: 30–40 min z 3 × 1 min mocno',OPEN,'Przetarcie 35 min'],
+      la:['dzień przed długą jazdą albo zawodami',OPEN,'Przetarcie 35 min']},
+  how:['Bez zmęczenia: masz zejść z roweru z uczuciem, że możesz więcej.']},
+ {id:'test',name:'Test FTP na Keiserze',goal:['pomiar'],z:'thr',
+  why:'Ustala waty i próg tętna dla wszystkich stref. Rób co 6–8 tygodni, najlepiej po lżejszym tygodniu.',
+  rx:{sm:['teraz, na starcie fazy: 15 min rozgrzewki, 20 min tak mocno, jak równo utrzymasz, 10 min schłodzenia',TEST,'Test FTP 20 min'],
+      ss:['nie w sezonie; zrób go po Alpach',TEST,'Test FTP 20 min'],
+      pr:['po pierwszym tygodniu po Alpach i znowu pod koniec kwietnia',TEST,'Test FTP 20 min'],
+      la:['w czerwcu, a potem tylko gdy chcesz sprawdzić formę',TEST,'Test FTP 20 min']},
+  how:['FTP to około 95% średnich watów z 20 minut. Próg tętna to średnie tętno z ostatnich 10 minut testu.','Starszy Keiser M3 szacuje waty. Porównuj je tylko z tym samym rowerem.','Zapisz test w Garminie jako osobną aktywność i wyślij mi plik FIT, a sprawdzę próg.']}
+];
+
+function profile(seg){
+  const total=seg.reduce((a,s)=>a+s.m,0), H=84, top=8, max=160;
+  let x=0, out='';
+  const y=p=>H-Math.max(6,(Math.min(p,max)/max)*(H-top));
+  seg.forEach(s=>{const w=s.m/total*1000, yy=y(s.p), z=zoneOfPct(s.p);
+    out+=`<rect x="${x.toFixed(2)}" y="${yy.toFixed(1)}" width="${Math.max(w-0.6,0.8).toFixed(2)}" height="${(H-yy).toFixed(1)}" fill="var(${ZN[z].c})"/>`; x+=w});
+  const ly=y(100);
+  out+=`<line x1="0" x2="1000" y1="${ly}" y2="${ly}" stroke="var(--muted)" stroke-dasharray="6 6" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+  return {svg:`<svg class="prof" viewBox="0 0 1000 ${H}" preserveAspectRatio="none" aria-hidden="true">${out}</svg>`,total:Math.round(total)};
+}
+const PLAY='<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>';
+
+function render(){
+  document.getElementById('phases').innerHTML=Object.keys(PH).map(id=>`<button class="ph" type="button" data-ph="${id}" aria-pressed="${id===phase}">${id===nowPh?'<span class="now">teraz</span>':''}<b>${PH[id].name}</b><span>${PH[id].when}</span></button>`).join('');
+  const P=PH[phase];
+  document.getElementById('phinfo').innerHTML=`<h3>${P.name}</h3><p class="muted">${P.when} · ${P.per}</p><p>${P.text}</p>`;
+  document.getElementById('week').innerHTML=P.week.map(([k,w],i)=>`<div class="day ${k==='b'?'bike':k==='s'?'str':''}"><span class="d">${DAYS[i]}</span><span class="w">${w}</span></div>`).join('');
+  const order=[...P.use,...WO.map(w=>w.id).filter(id=>!P.use.includes(id))];
+  document.getElementById('list').innerHTML=order.map(id=>{
+    const w=WO.find(x=>x.id===id), r=w.rx[phase], on=!!r&&P.use.includes(id);
+    const z=typeof w.z==='string'?w.z:w.z[phase]||'thr';
+    const pr=r?profile(r[1]):null;
+    return `<article class="wo${on?'':' off'}" id="wo-${w.id}">
+      <div class="wo-h"><h3>${w.name}</h3><div class="tags">${w.goal.map(g=>`<span class="tag">${g}</span>`).join('')}${on?'':'<span class="tag off">nie w tej fazie</span>'}</div></div>
+      <p class="why">${w.why}</p>
+      ${pr?`${pr.svg}<div class="prof-cap"><span>start</span><span>około ${pr.total} min · linia przerywana = FTP</span></div>`:''}
+      <dl class="rx"><dt>Ile</dt><dd>${r?r[0]:'nie w tej fazie'}</dd><dt>Jak mocno</dt><dd>${zoneLine(z)}</dd></dl>
+      ${r?`<button class="run" type="button" data-run="${w.id}">${PLAY}Uruchom timer</button>`:''}
+      <details class="how"><summary>Jak to zrobić</summary><ul class="cues">${w.how.map(h=>`<li>${h}</li>`).join('')}</ul></details>
+    </article>`}).join('');
+  renderZones();
+}
+
+/* ---------- timer ---------- */
+const $=id=>document.getElementById(id);
+const tm=$('tm'), tmBody=$('tm-body');
+let T=null, raf=null, actx=null, wake=null, sound=store.get('rpl-sound',true), voice=store.get('rpl-voice',false), lastFocus=null, endArm=false;
+const hasVoice=(()=>{try{return 'speechSynthesis' in window && typeof SpeechSynthesisUtterance!=='undefined'}catch(e){return false}})();
+
+const fmt=s=>{s=Math.max(0,Math.ceil(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+const durTxt=s=>s>=60?(s%60?`${Math.floor(s/60)} min ${s%60} s`:`${s/60} min`):`${s} s`;
+function target(s){
+  const z=zoneOfPct(s.p), Z=ZN[z];
+  let pw,hr;
+  if(z==='sprint'){pw='na maksa'}
+  else{
+    const lo=s.p<=102?Z.p[0]:s.p-4, hi=s.p<=102?Z.p[1]:s.p+4;
+    pw=ftp?`${W5(lo)}–${W5(hi)}`:`${lo}–${hi}%`;
+  }
+  if(s.dur<60||z==='sprint') hr='nie patrz';
+  else if(z==='vo2') hr=`>${HR(100)}`;
+  else hr=`${HR(Z.h[0])}–${HR(Z.h[1])}`;
+  return {z,pw,unit:ftp&&z!=='sprint'?'W':(z==='sprint'?'':'FTP'),hr};
+}
+function repTxt(s){
+  const a=[];
+  if(s.set) a.push(`Seria ${s.set[0]} z ${s.set[1]}`);
+  if(s.rep) a.push(s.after?`po powtórzeniu ${s.rep[0]} z ${s.rep[1]}`:`Powtórzenie ${s.rep[0]} z ${s.rep[1]}`);
+  return a.join(' · ');
+}
+function beep(f,ms,vol){
+  if(!sound||!actx) return;
+  try{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;
+    const t=actx.currentTime;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.35,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+ms/1000);
+    o.connect(g).connect(actx.destination);o.start(t);o.stop(t+ms/1000+0.02)}catch(e){}
+}
+function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+function say(s){
+  if(!voice||!hasVoice) return;
+  try{const t=target(s);speechSynthesis.cancel();
+    const txt=`${s.l}. ${durTxt(s.dur)}. ${t.pw==='na maksa'?'Na maksa':(ftp?t.pw.replace('–',' do ')+' watów':'')}. Kadencja ${s.cad.replace('–',' do ').replace('+',' i więcej')}.`;
+    const u=new SpeechSynthesisUtterance(txt);u.lang='pl-PL';u.rate=1.05;speechSynthesis.speak(u)}catch(e){}
+}
+async function lockScreen(){
+  try{if('wakeLock' in navigator){wake=await navigator.wakeLock.request('screen');return true}}catch(e){}
+  wake=null;return false;
+}
+function releaseLock(){try{wake&&wake.release()}catch(e){} wake=null}
+
+function openTimer(id){
+  const w=WO.find(x=>x.id===id), r=w.rx[phase]; if(!r) return;
+  const steps=r[1].map(s=>Object.assign({},s,{dur:Math.max(5,Math.round(s.m*60))}));
+  T={w,r,steps,idx:0,running:false,started:false,segStart:0,pausedAt:0,done:false,lastSec:null,elapsedTotal:0};
+  lastFocus=document.activeElement;
+  $('tm-title').textContent=w.name;
+  tm.hidden=false; document.body.classList.add('lock');
+  drawProfile(); paint(true);
+  const b=tmBody.querySelector('.go'); b&&b.focus();
+}
+function closeTimer(){
+  cancelAnimationFrame(raf); raf=null; releaseLock();
+  try{hasVoice&&speechSynthesis.cancel()}catch(e){}
+  T=null; endArm=false; tm.hidden=true; document.body.classList.remove('lock');
+  lastFocus&&lastFocus.focus&&lastFocus.focus();
+}
+function drawProfile(){
+  const p=profile(T.steps.map(s=>({m:s.dur/60,p:s.p})));
+  $('tm-prof').innerHTML=p.svg+'<span class="tm-mark" id="tm-mark"></span>';
+}
+const totalDur=()=>T.steps.reduce((a,s)=>a+s.dur,0);
+function segElapsed(now){return T.running?(now-T.segStart)/1000:T.started?(T.pausedAt-T.segStart)/1000:0}
+
+function start(){
+  if(!actx){try{const C=window.AudioContext||window.webkitAudioContext;if(C){actx=new C()}}catch(e){actx=null}}
+  try{actx&&actx.state==='suspended'&&actx.resume()}catch(e){}
+  const now=performance.now();
+  if(!T.started){T.started=true;T.segStart=now;say(T.steps[0]);beep(880,220)}
+  else T.segStart+=now-T.pausedAt;
+  T.running=true;
+  lockScreen().then(ok=>{T&&(T.wakeOk=ok);paint(true)});
+  loop();
+}
+function pause(){T.running=false;T.pausedAt=performance.now();cancelAnimationFrame(raf);paint(true)}
+function go(i,now){
+  now=now||performance.now();
+  if(i>=T.steps.length){finish();return}
+  T.idx=Math.max(0,i); T.segStart=now; T.pausedAt=now; T.lastSec=null;
+  const s=T.steps[T.idx];
+  beep(T.idx%2?660:880,380,0.45); buzz([200,80,200]); say(s);
+  paint(true);
+}
+function finish(){
+  T.done=true;T.running=false;cancelAnimationFrame(raf);releaseLock();
+  beep(660,200);setTimeout(()=>beep(880,200),250);setTimeout(()=>beep(1100,400),500);buzz([300,100,300,100,300]);
+  paint(true);
+}
+function loop(){
+  cancelAnimationFrame(raf);
+  const step=()=>{
+    if(!T||!T.running) return;
+    const now=performance.now();
+    let s=T.steps[T.idx], el=(now-T.segStart)/1000;
+    if(el>=s.dur){
+      // carry over: handles a phone that slept through one or more changes
+      let carry=now-(T.segStart+s.dur*1000), i=T.idx+1;
+      while(i<T.steps.length&&carry>=T.steps[i].dur*1000){carry-=T.steps[i].dur*1000;i++}
+      if(i>=T.steps.length){finish();return}
+      go(i,now-carry);
+    }else{
+      const left=Math.ceil(s.dur-el);
+      if(left!==T.lastSec){T.lastSec=left; if(left<=3&&left>=1&&s.dur>=10){beep(1040,110);buzz(60)} paint(false)}
+    }
+    raf=requestAnimationFrame(step);
+  };
+  raf=requestAnimationFrame(step);
+}
+function adjust(delta){
+  const s=T.steps[T.idx], now=performance.now(), el=segElapsed(now);
+  s.dur=Math.max(Math.ceil(el)+5,s.dur+delta);
+  drawProfile(); paint(true);
+}
+function copyText(t,btn){
+  const ok=()=>{btn.textContent='Skopiowane';setTimeout(()=>btn.textContent='Kopiuj nazwę',1500)};
+  try{navigator.clipboard.writeText(t).then(ok,()=>{btn.textContent='Zaznacz i skopiuj ręcznie'})}catch(e){btn.textContent='Zaznacz i skopiuj ręcznie'}
+}
+
+function paint(full){
+  if(!T) return;
+  const now=performance.now(), s=T.steps[T.idx], el=segElapsed(now), left=s.dur-el;
+  const tot=totalDur(), before=T.steps.slice(0,T.idx).reduce((a,x)=>a+x.dur,0), doneS=Math.min(tot,before+el);
+  $('tm-tot').textContent=T.done?`gotowe · ${fmt(tot)}`:`${fmt(doneS)} / ${fmt(tot)} · zostało ${fmt(tot-doneS)}`;
+  const mk=$('tm-mark'); if(mk) mk.style.left=(doneS/tot*100)+'%';
+
+  if(T.done){
+    if(!full) return;
+    const name=`${T.r[2]}${ftp?' · ___ W':''}`;
+    tmBody.innerHTML=`<div class="tm-done"><div class="tm-name">Trening zrobiony</div>
+      <p>Zatrzymaj nagrywanie na zegarku. Potem w Garmin Connect zmień nazwę aktywności na tę poniżej i wpisz średnie waty z Keisera.</p>
+      <code id="tm-gname">${name}</code>
+      <div class="row"><button type="button" data-a="copy">Kopiuj nazwę</button><button type="button" data-a="close">Zamknij</button></div></div>`;
+    return;
+  }
+  const t=target(s), nx=T.steps[T.idx+1], zc=`var(${ZN[t.z].c})`;
+  tm.style.setProperty('--zc',zc);
+  if(full||!$('tm-clock')){
+    const nt=nx?target(nx):null;
+    tmBody.innerHTML=`
+      <div class="tm-seg">
+        <div class="tm-rep">${repTxt(s)||`Odcinek ${T.idx+1} z ${T.steps.length}`}</div>
+        <div class="tm-name">${s.l}</div>
+        <div class="tm-clock" id="tm-clock" aria-live="off">${fmt(left)}</div>
+        <div class="tm-bar"><i id="tm-fill" style="width:${Math.min(100,el/s.dur*100)}%"></i></div>
+      </div>
+      <div class="tgt">
+        <div class="${t.z==='tempo'?'':'big'}"><span>Moc${t.unit==='FTP'?' (% FTP)':''}</span><b>${t.pw}${t.unit==='W'?' W':''}</b></div>
+        <div><span>Tętno</span><b>${t.hr}</b></div>
+        <div class="${t.z==='tempo'?'big':''}"><span>Kadencja</span><b>${s.cad}</b></div>
+      </div>
+      ${s.cue?`<p class="tm-cue">${s.cue}</p>`:''}
+      <p class="tm-next">${nx?`Dalej: <b>${nx.l}</b> · ${durTxt(nx.dur)} · ${nt.pw}${nt.unit==='W'?' W':nt.unit==='FTP'?' FTP':''} · kad. ${nx.cad}`:'Dalej: koniec treningu'}</p>
+      <div class="tm-ctl">
+        <button type="button" data-a="prev" aria-label="Poprzedni odcinek">◀ Wstecz</button>
+        <button type="button" class="go" data-a="toggle">${T.running?'Pauza':T.started?'Wznów':'Start'}</button>
+        <button type="button" data-a="next" aria-label="Następny odcinek">Dalej ▶</button>
+      </div>
+      <div class="tm-sub">
+        <button type="button" data-a="minus">−1 min</button>
+        <button type="button" data-a="plus">+1 min</button>
+        <button type="button" data-a="sound" aria-pressed="${sound}">${sound?'Dźwięk: wł.':'Dźwięk: wył.'}</button>
+        <button type="button" data-a="end" class="${endArm?'arm':''}">${endArm?'Na pewno?':'Zakończ'}</button>
+      </div>
+      ${hasVoice?`<div class="tm-sub" style="grid-template-columns:1fr"><button type="button" data-a="voice" aria-pressed="${voice}">${voice?'Głos zapowiada odcinki: wł.':'Głos zapowiada odcinki: wył.'}</button></div>`:''}
+      <p class="tm-hint">${!T.started?'Włącz na zegarku „Rower stacjonarny” i naciśnij Start. Przed każdą zmianą usłyszysz trzy krótkie sygnały.':T.wakeOk===false?'Telefon może sam wygasić ekran. Na czas jazdy wyłącz autoblokadę albo podłącz ładowarkę. Timer liczy dalej także po wygaszeniu.':'Ekran nie zgaśnie, dopóki timer jest otwarty.'}</p>`;
+  }else{
+    const c=$('tm-clock'); c.textContent=fmt(left); c.classList.toggle('warn',left<=3.5);
+    const f=$('tm-fill'); if(f) f.style.width=Math.min(100,el/s.dur*100)+'%';
+  }
+}
+tmBody.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]'); if(!b||!T) return;
+  const a=b.dataset.a;
+  if(a!=='end') endArm=false;
+  if(a==='toggle'){T.running?pause():start()}
+  else if(a==='next'){go(T.idx+1); if(!T.done&&!T.running){T.pausedAt=performance.now()}}
+  else if(a==='prev'){const el=segElapsed(performance.now()); go(el>5?T.idx:T.idx-1); if(!T.running)T.pausedAt=performance.now()}
+  else if(a==='plus') adjust(60);
+  else if(a==='minus') adjust(-60);
+  else if(a==='sound'){sound=!sound;store.set('rpl-sound',sound);paint(true)}
+  else if(a==='voice'){voice=!voice;store.set('rpl-voice',voice);if(voice&&T.started)say(T.steps[T.idx]);paint(true)}
+  else if(a==='end'){if(endArm){closeTimer()}else{endArm=true;paint(true);setTimeout(()=>{if(endArm&&T){endArm=false;paint(true)}},4000)}}
+  else if(a==='copy'){copyText($('tm-gname').textContent,b)}
+  else if(a==='close') closeTimer();
+});
+document.addEventListener('keydown',e=>{
+  if(tm.hidden||!T) return;
+  if(e.key===' '&&!T.done&&e.target.tagName!=='BUTTON'){e.preventDefault();T.running?pause():start()}
+  if(e.key==='Escape'&&(T.done||!T.started)) closeTimer();
+});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&T&&T.running){lockScreen();try{actx&&actx.resume()}catch(e){}paint(true);loop()}
+});
+
+/* wiring */
+document.getElementById('phases').addEventListener('click',e=>{const b=e.target.closest('[data-ph]');if(!b)return;phase=b.dataset.ph;store.set('rpl-phase',phase);render()});
+document.getElementById('list').addEventListener('click',e=>{const b=e.target.closest('[data-run]');if(b)openTimer(b.dataset.run)});
+const fi=document.getElementById('ftp'), li=document.getElementById('lthr');
+if(ftp) fi.value=ftp; li.value=lthr;
+fi.addEventListener('input',()=>{const v=+fi.value;ftp=v>=80&&v<=500?v:null;store.set('rpl-ftp',ftp);render()});
+li.addEventListener('input',()=>{const v=+li.value;lthr=v>=120&&v<=200?v:163;store.set('rpl-lthr',lthr);render()});
+render();
+})();
+
+</script>
+</body>
+</html>

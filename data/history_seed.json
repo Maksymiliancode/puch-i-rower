@@ -1,0 +1,210 @@
+{
+  "_opis": "Historia startowa do zaimportowania przy pierwszym uruchomieniu (źródła: eksport Garmina do 20.11.2026, dziennik w artefakcie 'Nogi na puch', rozmowa z Claude). Kolejność rosnąco po dacie.",
+  "planned_next": [
+    {
+      "date": "2026-11-25",
+      "workout_id": "b_z2",
+      "note": "Jazda 2: 75–90 min, 200–210 W, tętno ≤145, kadencja 85–95, bieg ~11"
+    },
+    {
+      "date": "2026-11-26",
+      "workout_id": "s_puch",
+      "note": "Nogi na puch (P2 Siła i moc)"
+    },
+    {
+      "date": "2026-11-27",
+      "workout_id": null,
+      "note": "27–29.11 Kopenhaga: spacery, ewentualnie spokojny bieg"
+    },
+    {
+      "date": "2026-11-30",
+      "workout_id": "b_torque",
+      "note": "Jazda 3: 4×6 min kadencja 55–65, 220–250 W (znaleźć bieg dający ~240 W przy 60 rpm) + 2×2 min 280–290 W przy 90 rpm"
+    },
+    {
+      "date": "2026-12-01",
+      "workout_id": null,
+      "note": "Wolne albo spokojny bieg"
+    },
+    {
+      "date": "2026-12-02",
+      "workout_id": "b_test",
+      "note": "Test FTP po śniadaniu"
+    },
+    {
+      "date": "2026-12-04",
+      "workout_id": "s_puch",
+      "note": "Nogi na puch"
+    }
+  ],
+  "sessions": [
+    {
+      "date": "2026-11-07",
+      "workout_id": "m_day",
+      "kind": "walk",
+      "title": "Zakopane – dzień w górach (marsz)",
+      "duration_min": 315,
+      "distance_km": 13.0,
+      "elevation_m": 661,
+      "avg_hr": 99,
+      "max_hr": 144,
+      "source": "garmin_export",
+      "id": "seed-01",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-08",
+      "workout_id": "m_day",
+      "kind": "hike",
+      "title": "Poronin – wędrówka",
+      "duration_min": 157,
+      "distance_km": 9.6,
+      "elevation_m": 327,
+      "avg_hr": 97,
+      "max_hr": 132,
+      "source": "garmin_export",
+      "id": "seed-02",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-11",
+      "workout_id": "r_easy",
+      "kind": "run",
+      "title": "Bieg, Bielsko-Biała",
+      "duration_min": 62,
+      "distance_km": 9.0,
+      "elevation_m": 83,
+      "avg_hr": 135,
+      "max_hr": 191,
+      "source": "garmin_export",
+      "notes": "Max 191 – najwyższe zanotowane tętno.",
+      "id": "seed-03",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-13",
+      "workout_id": "r_easy",
+      "kind": "run",
+      "title": "Bieg, Bielsko-Biała",
+      "duration_min": 48,
+      "distance_km": 7.1,
+      "elevation_m": 52,
+      "avg_hr": 134,
+      "max_hr": 154,
+      "source": "garmin_export",
+      "id": "seed-04",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-15",
+      "workout_id": "h_pack",
+      "kind": "hike",
+      "title": "Mocne podejście, Bielsko-Biała",
+      "duration_min": 44,
+      "distance_km": 5.5,
+      "elevation_m": 348,
+      "avg_hr": 155,
+      "max_hr": 183,
+      "source": "garmin_export",
+      "notes": "Szybkie podejście, tętno średnio 155.",
+      "id": "seed-05",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-17",
+      "workout_id": "r_easy",
+      "kind": "run",
+      "title": "Bieg spokojny, Warszawa",
+      "duration_min": 34,
+      "distance_km": 4.3,
+      "elevation_m": 10,
+      "avg_hr": 115,
+      "max_hr": 131,
+      "source": "garmin_export+nogi_na_puch_artifact",
+      "id": "seed-06",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-19",
+      "workout_id": "s_puch",
+      "kind": "strength",
+      "title": "Nogi na puch (faza Fundament)",
+      "source": "nogi_na_puch_artifact+user_chat",
+      "notes": "Mocny trening nóg (czwartek).",
+      "id": "seed-07",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-20",
+      "workout_id": "r_easy",
+      "kind": "run",
+      "title": "Bieg 10 km w miarę wolno",
+      "duration_min": 59,
+      "distance_km": 10.0,
+      "elevation_m": 32,
+      "avg_hr": 140,
+      "max_hr": 152,
+      "source": "garmin_export+user_chat",
+      "id": "seed-08",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-21",
+      "workout_id": "s_upper",
+      "kind": "strength_upper",
+      "title": "Siłownia: klatka + 15 min podejścia na bieżni",
+      "duration_min": null,
+      "source": "user_chat",
+      "notes": "Brak szczegółów; bieżnia z nachyleniem 15 min.",
+      "id": "seed-09",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-22",
+      "workout_id": null,
+      "kind": "rest",
+      "title": "Odpoczynek",
+      "source": "user_chat",
+      "id": "seed-10",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-23",
+      "workout_id": null,
+      "kind": "rest",
+      "title": "Odpoczynek",
+      "source": "user_chat",
+      "id": "seed-11",
+      "phase": "P1"
+    },
+    {
+      "date": "2026-11-24",
+      "workout_id": "b_intro",
+      "kind": "bike",
+      "title": "Pierwsza jazda Z2 (pierwszy rower od sierpnia), na czczo",
+      "duration_min": 54,
+      "source": "garmin+user_chat",
+      "avg_hr": null,
+      "hr_zone_minutes_garmin": {
+        "98-116": 1.9,
+        "117-136": 32.1,
+        "137-155": 18.3
+      },
+      "metrics": {
+        "warmup": {
+          "gear": 10,
+          "watts": 180
+        },
+        "z2_block": {
+          "gear": 12,
+          "watts": 220,
+          "hr": "~145–150"
+        }
+      },
+      "fasted": true,
+      "notes": "Tętno równe, bez dryfu. Wniosek: wstępne FTP ~290 W na tym Keiserze.",
+      "id": "seed-12",
+      "phase": "P2"
+    }
+  ]
+}
