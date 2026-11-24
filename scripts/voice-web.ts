@@ -233,14 +233,47 @@ async function analyze(file: string) {
   const g = gaps(samples, sampleRate);
   console.log(`Długość: ${(samples.length / sampleRate).toFixed(1)} s, mowa ${g.start.toFixed(2)}–${g.end.toFixed(2)} s, przerw ≥ 80 ms: ${g.gaps.length}`);
   console.log('Przerwy (s): ' + g.gaps.map((x) => x.len.toFixed(2)).join(' '));
+  const n = Number(option('n') ?? 0);
+  const r = n ? cut(samples, sampleRate, n) : null;
+  if (r) r.segs.forEach(([a, b], i) => console.log(`  fraza ${i + 1}: ${a.toFixed(2)}–${b.toFixed(2)} s (${(b - a).toFixed(2)} s)`));
 }
 
-const cmd = args[0];
+/** Ocena nagrania bez zapisu: pewność cięcia, zgodność z tekstem, tempo mowy. */
+async function rate(file: string) {
+  const order = JSON.parse(readFileSync(join(webDir, 'order.json'), 'utf8')) as string[];
+  const { samples, sampleRate } = await decode(file);
+  const r = cut(samples, sampleRate, order.length);
+  const name = file.split(/[\\/]/).pop();
+  if (!r) return console.log(`${name}: za mało przerw na ${order.length} fraz`);
+  const texts = order.map((k) => phrases.find((p) => p.key === k)?.text.length ?? 0);
+  const durs = r.segs.map(([a, b]) => b - a);
+  const corr = pearson(texts, durs);
+  const speech = durs.reduce((a, b) => a + b, 0);
+  const chars = texts.reduce((a, b) => a + b, 0);
+  const sorted = [...durs].sort((a, b) => a - b);
+  // Frazy najbardziej odstające od średniego tempa (podejrzane o złe cięcie).
+  const per = durs.map((d, i) => ({ i, text: phrases.find((p) => p.key === order[i])?.text ?? '', d, ratio: d / Math.max(1, texts[i]) }));
+  const avg = per.reduce((a, p) => a + p.ratio, 0) / per.length;
+  [...per]
+    .sort((a, b) => Math.abs(Math.log(b.ratio / avg)) - Math.abs(Math.log(a.ratio / avg)))
+    .slice(0, 6)
+    .forEach((p) => console.log(`  odstaje: #${p.i + 1} „${p.text}” ${p.d.toFixed(2)} s (${(p.ratio / avg).toFixed(2)}× średniej)`));
+  console.log(
+    `${name}\n  długość ${(samples.length / sampleRate).toFixed(1)} s, zgodność ${corr.toFixed(2)}, przerwy: między frazami ≥ ${r.minChosen.toFixed(2)} s, w frazie ≤ ${r.maxOther.toFixed(2)} s\n  tempo ${(chars / speech).toFixed(1)} znaków/s (naturalnie ok. 12–15), najkrótsza fraza ${sorted[0].toFixed(2)} s, najdłuższa ${sorted[sorted.length - 1].toFixed(2)} s`,
+  );
+}
+
 const fail = (e: unknown) => {
   console.error((e as Error).message);
   process.exitCode = 1;
 };
-if (cmd === 'tekst') writeText();
+
+const cmd = args[0];
+if (cmd === 'ocen') {
+  for (const f of args.slice(1)) await rate(f).catch(fail);
+}
+
+else if (cmd === 'tekst') writeText();
 else if (cmd === 'potnij') split().catch(fail);
 else if (cmd === 'analizuj' && args[1]) analyze(args[1]).catch(fail);
 else console.log('Użycie: npm run voice:web -- tekst | potnij --name Rhea | analizuj "plik.mp3"');
