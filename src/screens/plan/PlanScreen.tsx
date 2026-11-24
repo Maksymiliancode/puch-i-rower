@@ -129,6 +129,9 @@ export function PlanScreen({ focus }: { focus?: string }) {
           oznacza dnia wolnego.
         </p>
         <p className="num week-core">
+          <span className="slot-star" aria-hidden="true">
+            ★
+          </span>{' '}
           Najważniejsze trzy: <b>{coreDone}</b> z {CORE_SLOTS} zrobione
           {corePlanned > 0 && <span className="muted"> · {corePlanned} w planie</span>}
         </p>
@@ -144,7 +147,12 @@ export function PlanScreen({ focus }: { focus?: string }) {
                 </span>
                 <span className="slot-cat">
                   {CATEGORY_LABEL[s.c]}
-                  {i < CORE_SLOTS && <span className="visually-hidden"> (jeden z trzech najważniejszych)</span>}
+                  {i < CORE_SLOTS && (
+                    <span className="slot-star" title="Jeden z trzech najważniejszych">
+                      <span aria-hidden="true">★</span>
+                      <span className="visually-hidden"> (jeden z trzech najważniejszych)</span>
+                    </span>
+                  )}
                 </span>
                 <span className="slot-by">
                   {by ? (
@@ -170,6 +178,12 @@ export function PlanScreen({ focus }: { focus?: string }) {
             <Icon name="calendar" size={16} /> w planie
           </li>
           <li data-state="todo">do zrobienia</li>
+          <li>
+            <span className="slot-star" aria-hidden="true">
+              ★
+            </span>{' '}
+            najważniejsze trzy
+          </li>
         </ul>
         {wp.extra.length > 0 && <p className="muted">Dodatkowo: {wp.extra.map((e) => shortName(e.workoutId)).join(', ')}.</p>}
       </section>

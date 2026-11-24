@@ -330,6 +330,17 @@
   font-weight: 700;
 }
 
+.slot-star {
+  margin-left: 6px;
+  color: var(--fam-legs);
+  font-size: 1.1em;
+}
+
+.week-core .slot-star,
+.slot-legend .slot-star {
+  margin-left: 0;
+}
+
 .slot-icon {
   display: grid;
   place-items: center;
