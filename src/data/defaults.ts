@@ -1,10 +1,9 @@
 // Ustawienia startowe z data/athlete.json i data/season.json.
-import athleteJson from '../../data/athlete.json';
+// Z profilu bierzemy tylko liczby (`metrics`); imię, miasta i opis tygodnia nie trafiają do aplikacji.
+import { metrics } from '../../data/athlete.json';
 import historyJson from '../../data/history_seed.json';
 import { SEASON } from '../domain/catalog';
 import type { Planned, Session, SessionKind, Settings } from '../domain/types';
-
-const metrics = athleteJson.metrics;
 
 export function defaultSettings(): Settings {
   return {
