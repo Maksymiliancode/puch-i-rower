@@ -106,9 +106,12 @@ async function main() {
           continue;
         }
         console.error(`\nNie udało się: „${p.text}”. ${msg}`);
-        console.error('Nagrane do tej pory frazy zostają; uruchom komendę ponownie, żeby dokończyć.');
+        if (/paid_plan_required|402/.test(msg)) {
+          console.error('Ten głos jest z biblioteki ElevenLabs, a darmowe konto nie może go używać przez API. Wybierz głos z „Default voices” albo plan płatny.');
+        } else console.error('Nagrane do tej pory frazy zostają; uruchom komendę ponownie, żeby dokończyć.');
         writeManifest(voice);
-        process.exit(1);
+        process.exitCode = 1;
+        return;
       }
     }
     done++;
@@ -126,7 +129,8 @@ function writeManifest(voiceId: string) {
   writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 1) + '\n');
 }
 
+// exitCode zamiast process.exit(): na Windowsie twarde wyjście przy otwartym połączeniu kończy się błędem Node.
 main().catch((e: unknown) => {
   console.error((e as Error).message);
-  process.exit(1);
+  process.exitCode = 1;
 });
